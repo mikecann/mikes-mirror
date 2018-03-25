@@ -1,0 +1,15 @@
+.face-detect-widget {
+    position: relative;
+    bottom: 1em;
+    text-align: center;
+    width: 100%;
+    font-size: 6em;    
+}
+
+.face-detect-widget > canvas {
+    position: absolute;
+}
+
+.face-detect-widget > video {
+    position: absolute;
+}

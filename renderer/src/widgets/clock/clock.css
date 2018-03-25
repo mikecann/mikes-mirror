@@ -1,0 +1,26 @@
+.clock-widget {
+    max-width: 400px;
+    padding-left: 1em;
+}
+
+.clock-widget .hours-minutes {
+    font-size: 8em;
+}
+
+.clock-widget .seconds {
+    font-size: 3em;
+    padding-left: .1em;
+}
+
+.clock-widget .the-date {
+    border-top: 1px solid #333;
+    margin-top: -0.5em;
+    font-size: 1.6em;
+    font-weight: 300;
+}
+
+.clock-widget .the-date .date-icon {
+    font-size: 1em;
+    margin-right: 0.2em;
+    padding-top: 0.2em;
+}

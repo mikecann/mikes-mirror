@@ -13,12 +13,13 @@
             true,
             "check-space"
         ],
-        "curly": true,
+        "curly": false,
         "eofline": false,
         "forin": true,
         "indent": [ true, "spaces" ],
         "interface-name": [true, "never-prefix"],
         "jsdoc-format": true,
+        "jsx-wrap-multiline": false,
         "jsx-no-lambda": false,
         "jsx-no-multiline-js": false,
         "label-position": true,
@@ -29,20 +30,11 @@
             "static-before-instance",
             "variables-before-functions"
         ],
-        "no-any": true,
+        "no-any": false,
         "no-arg": true,
         "no-bitwise": true,
-        "no-console": [
-            true,
-            "log",
-            "error",
-            "debug",
-            "info",
-            "time",
-            "timeEnd",
-            "trace"
-        ],
         "no-consecutive-blank-lines": true,
+        "jsx-boolean-value": false,
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-variable": true,
@@ -61,9 +53,7 @@
             "check-open-brace",
             "check-whitespace"
         ],
-        "quotemark": [true, "single", "jsx-double"],
         "radix": true,
-        "semicolon": [true, "always"],
         "switch-default": true,
 
         "trailing-comma": [false],

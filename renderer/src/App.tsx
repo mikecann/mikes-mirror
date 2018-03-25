@@ -1,22 +1,20 @@
 import * as React from 'react';
-import './App.css';
+import './app.css';
+import Clock from './widgets/clock/Clock';
+import Particles from './widgets/particles/Particles';
+import FaceDetect from './widgets/face-detect/FaceDetect';
 
-const logo = require('./logo.svg');
+// const electron = (window as any).require('electron');
+// const fs = electron.remote.require('fs');
+// const ipcRenderer  = electron.ipcRenderer;
+// console.log({fs, ipcRenderer});
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    );
+    return <div>
+      <Particles />
+      <Clock />    
+      <FaceDetect />  
+    </div>
   }
 }
-
-export default App;
