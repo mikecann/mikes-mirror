@@ -7,8 +7,7 @@
     "electron": "^1.8.4"
   },
   "scripts": {
-    "postinstall": "cd renderer && yarn install && cd ../main && yarn install",
-    "start": "concurrently -n main,renderer \"cd main && yarn start\" \"cd renderer && yarn start\" "
+    "start": "tsc && concurrently -n tsc,electron \"tsc -w\" \"electron dist/main.js\""
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
