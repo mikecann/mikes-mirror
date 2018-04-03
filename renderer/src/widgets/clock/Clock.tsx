@@ -8,12 +8,18 @@ interface State {
 
 export default class Clock extends React.Component<any, State> {
 
+    timer: NodeJS.Timer;
+
     state = {
         time: moment()
     };
 
     componentDidMount() {
-        setInterval(this.updateTime, 1000);
+        this.timer = setInterval(this.updateTime, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
     }
 
     updateTime = () => this.setState({ time: moment() });

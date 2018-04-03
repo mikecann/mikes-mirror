@@ -1,0 +1,7 @@
+.welcome-message-widget {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 4em;
+}
