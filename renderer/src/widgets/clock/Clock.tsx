@@ -28,7 +28,7 @@ export default class Clock extends React.Component<any, State> {
         const {time} = this.state;
         const dateStr = time.format(`dddd MMMM Do`).toUpperCase();
 
-        return <div className="clock-widget">
+        return <div className="clock">
             <div className="the-time">
                 <span className="hours-minutes bright">{time.format('hh:mm')}</span>
                 <span className="seconds dimmed">{time.format('ss')}</span>                

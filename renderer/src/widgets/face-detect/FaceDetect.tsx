@@ -74,7 +74,7 @@ export default class FaceDetect extends React.Component<any, State> {
 
     render() {
         const {cameraStream} = this.state;
-        return <div className="face-detect-widget">
+        return <div className="face-detect">
             
             <video 
                 id="video" 

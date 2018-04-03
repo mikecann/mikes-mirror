@@ -1,0 +1,12 @@
+.profile-picture {
+    filter: grayscale(100%);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    /* transform-origin: right top; */
+}
+
+.profile-picture>img {
+    height: 100px;
+    border-radius: 8px;
+}

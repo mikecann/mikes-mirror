@@ -1,17 +1,22 @@
-.example-enter {
+.profile {
+    padding: 100px;
+}
+
+
+.profile-enter {
     opacity: 0.01;
 }
 
-.example-enter.example-enter-active {
+.profile-enter.profile-enter-active {
     opacity: 1;
     transition: opacity 500ms ease-in;
 }
 
-.example-leave {
+.profile-leave {
     opacity: 1;
 }
 
-.example-leave.example-leave-active {
+.profile-leave.profile-leave-active {
     opacity: 0.01;
     transition: opacity 300ms ease-in;
 }

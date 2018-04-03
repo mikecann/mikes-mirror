@@ -27,7 +27,7 @@ export default class App extends React.Component<Props, State> {
     this.state = {
       profile: props.startingProfile
     }
-}
+  }
 
   render() {
     const {profiles} = this.props;
@@ -36,7 +36,8 @@ export default class App extends React.Component<Props, State> {
     return <div className="app">
 
         <CSSTransitionGroup
-          transitionName="example"
+          className="profiles"
+          transitionName="profile"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}
         >

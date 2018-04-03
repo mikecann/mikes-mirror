@@ -8,7 +8,7 @@ interface Props {
 export default class WelcomeMessage extends React.Component<Props, any> {
 
     render() {
-        return <div className="welcome-message-widget">
+        return <div className="welcome-message">
             {this.props.message}
         </div>
     }

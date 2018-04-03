@@ -111,7 +111,7 @@ const params = {
 export default class Particles extends React.Component {
 
     render() {
-        return <div className="particles-widget">
+        return <div className="particles">
             <ParticlesJS height="100%" params={params} />
         </div>
 
