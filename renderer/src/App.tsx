@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './app.css';
+import './App.css';
 import ManualProfileSwitcher from './widgets/manual-profile-switcher/ManualProfileSwitcher';
 import { wrap } from './utils';
 import { CSSTransitionGroup } from 'react-transition-group';
