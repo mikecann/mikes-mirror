@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+  face_recognition:
+    build: .
+    privileged: true
+    volumes:
+        - ./:/root/face_recognition

@@ -26,7 +26,7 @@ export default class Clock extends React.Component<any, State> {
 
     render() {
         const {time} = this.state;
-        const dateStr = time.format(`dddd MMMM Do`).toUpperCase();
+        const dateStr = time.format(`dddd MMMM Do`);
 
         return <div className="clock">
             <div className="the-time">

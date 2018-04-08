@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as RSSParser from "rss-parser";
 import './rss-news.css';
 import * as Spinner from "react-spinkit";
+import * as moment from "moment";
 
 interface Props {
     feedUrl: string;
@@ -16,7 +17,8 @@ interface State {
 
 type FeedItem = {
     date: string, 
-    title: string
+    title: string,
+    pubDate: string
 }
 
 type Feed = {
@@ -62,6 +64,7 @@ export default class NewsRSS extends React.Component<Props, State> {
 }
 
 const FeedItem = (props: {item: FeedItem}) => 
-    <li>
-        {props.item.title.replace("&nbsp;", "")}
+    <li>        
+        <span>{props.item.title.replace("&nbsp;", "")}</span>
+        <span className="normal">{moment(props.item.pubDate).fromNow()}</span>
     </li>
