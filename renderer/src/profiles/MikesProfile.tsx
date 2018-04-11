@@ -5,6 +5,7 @@ import Clock from '../widgets/clock/Clock';
 import App from '../App';
 import WeatherChart from '../widgets/weather-chart/WeatherChart';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
+import FaceRecognition from "../widgets/face-recognition/FaceRecognition";
 
 interface Props {
   app: App
@@ -20,6 +21,7 @@ export default class MikesProfile extends React.Component<Props, any> {
       {/* <WelcomeMessage message="Hi Mike" /> */}
       <ProfilePicture url="mike_4.png" />
       {/* <FaceDetect />   */}
+      <FaceRecognition />
     </div>
   }
 }

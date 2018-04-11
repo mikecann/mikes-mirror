@@ -1,6 +1,7 @@
 # This is a sample Dockerfile you can modify to deploy your own app based on face_recognition
 
-FROM python:3.4-slim
+# FROM python:3.4-slim
+FROM ubuntu:16.04
 
 RUN apt-get -y update
 RUN apt-get install -y --fix-missing \
@@ -40,5 +41,18 @@ RUN pip3 install -r requirements.txt
 
 COPY . /root/face_recognition
 RUN python3 setup.py install
+
+# Replace 1000 with your user / group id
+# Sharing X11 windowing with the container
+RUN export uid=1000 gid=1000 && \
+    mkdir -p /home/developer && \
+    echo "developer:x:${uid}:${gid}:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
+    echo "developer:x:${uid}:" >> /etc/group && \
+    echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
+    chmod 0440 /etc/sudoers.d/developer && \
+    chown ${uid}:${gid} -R /home/developer
+
+# USER developer
+# ENV HOME /home/developer
 
 #CMD cd examples && python3 facerec_from_video_file.py
