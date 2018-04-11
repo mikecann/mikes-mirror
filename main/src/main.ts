@@ -2,6 +2,7 @@ import { app, BrowserWindow } from "electron";
 import { FaceDetectionService } from "./FaceDetectionService";
 
 let mainWindow: Electron.BrowserWindow;
+let faceDetection: FaceDetectionService;
 
 function createWindow() {
   // Create the browser window.
@@ -19,12 +20,9 @@ function createWindow() {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
-  
-
+  faceDetection = new FaceDetectionService(mainWindow);
+  faceDetection.start();
 }
-
-var faceDetection = new FaceDetectionService();
-faceDetection.startDetecting();
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -40,7 +38,7 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 
-  faceDetection.stopDetecting();
+  faceDetection.stop();
 });
 
 app.on("activate", () => {

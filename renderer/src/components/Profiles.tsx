@@ -1,8 +1,8 @@
 import * as React from 'react';
 import App from '../App';
 
-export type Profile = React.Component;
+export interface Profile extends React.Component {};
 
-export type Profiles = {
+export interface Profiles {
     [name: string]: (app: App) => JSX.Element
 }

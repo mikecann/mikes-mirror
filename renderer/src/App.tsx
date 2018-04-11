@@ -5,6 +5,7 @@ import { wrap } from './utils';
 import { CSSTransitionGroup } from 'react-transition-group';
 import ProfileWrapper from './components/ProfileWrapper';
 import { Profiles } from './components/Profiles';
+import FacialProfileSwitcher from './widgets/facial-profile-switcher/FacialProfileSwitcher';
 
 // const electron = (window as any).require('electron');
 // const fs = electron.remote.require('fs');
@@ -47,14 +48,23 @@ export default class App extends React.Component<Props, State> {
         </CSSTransitionGroup>
 
         <ManualProfileSwitcher 
-          onChangeProfile={this.nextProfile} 
+          onChangeProfile={this.changeProfile} 
           onNextProfile={this.nextProfile} 
           onPrevProfile={this.prevProfile} 
         />
+
+        <FacialProfileSwitcher onChangeProfile={this.changeProfile} />
     </div>
   }
 
   changeProfile = (profile: string) => {
+
+    if (!this.props.profiles.hasOwnProperty(profile))
+      return console.log(`Cannot change profile to '${profile}', its an unknown profile`);
+    
+    if (profile === this.state.profile)
+      return;
+
     console.log(`Profile changed`, {profile});
     this.setState({profile});
   }

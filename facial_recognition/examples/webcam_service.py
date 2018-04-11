@@ -1,8 +1,7 @@
 import face_recognition
 import cv2
 import sys
-
-print("Webcam Service Starting..")
+import json
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -39,9 +38,6 @@ while True:
         face_locations = face_recognition.face_locations(small_frame)
         face_encodings = face_recognition.face_encodings(small_frame, face_locations)
 
-        if not face_locations:
-            print("None")
-
         face_names = []
         for face_encoding in face_encodings:
             # See if the face is a match for the known face(s)
@@ -49,11 +45,13 @@ while True:
             name = "Unknown"
 
             if match[0]:
-                name = "Mike"
+                name = "mike"
 
             face_names.append(name)
 
     process_this_frame = not process_this_frame
+
+    detections = []
 
     for (top, right, bottom, left), name in zip(face_locations, face_names):
         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
@@ -62,8 +60,10 @@ while True:
         bottom *= 4
         left *= 4
 
-        print("{} {},{},{},{}".format(name, top, left, bottom, right))
-    
+        detections.append({"top": top, "left": left, "bottom": bottom, "right": right, "name": name})
+        
+    output = {"detections": detections}
+    print(json.dumps(output))
     sys.stdout.flush()
 
 # Release handle to the webcam
