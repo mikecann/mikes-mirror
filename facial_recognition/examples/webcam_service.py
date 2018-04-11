@@ -2,6 +2,34 @@ import face_recognition
 import cv2
 import sys
 import json
+import os
+import click
+import re
+import time
+
+def image_files_in_folder(folder):
+    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.(jpg|jpeg|png)', f, flags=re.I)]
+
+# This method was borrowed from the facial_recognition CLI
+def scan_known_people(known_people_folder):
+    known_names = []
+    known_face_encodings = []
+
+    for file in image_files_in_folder(known_people_folder):
+        basename = os.path.splitext(os.path.basename(file))[0]
+        img = face_recognition.load_image_file(file)
+        encodings = face_recognition.face_encodings(img)
+
+        if len(encodings) > 1:
+            click.echo("WARNING: More than one face found in {}. Only considering the first face.".format(file))
+
+        if len(encodings) == 0:
+            click.echo("WARNING: No faces found in {}. Ignoring file.".format(file))
+        else:
+            known_names.append(basename)
+            known_face_encodings.append(encodings[0])
+
+    return known_names, known_face_encodings
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -14,23 +42,30 @@ import json
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
+# video_capture.set(cv2.CAP_PROP_BUFFERSIZE,1) # cant do this quite yet (https://github.com/opencv/opencv/pull/11047)
 
-# Load a sample picture and learn how to recognize it.
-mike = face_recognition.load_image_file("mike0.JPG")
-mike_face_encoding = face_recognition.face_encodings(mike)[0]
+known_names, known_face_encodings = scan_known_people("./faces")
 
 # Initialize some variables
 face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
+downscale_factor = 2
 
 while True:
-    # Grab a single frame of video
+    
+    # 4 Empty grabs first due to framebuffer getting filled by slow render loop
+    video_capture.grab()
+    video_capture.grab()
+    video_capture.grab()
+    video_capture.grab()
+
+    # Grab and decode a single frame of video
     ret, frame = video_capture.read()
 
     # Resize frame of video to 1/4 size for faster face recognition processing
-    small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+    small_frame = cv2.resize(frame, (0, 0), fx=1/downscale_factor, fy=1/downscale_factor)
 
     # Only process every other frame of video to save time
     if process_this_frame:
@@ -40,14 +75,14 @@ while True:
 
         face_names = []
         for face_encoding in face_encodings:
+
             # See if the face is a match for the known face(s)
-            match = face_recognition.compare_faces([mike_face_encoding], face_encoding)
+            matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
             name = "Unknown"
 
-            if match[0]:
-                name = "mike"
-
-            face_names.append(name)
+            for i, match in enumerate(matches):
+                if match:
+                    face_names.append(known_names[i])
 
     process_this_frame = not process_this_frame
 
@@ -55,10 +90,10 @@ while True:
 
     for (top, right, bottom, left), name in zip(face_locations, face_names):
         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-        top *= 4
-        right *= 4
-        bottom *= 4
-        left *= 4
+        top *= downscale_factor
+        right *= downscale_factor
+        bottom *= downscale_factor
+        left *= downscale_factor
 
         detections.append({"top": top, "left": left, "bottom": bottom, "right": right, "name": name})
         
