@@ -15,10 +15,11 @@ interface SwitcherProps {
 class Switcher extends React.Component<SwitcherProps, any> {
     
     componentWillReceiveProps(nextProps: SwitcherProps) {
-        if (nextProps.detections.length !== 1)
-            return;
+        if (nextProps.detections.length === 0)
+            nextProps.onChangeProfile("empty");
 
-        nextProps.onChangeProfile(nextProps.detections[0].name);
+        if (nextProps.detections.length === 1)
+            nextProps.onChangeProfile(nextProps.detections[0].name);
     }
 
     render() {
