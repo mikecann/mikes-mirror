@@ -20,8 +20,8 @@ function createWindow() {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
-  faceDetection = new FaceDetectionService(mainWindow);
-  faceDetection.start();
+  // faceDetection = new FaceDetectionService(mainWindow);
+  // faceDetection.start();
 }
 
 // This method will be called when Electron has finished
