@@ -10,4 +10,6 @@ if [ $LOCAL != $REMOTE ]; then
     git pull origin master;
 
     echo "updated"
+else
+    echo "no changes"
 fi
