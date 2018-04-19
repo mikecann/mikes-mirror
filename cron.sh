@@ -1,9 +1,13 @@
-#!/bin/bash
-changed=0
-git remote update && git status -uno | grep -q 'Your branch is behind' && changed=1
-if [ $changed = 1 ]; then
-    echo "Update needed, running.."
-    git pull
-    yarn install
-    echo "Updated successfully"
+#/bin/bash
+
+git fetch;
+LOCAL=$(git rev-parse HEAD);
+REMOTE=$(git rev-parse @{u});
+
+#if our local revision id doesn't match the remote, we will need to pull the changes
+if [ $LOCAL != $REMOTE ]; then
+    #pull and merge changes
+    git pull origin master;
+
+    echo "updated"
 fi
