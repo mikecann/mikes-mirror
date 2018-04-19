@@ -53,6 +53,7 @@ app.on("activate", () => {
 function createWindowProd() {
   mainWindow = new BrowserWindow({
     fullscreen: true,
+    frame: false,
     webPreferences: {
       webSecurity: false
     }
@@ -83,13 +84,13 @@ function watchForUpdates() {
   setInterval(() => {
     checkForUpdate(hasUpdate => { 
       if (!hasUpdate)
-        return console.log("Currently up to date");
+        return console.log(`${Date.now()} - Currently up to date`);
       
       console.log("Detected that remote has an update for us, stopping app.");
       mainWindow.close();
     });
    
-  }, 5000)
+  }, interval)
 }
 
 
