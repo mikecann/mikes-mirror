@@ -24,7 +24,7 @@
     "dev": "cross-env BROWSER=none react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "export": "copyfiles ./build/**/* ../main/dist/renderer",
+    "export": "copyfiles \"./build/**/*\" ../main/dist/renderer",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
