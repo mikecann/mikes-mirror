@@ -77,7 +77,7 @@ function createWindowDev() {
 }
 
 function watchForUpdates() {
-  const interval = 5000;
+  const interval = 30000;
   console.log(`Beginning to check for updates every ${interval} ms`);
 
   setInterval(() => {
