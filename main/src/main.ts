@@ -2,6 +2,7 @@ import { app, BrowserWindow } from "electron";
 import { FaceDetectionService } from "./FaceDetectionService";
 import * as path from "path";
 import * as url from "url";
+import { checkForUpdate } from "./CheckForUpdates";
 
 let mainWindow: Electron.BrowserWindow;
 let faceDetection: FaceDetectionService;
@@ -74,5 +75,22 @@ function createWindowDev() {
   mainWindow.loadURL('http://localhost:3000');
   mainWindow.webContents.openDevTools();
 }
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
+
+function watchForUpdates() {
+  const interval = 5000;
+  console.log(`Beginning to check for updates every ${interval} ms`);
+
+  setInterval(() => {
+    checkForUpdate(hasUpdate => { 
+      if (!hasUpdate)
+        return console.log("Currently up to date");
+      
+      console.log("Detected that remote has an update for us, stopping app.");
+      mainWindow.close();
+    });
+   
+  }, 5000)
+}
+
+
+watchForUpdates();
