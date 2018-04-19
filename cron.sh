@@ -9,7 +9,7 @@ if [ $LOCAL != $REMOTE ]; then
     echo "detected changes on remote, updating.."
     git pull origin master;
     yarn install
-    echo "updated"
+    echo "updated."
 else
     echo "no changes"
 fi
