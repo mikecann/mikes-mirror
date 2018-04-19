@@ -9,7 +9,9 @@ if [ $LOCAL != $REMOTE ]; then
     echo "detected changes on remote, updating.."
     git pull origin master;
     yarn install
+    pkill electron
     echo "updated."
+    yarn deploy
 else
     echo "no changes"
 fi
