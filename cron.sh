@@ -6,6 +6,4 @@ if [ $changed = 1 ]; then
     git pull
     yarn install
     echo "Updated successfully";
-else
-    echo "Up-to-date";
 fi
