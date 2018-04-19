@@ -1,3 +1,3 @@
 # Mikes Mirror
 
-This is my mirror project based on Typescript and react...
+This is my mirror project based on Typescript and react.
