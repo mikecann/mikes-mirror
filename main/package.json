@@ -12,7 +12,7 @@
     "dev": "yarn build && concurrently -n tsc,electron \"tsc -w\" \"yarn start-dev\"",
     "build": "tsc",
     "start-dev": "electron dist/main.js",
-    "start": "cross-env NODE_ENV=production electron dist/main.js"
+    "start": "cross-env NODE_ENV=production DISPLAY=:0 electron dist/main.js"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
