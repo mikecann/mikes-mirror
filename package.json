@@ -4,14 +4,17 @@
   "private": true,
   "main": "electron-starter.js",
   "dependencies": {
-    "electron": "^1.8.4"
+    "cron": "^1.3.0",
+    "electron": "^1.8.4",
+    "shelljs": "^0.8.1"
   },
   "scripts": {
     "postinstall": "cd renderer && yarn install && cd ../main && yarn install",
     "build": "cd main && yarn build && cd ../renderer && yarn build && yarn export",
     "dev": "concurrently -n main,renderer \"cd main && yarn dev\" \"cd renderer && yarn dev\"",
     "start": "cd main && yarn start",
-    "deploy": "git pull && yarn build && yarn start"
+    "deploy": "git pull && yarn build && yarn start",
+    "cron": "node cron.js"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
