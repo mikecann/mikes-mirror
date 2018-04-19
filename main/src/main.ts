@@ -1,24 +1,23 @@
 import { app, BrowserWindow } from "electron";
 import { FaceDetectionService } from "./FaceDetectionService";
+import * as path from "path";
+import * as url from "url";
 
 let mainWindow: Electron.BrowserWindow;
 let faceDetection: FaceDetectionService;
 
+const isProduction = process.env.NODE_ENV == "production";
+const isDev = !isProduction;
+
+console.log("Mikes Mirror Starting Up..", { isProduction });
+
 function createWindow() {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
-    webPreferences: {
-      webSecurity: false
-    }
-  });
 
-  // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:3000');
+  if (isDev)
+    createWindowDev();
+  else 
+    createWindowProd();
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 
   // faceDetection = new FaceDetectionService(mainWindow);
   // faceDetection.start();
@@ -29,7 +28,6 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on("ready", createWindow);
 
-
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
   // On OS X it is common for applications and their menu bar
@@ -38,7 +36,8 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 
-  faceDetection.stop();
+  if (faceDetection)
+    faceDetection.stop();
 });
 
 app.on("activate", () => {
@@ -47,7 +46,33 @@ app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
   }
+
 });
 
+function createWindowProd() {
+  mainWindow = new BrowserWindow({
+    fullscreen: true,
+    webPreferences: {
+      webSecurity: false
+    }
+  });
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, './renderer/build/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+}
+
+function createWindowDev() {
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      webSecurity: false
+    }
+  });
+  mainWindow.loadURL('http://localhost:3000');
+  mainWindow.webContents.openDevTools();
+}
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

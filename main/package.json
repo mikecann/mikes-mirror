@@ -4,12 +4,15 @@
   "private": true,
   "main": "electron-starter.js",
   "dependencies": {
+    "cross-env": "^5.1.4",
     "electron": "^1.8.4",
     "python-shell": "^0.5.0"
   },
   "scripts": {
-    "start": "tsc && concurrently -n tsc,electron \"tsc -w\" \"yarn start-electron\"",
-    "start-electron": "electron dist/main.js"
+    "dev": "yarn build && concurrently -n tsc,electron \"tsc -w\" \"yarn start-dev\"",
+    "build": "tsc",
+    "start-dev": "electron dist/main.js",
+    "start": "cross-env NODE_ENV=production electron dist/main.js"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
