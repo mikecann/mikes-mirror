@@ -3,6 +3,7 @@ import { FaceDetectionService } from "./FaceDetectionService";
 import * as path from "path";
 import * as url from "url";
 import { checkForUpdate } from "./CheckForUpdates";
+import * as moment from "moment";
 
 let mainWindow: Electron.BrowserWindow;
 let faceDetection: FaceDetectionService;
@@ -84,7 +85,7 @@ function watchForUpdates() {
   setInterval(() => {
     checkForUpdate(hasUpdate => { 
       if (!hasUpdate)
-        return console.log(`${Date.now()} - Currently up to date`);
+        return console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - Currently up to date`);
       
       console.log("Detected that remote has an update for us, stopping app.");
       mainWindow.close();

@@ -6,6 +6,7 @@
   "dependencies": {
     "cross-env": "^5.1.4",
     "electron": "^1.8.4",
+    "moment": "^2.22.1",
     "python-shell": "^0.5.0"
   },
   "scripts": {
