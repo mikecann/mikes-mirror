@@ -6,6 +6,10 @@
   version "8.10.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.0.tgz#f5d649cc49af8ed6507d15dc6e9b43fe8b927540"
 
+"@types/systeminformation@^3.23.0":
+  version "3.23.0"
+  resolved "https://registry.yarnpkg.com/@types/systeminformation/-/systeminformation-3.23.0.tgz#50c9e7b7c52cb873ea9b641cf9f27ec06b1a14fb"
+
 ajv@^5.1.0:
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.5.2.tgz#73b5eeca3fab653e3d3f9422b341ad42205dc965"
@@ -951,6 +955,10 @@ supports-color@^3.2.3:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
     has-flag "^1.0.0"
+
+systeminformation@^3.38.0:
+  version "3.38.0"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-3.38.0.tgz#ea7b09ef9f4f34dbb594ac8b88269faa826c009f"
 
 throttleit@0.0.2:
   version "0.0.2"

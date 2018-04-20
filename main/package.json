@@ -4,10 +4,12 @@
   "private": true,
   "main": "electron-starter.js",
   "dependencies": {
+    "@types/systeminformation": "^3.23.0",
     "cross-env": "^5.1.4",
     "electron": "^1.8.4",
     "moment": "^2.22.1",
-    "python-shell": "^0.5.0"
+    "python-shell": "^0.5.0",
+    "systeminformation": "^3.38.0"
   },
   "scripts": {
     "dev": "yarn build && concurrently -n tsc,electron \"tsc -w\" \"yarn start-dev\"",

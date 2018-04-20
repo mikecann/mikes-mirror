@@ -4,9 +4,11 @@ import * as path from "path";
 import * as url from "url";
 import { checkForUpdate } from "./CheckForUpdates";
 import * as moment from "moment";
+import { PerformanceService } from "./PerformanceService";
 
 let mainWindow: Electron.BrowserWindow;
 let faceDetection: FaceDetectionService;
+let performanceService: PerformanceService;
 
 const isProduction = process.env.NODE_ENV == "production";
 const isDev = !isProduction;
@@ -23,6 +25,9 @@ function createWindow() {
 
   // faceDetection = new FaceDetectionService(mainWindow);
   // faceDetection.start();
+
+  performanceService = new PerformanceService(mainWindow);
+  performanceService.start();
 }
 
 // This method will be called when Electron has finished
