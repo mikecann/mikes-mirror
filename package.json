@@ -11,7 +11,7 @@
     "build": "cd main && yarn build && cd ../renderer && yarn build && yarn export",
     "dev": "concurrently -n main,renderer \"cd main && yarn dev\" \"cd renderer && yarn dev\"",
     "start": "cd main && yarn start",
-    "deploy": "git remote update && git pull && yarn build && yarn start && yarn deploy"
+    "deploy": "git pull && yarn install && yarn build && yarn start && yarn deploy"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
