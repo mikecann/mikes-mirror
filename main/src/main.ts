@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, powerSaveBlocker } from "electron";
 import { FaceDetectionService } from "./FaceDetectionService";
 import * as path from "path";
 import * as url from "url";
@@ -15,25 +15,24 @@ const isDev = !isProduction;
 
 console.log("Mikes Mirror Starting Up..", { isProduction });
 
-function createWindow() {
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on("ready", () => {
 
-  if (isDev)
-    createWindowDev();
-  else 
-    createWindowProd();
+  // Create the window
+  isDev ? createWindowDev() : createWindowProd()
 
+  // Prevent the display from sleeping
+  powerSaveBlocker.start("prevent-display-sleep");
 
-  // faceDetection = new FaceDetectionService(mainWindow);
+   // faceDetection = new FaceDetectionService(mainWindow);
   // faceDetection.start();
 
   performanceService = new PerformanceService(mainWindow);
   performanceService.start();
-}
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
@@ -45,15 +44,6 @@ app.on("window-all-closed", () => {
 
   if (faceDetection)
     faceDetection.stop();
-});
-
-app.on("activate", () => {
-  // On OS X it"s common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow();
-  }
-
 });
 
 function createWindowProd() {
@@ -98,6 +88,5 @@ function watchForUpdates() {
    
   }, interval)
 }
-
 
 watchForUpdates();
