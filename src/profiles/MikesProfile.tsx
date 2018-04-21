@@ -33,8 +33,8 @@ export default class MikesProfile extends React.Component<Props, any> {
         
         {/* <FaceDetect />   */}
         
-        <SystemInfo />
-        
+        {/* <SystemInfo /> */}
+
       </div>
 
     </div>

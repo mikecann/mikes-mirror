@@ -1,5 +1,8 @@
 import { stylesheet, cssRule } from "typestyle";
-import {normalize, setupPage} from "csstips";
+import {normalize, setupPage, padding} from "csstips";
+
+const isProd = process.env.NODE_ENV == "production";
+const prodPadding = "0px 10px 30px 20px";
 
 export function setupStyles(root: string = "#root") {
     normalize();
@@ -9,7 +12,8 @@ export function setupStyles(root: string = "#root") {
         color: "white",
         backgroundColor: "black",
         fontWeight: 100,
-        overflow: "hidden"
+        overflow: "hidden",
+        padding: isProd ? prodPadding : 0,
     });
 }
 
