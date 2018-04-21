@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Particles from '../widgets/particles/Particles';
+// import Particles from '../widgets/particles/Particles';
 import Clock from '../widgets/clock/Clock';
 import WeatherChart from '../widgets/weather-chart/WeatherChart';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
@@ -14,7 +14,8 @@ interface Props {
 export default class MikesProfile extends React.Component<Props, any> {
   render() {
     return <div className={css.profile}>
-      <Particles />
+      
+      {/* <Particles /> */}
 
       <div className={css.rootContainer}>
 
