@@ -4,7 +4,7 @@ import * as path from "path";
 import * as url from "url";
 import * as moment from "moment";
 import * as reload from "electron-reload";
-import { GitBasedAutoUpdater } from './utils/GitBasedAutoUpdater';
+import { waitForUpdate } from './utils/GitBasedAutoUpdater';
 
 reload(__dirname, {
   electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),
@@ -20,7 +20,7 @@ console.log("Mikes Mirror Starting Up..", { isProduction });
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", () => {
+app.on("ready", async () => {
 
   // Create the window
   const window = isDev ? createWindowDev() : createWindowProd();
@@ -40,8 +40,8 @@ app.on("ready", () => {
   powerSaveBlocker.start("prevent-display-sleep");
 
   // Lets continually check git to see if there are updates and close if there are
-  new GitBasedAutoUpdater()
-    .beginCheckingForUpdates(hasUpdate => hasUpdate ? window.close() : null);
+  await waitForUpdate(5000);
+  window.close();
 
 });
 

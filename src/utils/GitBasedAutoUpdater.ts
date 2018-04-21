@@ -1,37 +1,37 @@
 import { exec } from "child_process";
 import * as moment from 'moment';
 
-export type GitBasedAutoUpdaterUpdateCheckCallback = (updateAvailabe: boolean) => void;
-
-export class GitBasedAutoUpdater {
-
-    private execute(command: string, callback: (stdout: string) => void) {
-        exec(command, { cwd: ".." }, (error, stdout, stderr) => { callback(stdout); });
-    };
-
-    private checkForUpdate(callback: (hasUpdate: boolean) => void) {
-        this.execute("git remote update", () => {
-            this.execute("git status -uno", (status: string) => {
-                callback(status.indexOf("Your branch is behind") != -1);
-            });
+function execute(command: string) {
+    return new Promise<string>((resolve, reject) => {
+        exec(command, { cwd: "." }, (error, stdout, stderr) => {
+            if (error)
+                throw error;
+            resolve(stdout);
         });
-    };
+    });
+};
 
-    beginCheckingForUpdates(callback: GitBasedAutoUpdaterUpdateCheckCallback, intervalMs: number = 30000) {
-        const interval = 30000;
-        console.log(`Beginning to check for updates every ${interval} ms`);
+async function checkForUpdate(): Promise<boolean> {
+    await execute("git remote update");
+    const status = await execute("git status -uno");
+    return status.indexOf("Your branch is behind") != -1;
+};
 
-        setInterval(() => {
-            this.checkForUpdate(hasUpdate => {
-                if (!hasUpdate)
-                    console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - Currently up to date`);
-                else
-                    console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - New update detected.`);
+export function waitForUpdate(intervalMs: number = 30000) {
+    console.log(`Beginning to check for updates every ${intervalMs} ms`);
 
-                callback(hasUpdate);
-            });
+    return new Promise(resolve => {
+        setInterval(async () => {
+            
+            const hasUpdate = await checkForUpdate();
 
-        }, interval)
-    }
+            if (!hasUpdate)
+                console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - Currently up to date`);
+            else
+                console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - New update detected.`);
 
+            resolve();
+
+        }, intervalMs);
+    });
 }
