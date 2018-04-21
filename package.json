@@ -2,11 +2,14 @@
   "name": "mikes-mirror",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && cpx -v src/resources/**/* dist",
-    "watch:scripts": "tsc -w",
-    "watch:resources": "cpx -w -v src/resources/**/* dist",
+    "build": "yarn build:scripts && yarn build:resources",
+    "build:scripts": "tsc",
+    "build:resources": "cpx -v src/resources/**/* dist",
+    "watch:scripts": "yarn build:scripts -w",
+    "watch:resources": "yarn build:resources -w",
     "start": "electron ./dist/main.js",
-    "dev": "yarn build && concurrently -n scripts,resources,electron \"yarn watch:scripts\" \"yarn watch:resources\" \"yarn start\" "
+    "dev": "yarn build && concurrently -n scripts,resources,electron \"yarn watch:scripts\" \"yarn watch:resources\" \"yarn start\" ",
+    "deploy": "git pull && yarn install && yarn build && yarn start && yarn deploy"
   },
   "dependencies": {
     "@types/react": "^16.3.12",
