@@ -2,7 +2,7 @@ import { stylesheet, cssRule } from "typestyle";
 import {normalize, setupPage, padding} from "csstips";
 
 const isProd = process.env.NODE_ENV == "production";
-const prodPadding = "0px 10px 30px 20px";
+const prodPadding = "0px 10px 10px 30px";
 
 export function setupStyles(root: string = "#root") {
     normalize();
