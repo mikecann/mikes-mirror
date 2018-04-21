@@ -42,7 +42,7 @@ app.on("ready", () => {
 
   // Lets continually check git to see if there are updates and close if there are
   new GitBasedAutoUpdater()
-    .beginCheckingForUpdates(hasUpdate => window.close())
+    .beginCheckingForUpdates(hasUpdate => hasUpdate ? window.close() : null);
 
 });
 
