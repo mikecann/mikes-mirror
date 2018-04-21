@@ -28,9 +28,10 @@ export function waitForUpdate(intervalMs: number = 30000) {
             if (!hasUpdate)
                 console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - Currently up to date`);
             else
+            {
                 console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - New update detected.`);
-
-            resolve();
+                resolve();
+            }
 
         }, intervalMs);
     });

@@ -40,7 +40,7 @@ app.on("ready", async () => {
   powerSaveBlocker.start("prevent-display-sleep");
 
   // Lets continually check git to see if there are updates and close if there are
-  await waitForUpdate(5000);
+  await waitForUpdate(30000);
   window.close();
 
 });
