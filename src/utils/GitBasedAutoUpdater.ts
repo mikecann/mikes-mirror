@@ -6,12 +6,12 @@ export type GitBasedAutoUpdaterUpdateCheckCallback = (updateAvailabe: boolean) =
 export class GitBasedAutoUpdater {
 
     private execute(command: string, callback: (stdout: string) => void) {
-        exec(command, { cwd: ".." }, function (error, stdout, stderr) { callback(stdout); });
+        exec(command, { cwd: ".." }, (error, stdout, stderr) => { callback(stdout); });
     };
 
     private checkForUpdate(callback: (hasUpdate: boolean) => void) {
-        this.execute("git remote update", function () {
-            this.execute("git status -uno", function (status: string) {
+        this.execute("git remote update", () => {
+            this.execute("git status -uno", (status: string) => {
                 callback(status.indexOf("Your branch is behind") != -1);
             });
         });
