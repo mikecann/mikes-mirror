@@ -8,8 +8,9 @@
     "watch:scripts": "yarn build:scripts -w",
     "watch:resources": "yarn build:resources -w",
     "start": "electron ./dist/main.js",
+    "start:prod": "cross-env NODE_ENV=production DISPLAY=:0 yarn start",
     "dev": "yarn build && concurrently -n scripts,resources,electron \"yarn watch:scripts\" \"yarn watch:resources\" \"yarn start\" ",
-    "deploy": "git pull && yarn install && yarn build && yarn start && yarn deploy"
+    "deploy": "git pull && yarn install && yarn build && yarn start:prod && yarn deploy"
   },
   "dependencies": {
     "@types/react": "^16.3.12",
