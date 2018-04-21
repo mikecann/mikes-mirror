@@ -1,11 +1,12 @@
 import * as React from 'react';
 // import './App.css';
-import ManualProfileSwitcher from './widgets/manual-profile-switcher/ManualProfileSwitcher';
-import { wrap } from './utils';
 import { CSSTransitionGroup } from 'react-transition-group';
-import ProfileWrapper from './components/ProfileWrapper';
-import { Profiles } from './components/Profiles';
-import FacialProfileSwitcher from './widgets/facial-profile-switcher/FacialProfileSwitcher';
+import { Profiles } from './Profiles';
+import ProfileWrapper from './ProfileWrapper';
+import ManualProfileSwitcher from '../widgets/manual-profile-switcher/ManualProfileSwitcher';
+import FacialProfileSwitcher from '../widgets/facial-profile-switcher/FacialProfileSwitcher';
+import { wrap } from '../utils/utils';
+import css from "./AppStyles";
 
 // const electron = (window as any).require('electron');
 // const fs = electron.remote.require('fs');
@@ -34,10 +35,10 @@ export default class App extends React.Component<Props, State> {
     const {profiles} = this.props;
     const {profile} = this.state;
 
-    return <div className="app">
+    return <div className={css.app}>
 
         <CSSTransitionGroup
-          className="profiles"
+          className={css.profiles}
           transitionName="profile"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}

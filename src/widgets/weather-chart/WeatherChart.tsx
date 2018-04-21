@@ -1,6 +1,7 @@
 import * as React from 'react';
 // import './weather-chart.css';
 // import * as Spinner from "react-spinkit";
+import css from "./styles";
 
 interface Props {
 }
@@ -62,6 +63,7 @@ export default class WeatherChart extends React.Component<Props, State> {
         const { image } = this.state;
         return <div className="weather-chart">
             <canvas 
+                className={css.canvas}
                 ref={this.onCanvasLoaded} 
                 width={image ? image.width - 20 : 0} 
                 height={image ? image.height - 40 : 0} 

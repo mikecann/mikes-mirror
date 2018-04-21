@@ -11,24 +11,27 @@
   "dependencies": {
     "@types/react": "^16.3.12",
     "@types/react-dom": "^16.0.5",
+    "@types/react-spinkit": "^3.0.3",
+    "@types/react-transition-group": "1.x",
     "@types/systeminformation": "^3.23.0",
     "concurrently": "^3.5.1",
     "cpx": "^1.5.0",
     "cross-env": "^5.1.4",
+    "csstips": "^0.2.3",
+    "csx": "^8.5.0",
     "electron": "^1.8.4",
     "electron-reload": "^1.2.2",
     "moment": "^2.22.1",
     "python-shell": "^0.5.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-particles-js": "^2.1.1",
+    "react-transition-group": "1.x",
+    "rss-parser": "^3.1.2",
     "systeminformation": "^3.38.0",
     "tslint": "^5.9.1",
     "typescript": "^2.6.2",
-    "unstated": "^2.0.2",
-    "react-transition-group": "1.x",
-    "rss-parser": "^3.1.2",
-    "@types/react-spinkit": "^3.0.3",
-    "@types/react-transition-group": "1.x",
-    "react-particles-js": "^2.1.1"
+    "typestyle": "^1.7.2",
+    "unstated": "^2.0.2"
   }
 }

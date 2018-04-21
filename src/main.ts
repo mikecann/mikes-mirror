@@ -2,10 +2,10 @@ import { app, BrowserWindow, powerSaveBlocker } from "electron";
 import { FaceDetectionService } from "./services/FaceDetectionService";
 import * as path from "path";
 import * as url from "url";
-import { checkForUpdate } from "./CheckForUpdates";
 import * as moment from "moment";
 import { SystemInformationService } from "./services/SystemInformationService";
 import * as reload from "electron-reload";
+import { checkForUpdate } from './utils/gitUpdates';
 
 reload(__dirname, {
   electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),

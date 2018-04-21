@@ -1,11 +1,11 @@
 import * as React from 'react';
-// import './mikes-profile.css';
 import Particles from '../widgets/particles/Particles';
 import Clock from '../widgets/clock/Clock';
-import App from '../App';
 import WeatherChart from '../widgets/weather-chart/WeatherChart';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import SystemInfo from '../widgets/system-info/SystemInfo';
+import App from '../components/App';
+import css from "./styles";
 
 interface Props {
   app: App
@@ -13,16 +13,29 @@ interface Props {
 
 export default class MikesProfile extends React.Component<Props, any> {
   render() {
-    return <div className="mikes-profile">
-      <WeatherChart />
+    return <div className={css.profile}>
       <Particles />
-      <Clock />    
-      
-      {/* <WelcomeMessage message="Hi Mike" /> */}
-      <ProfilePicture url="mike_4.png" />
-      {/* <FaceDetect />   */}
-      
-      <SystemInfo />
+
+      <div className={css.rootContainer}>
+        
+        <div className={css.hozContainer}>
+          <Clock />
+          <div className={css.flex} />
+          <ProfilePicture url="mike_4.png" />          
+        </div>
+        
+           
+        <div className={css.flex} />
+
+
+        <WeatherChart />
+        {/* <WelcomeMessage message="Hi Mike" /> */}
+        
+        {/* <FaceDetect />   */}
+        
+        <SystemInfo />
+        
+      </div>
 
     </div>
   }

@@ -1,7 +1,6 @@
 import * as React from 'react';
-// import './empty-profile.css';
-import App from '../App';
 import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
+import App from '../components/App';
 
 interface Props {
   app: App
@@ -9,7 +8,7 @@ interface Props {
 
 export default class EmptyProfile extends React.Component<Props, any> {
   render() {
-    return <div className="empty-profile">
+    return <div>
       <WelcomeMessage message="No one there" />
     </div>
   }

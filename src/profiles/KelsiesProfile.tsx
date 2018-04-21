@@ -1,10 +1,9 @@
 import * as React from 'react';
-// import './kelsies-profile.css';
 import Clock from '../widgets/clock/Clock';
-import App from '../App';
 import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import NewsRSS from '../widgets/news-rss/NewsRSS';
+import App from '../components/App';
 
 interface Props {
   app: App
@@ -13,7 +12,7 @@ interface Props {
 export default class MikesProfile extends React.Component<Props, any> {
   render() {
 
-    return <div className="kelsies-profile">
+    return <div>
       <Clock />          
       <WelcomeMessage message="Hey there beautiful" />
       <ProfilePicture url="kelsie_6.png" />
