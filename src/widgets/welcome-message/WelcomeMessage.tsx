@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import './welcome-message.css';
+import css from "./styles";
 
 interface Props {
     message: string
@@ -8,7 +8,7 @@ interface Props {
 export default class WelcomeMessage extends React.Component<Props, any> {
 
     render() {
-        return <div className="welcome-message">
+        return <div className={css.message}>
             {this.props.message}
         </div>
     }

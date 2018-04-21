@@ -12,6 +12,7 @@ export default stylesheet({
       ...csstips.vertical
     },
     flex: csstips.flex,
-    hozContainer: csstips.horizontal
+    hozContainer: csstips.horizontal,
+    vertContainer: csstips.vertical
   })
   

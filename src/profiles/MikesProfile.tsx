@@ -17,23 +17,25 @@ export default class MikesProfile extends React.Component<Props, any> {
       <Particles />
 
       <div className={css.rootContainer}>
-        
+
         <div className={css.hozContainer}>
           <Clock />
           <div className={css.flex} />
-          <ProfilePicture url="mike_4.png" />          
+          <ProfilePicture url="mike_4.png" />
         </div>
-        
-           
+
+
         <div className={css.flex} />
 
-
-        <WeatherChart />
-        {/* <WelcomeMessage message="Hi Mike" /> */}
-        
-        {/* <FaceDetect />   */}
-        
-        {/* <SystemInfo /> */}
+        <div className={css.hozContainer}>
+          <WeatherChart />
+          <div className={css.flex} />
+          <div className={css.vertContainer}>
+            <div className={css.flex} />
+            <SystemInfo />
+          </div>
+         
+        </div>
 
       </div>
 

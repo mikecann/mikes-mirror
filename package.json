@@ -1,6 +1,7 @@
 {
   "name": "mikes-mirror",
   "license": "MIT",
+  "version": "1.0.0",
   "scripts": {
     "build": "yarn build:scripts && yarn build:resources",
     "build:scripts": "tsc",

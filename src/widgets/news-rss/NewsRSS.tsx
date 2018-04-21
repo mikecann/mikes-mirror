@@ -3,6 +3,7 @@ import * as RSSParser from "rss-parser";
 // import './rss-news.css';
 // import * as Spinner from "react-spinkit";
 import * as moment from "moment";
+import css from "./styles";
 
 interface Props {
     feedUrl: string;
@@ -43,8 +44,8 @@ export default class NewsRSS extends React.Component<Props, State> {
 
     render() {
         const { feed } = this.state;
-        return <div className="news-rss" style={this.props.style}>
-            <h1>{this.props.title}</h1>
+        return <div style={this.props.style}>
+            <h1 className={css.title}>{this.props.title}</h1>
             {feed ? this.renderFeed(feed) : this.renderLoading()}
         </div>
     }

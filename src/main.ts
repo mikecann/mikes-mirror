@@ -3,7 +3,6 @@ import { FaceDetectionService } from "./services/FaceDetectionService";
 import * as path from "path";
 import * as url from "url";
 import * as moment from "moment";
-import { SystemInformationService } from "./services/SystemInformationService";
 import * as reload from "electron-reload";
 import { GitBasedAutoUpdater } from './utils/GitBasedAutoUpdater';
 
