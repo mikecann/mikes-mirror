@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASEDIR=$(dirname "$0")
+THISDIR=$(pwd)
 
 sudo apt-get install -y --fix-missing \
     build-essential \
@@ -26,10 +26,13 @@ sudo apt-get install -y --fix-missing \
     zip
 
 cd ~
+rm -rf dlib
 mkdir -p dlib
 git clone -b 'v19.5' --single-branch https://github.com/davisking/dlib.git dlib/
 cd  dlib/
-#python3 setup.py install --yes USE_AVX_INSTRUCTIONS
+sudo python3 setup.py install --yes USE_AVX_INSTRUCTIONS
 
-cd $BASEDIR
-cd facial_recognition
+cd $THISDIR
+
+sudo pip3 install -r requirements.txt
+sudo python3 setup.py install
