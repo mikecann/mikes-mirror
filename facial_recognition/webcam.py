@@ -14,7 +14,7 @@ import cv2
 video_capture = cv2.VideoCapture(0)
 
 # Load a sample picture and learn how to recognize it.
-mike = face_recognition.load_image_file("mike0.JPG")
+mike = face_recognition.load_image_file("faces/mike.jpg")
 mike_face_encoding = face_recognition.face_encodings(mike)[0]
 
 # Initialize some variables

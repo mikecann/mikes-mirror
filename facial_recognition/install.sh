@@ -30,7 +30,7 @@ rm -rf dlib
 mkdir -p dlib
 git clone -b 'v19.5' --single-branch https://github.com/davisking/dlib.git dlib/
 cd  dlib/
-sudo python3 setup.py install --yes USE_AVX_INSTRUCTIONS
+sudo python3 setup.py install #--yes USE_AVX_INSTRUCTIONS
 
 cd $THISDIR
 
