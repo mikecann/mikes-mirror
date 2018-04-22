@@ -16,7 +16,11 @@ def scan_known_people(known_people_folder):
     known_face_encodings = []
 
     for file in image_files_in_folder(known_people_folder):
+
         basename = os.path.splitext(os.path.basename(file))[0]
+
+        print("Generating encodings for {}..".format(basename))
+
         img = face_recognition.load_image_file(file)
         encodings = face_recognition.face_encodings(img)
 
@@ -51,7 +55,7 @@ face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
-downscale_factor = 2
+downscale_factor = 4
 
 while True:
     
