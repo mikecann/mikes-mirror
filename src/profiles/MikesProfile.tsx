@@ -22,7 +22,7 @@ export default class MikesProfile extends React.Component<Props, any> {
         <div className={css.hozContainer}>
           <Clock />
           <div className={css.flex} />
-          <ProfilePicture url="mike_4.png" />
+          <ProfilePicture url="../facial_recognition/faces/mike.jpg" />
         </div>
 
 
