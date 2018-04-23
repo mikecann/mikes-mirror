@@ -32,7 +32,7 @@ app.on("ready", async () => {
   }));
 
   // If we are dev mode lets open the dev tools
-  //if (isDev)
+  if (isDev)
     window.webContents.openDevTools();
 
   // Prevent the display from sleeping
