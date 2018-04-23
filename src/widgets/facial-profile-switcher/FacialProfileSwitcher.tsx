@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import './face-recognition.css';
-import { FacialRecognitionStore, FaceRecognitionDetection } from '../../stores/FaceRecognitionStore';
 import { Subscribe } from "unstated";
+import { FacialRecognitionStore, FaceRecognitionDetection } from './FaceDetectionStore';
 
 interface Props {
     onChangeProfile: (profile: string) => void
@@ -35,10 +35,10 @@ export default class FacialProfileSwitcher extends React.Component<Props, any> {
         return <Subscribe to={[FacialRecognitionStore]}>
         {
             (store: FacialRecognitionStore) => <div className="face-recognition">
-                {store.state.serviceOutput ? <Switcher 
+                <Switcher 
                     onChangeProfile={this.props.onChangeProfile}
-                    detections={store.state.serviceOutput.detections} 
-                /> : null}
+                    detections={store.state.detections} 
+                />
             </div>
         }
         </Subscribe>

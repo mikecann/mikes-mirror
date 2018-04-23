@@ -4,10 +4,11 @@ import MikesProfile from './profiles/MikesProfile';
 import KelsiesProfile from './profiles/KelsiesProfile';
 import EmptyProfile from './profiles/EmptyProfile';
 import { Profiles } from './components/Profiles';
-import { FacialRecognitionStore } from './stores/FaceRecognitionStore';
 import { Provider } from "unstated";
 import App from './components/App';
 import { setupStyles } from './styles';
+import { SystemInformationStore } from './widgets/system-info/SystemInformationStore';
+import { FacialRecognitionStore } from './widgets/facial-profile-switcher/FaceDetectionStore';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -20,10 +21,11 @@ const profiles: Profiles = {
 }
 
 const facialRecognition = new FacialRecognitionStore();
+const systemInfo = new SystemInformationStore();
 
 // Begin rendering
 ReactDOM.render(
-  <Provider inject={[facialRecognition]}>
+  <Provider inject={[facialRecognition, systemInfo]}>
     <App 
       profiles={profiles}  
       startingProfile="mike"

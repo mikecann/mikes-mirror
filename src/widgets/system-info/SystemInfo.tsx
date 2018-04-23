@@ -7,6 +7,7 @@ import { Systeminformation } from 'systeminformation';
 
 export default class SystemInfo extends React.Component<any, any> {
 
+
     render() {
         return <Subscribe to={[SystemInformationStore]}>
             { store => this.renderState(store.state) }

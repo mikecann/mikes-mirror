@@ -1,5 +1,4 @@
 import { app, BrowserWindow, powerSaveBlocker } from "electron";
-import { FaceDetectionService } from "./services/FaceDetectionService";
 import * as path from "path";
 import * as url from "url";
 import * as moment from "moment";
