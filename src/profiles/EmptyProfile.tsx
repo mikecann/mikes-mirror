@@ -17,7 +17,7 @@ export default class EmptyProfile extends React.Component<Props, any> {
         <div className={css.flex} />
         <div style={{ textAlign: "center" }}>
           <WelcomeMessage message="No one there" />        
-          <DisplayDeactivator msBeforeTurnOff={10000} />
+          <DisplayDeactivator msBeforeTurnOff={60000} />
         </div>
         <div className={css.flex} />
       </div>

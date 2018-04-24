@@ -22,7 +22,7 @@ def scan_known_people(known_people_folder):
         print("Generating encodings for {}..".format(basename))
 
         img = face_recognition.load_image_file(file)
-        encodings = face_recognition.face_encodings(img)
+        encodings = face_recognition.face_encodings(img, num_jitters=10)
 
         if len(encodings) > 1:
             click.echo("WARNING: More than one face found in {}. Only considering the first face.".format(file))
@@ -56,6 +56,7 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 downscale_factor = 4
+tolerance = 0.5
 
 while True:
     
@@ -81,7 +82,7 @@ while True:
         for face_encoding in face_encodings:
 
             # See if the face is a match for the known face(s)
-            matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+            matches = face_recognition.compare_faces(known_face_encodings, face_encoding, tolerance)
             name = "Unknown"
 
             for i, match in enumerate(matches):
