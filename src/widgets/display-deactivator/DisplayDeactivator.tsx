@@ -64,7 +64,8 @@ export default class DisplayDeactivator extends React.Component<Props, State> {
     }
 
     render() {
-        const secs = Math.round((this.state.displayTurnOffTime - Date.now()) / 1000);
+        let secs = Math.round((this.state.displayTurnOffTime - Date.now()) / 1000);
+        if (secs < 0) secs = 0;
         return <div>Turning off the display in {secs} seconds..</div>;
     }
 }
