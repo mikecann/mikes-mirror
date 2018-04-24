@@ -56,7 +56,7 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 downscale_factor = 4
-tolerance = 0.5
+tolerance = 0.6
 
 while True:
     
