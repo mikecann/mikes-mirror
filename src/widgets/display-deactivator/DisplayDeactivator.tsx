@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as shell from "shelljs";
 
+shell.config.execPath = shell.which("node");
+
 interface Props {
 }
 
