@@ -24,6 +24,7 @@ export default class DisplayDeactivator extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+        this.turnOnDisplay();
         this.countdownInterval = setInterval(() => this.forceUpdate(), 1000);
         this.timeoutId = setTimeout(this.turnOffDisplay, this.props.msBeforeTurnOff);
     }
@@ -49,18 +50,20 @@ export default class DisplayDeactivator extends React.Component<Props, State> {
         clearInterval(this.timeoutId);
         
         if (this.state.displayIsOff)
-        {
-            console.log("Activating display..");
-            exec("xset -display :0.0 dpms force on", (err, stdout, stderr) => {
-                if (err) {
-                  return console.error(err);
-                }
+            this.turnOnDisplay();
+    }
 
-                // the *entire* stdout and stderr (buffered)
-                console.log(`Activating stdout: ${stdout}`);
-                console.log(`Activating stderr: ${stderr}`);
-              });
-        }
+    turnOnDisplay = () => {
+        console.log("Activating display..");
+        exec("xset -display :0.0 dpms force on", (err, stdout, stderr) => {
+            if (err) {
+              return console.error(err);
+            }
+
+            // the *entire* stdout and stderr (buffered)
+            console.log(`Activating stdout: ${stdout}`);
+            console.log(`Activating stderr: ${stderr}`);
+          });
     }
 
     render() {

@@ -33,7 +33,7 @@ ReactDOM.render(
     <App 
       isProd={process.env.NODE_ENV=="production"}
       profiles={profiles}  
-      startingProfile="mike"
+      startingProfile="empty"
     />
   </Provider>,
   document.getElementById('root') as HTMLElement
