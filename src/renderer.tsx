@@ -20,7 +20,7 @@ const profiles: Profiles = {
   mike: (app: App) => <MikesProfile app={app} />,
   kelsie: (app: App) => <KelsiesProfile app={app} />,
   taryn: (app: App) => <TarynsProfile app={app} />,
-  leash: (app: App) => <LeahsProfile app={app} />,
+  leah: (app: App) => <LeahsProfile app={app} />,
   empty: (app: App) => <EmptyProfile app={app} />
 }
 

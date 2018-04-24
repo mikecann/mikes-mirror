@@ -1,7 +1,5 @@
 import * as React from 'react';
-import * as shell from "shelljs";
-
-shell.config.execPath = shell.which("node");
+import { exec } from 'child_process';
 
 interface Props {
 }
@@ -9,11 +7,29 @@ interface Props {
 export default class DisplayDeactivator extends React.Component<Props, any> {
 
     componentDidMount() {
-        shell.exec("xset -display :0.0 dpms force off");
+        console.log("Deactivating display..");
+        exec("xset -display :0.0 dpms force off", (err, stdout, stderr) => {
+            if (err) {
+              return console.error(err);
+            }
+          
+            // the *entire* stdout and stderr (buffered)
+            console.log(`Deactivating stdout: ${stdout}`);
+            console.log(`Deactivating stderr: ${stderr}`);
+          });
     }
 
     componentWillUnmount() {
-        shell.exec("xset -display :0.0 dpms force on");
+        console.log("Activating display..");
+        exec("xset -display :0.0 dpms force on", (err, stdout, stderr) => {
+            if (err) {
+              return console.error(err);
+            }
+          
+            // the *entire* stdout and stderr (buffered)
+            console.log(`Activating stdout: ${stdout}`);
+            console.log(`Activating stderr: ${stderr}`);
+          });
     }
 
     render() {
