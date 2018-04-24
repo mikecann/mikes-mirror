@@ -15,12 +15,15 @@ export default class EmptyProfile extends React.Component<Props, any> {
       <div className={css.flex} />
       <div className={css.hozContainer}>
         <div className={css.flex} />
-        <WelcomeMessage message="No one there" />        
+        <div style={{ textAlign: "center" }}>
+          <WelcomeMessage message="No one there" />        
+          <DisplayDeactivator msBeforeTurnOff={10000} />
+        </div>
         <div className={css.flex} />
       </div>
       <div className={css.flex} />
       <SystemInfo />
-      <DisplayDeactivator />
+      
     </div>
   }
 }
