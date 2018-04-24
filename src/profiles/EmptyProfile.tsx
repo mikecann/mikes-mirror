@@ -3,6 +3,7 @@ import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import App from '../components/App';
 import css from "./styles";
 import SystemInfo from '../widgets/system-info/SystemInfo';
+import DisplayDeactivator from '../widgets/display-deactivator/DisplayDeactivator';
 
 interface Props {
   app: App
@@ -19,6 +20,7 @@ export default class EmptyProfile extends React.Component<Props, any> {
         <div className={css.flex} />
       </div>
       <div className={css.flex} />
+      <DisplayDeactivator />
     </div>
   }
 }
