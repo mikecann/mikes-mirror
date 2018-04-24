@@ -5,12 +5,20 @@ import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import NewsRSS from '../widgets/news-rss/NewsRSS';
 import App from '../components/App';
 import css from "./styles";
+import { Howl } from "howler";
 
 interface Props {
   app: App
 }
 
 export default class MikesProfile extends React.Component<Props, any> {
+
+
+  componentDidMount() {
+    new Howl({ src: [ "./angels.mp3" ] })
+      .play();
+  }
+
   render() {
 
     return <div className={css.profile}>
@@ -20,7 +28,7 @@ export default class MikesProfile extends React.Component<Props, any> {
         <div className={css.hozContainer}>
           <Clock />
           <div className={css.flex} />
-          <ProfilePicture url="kelsie_6.png" />
+          <ProfilePicture url="../facial_recognition/faces/kelsie.jpg" />
         </div>
 
         <NewsRSS

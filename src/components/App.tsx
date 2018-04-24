@@ -15,7 +15,8 @@ import css from "./AppStyles";
 
 interface Props {
   profiles: Profiles,
-  startingProfile: string
+  startingProfile: string,
+  isProd: boolean
 }
 
 interface State {
@@ -54,7 +55,7 @@ export default class App extends React.Component<Props, State> {
           onPrevProfile={this.prevProfile} 
         />
 
-        <FacialProfileSwitcher onChangeProfile={this.changeProfile} />
+        { this.props.isProd ? <FacialProfileSwitcher onChangeProfile={this.changeProfile} /> : null } 
     </div>
   }
 
@@ -67,7 +68,7 @@ export default class App extends React.Component<Props, State> {
       return;
 
     console.log(`Profile changed`, {profile});
-    this.setState({profile});
+    this.setState({profile});   
   }
 
   nextProfile = () => {

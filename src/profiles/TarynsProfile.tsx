@@ -1,51 +1,47 @@
 import * as React from 'react';
-// import Particles from '../widgets/particles/Particles';
 import Clock from '../widgets/clock/Clock';
-import WeatherChart from '../widgets/weather-chart/WeatherChart';
+import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
-import SystemInfo from '../widgets/system-info/SystemInfo';
+import NewsRSS from '../widgets/news-rss/NewsRSS';
 import App from '../components/App';
 import css from "./styles";
+import { Howl } from "howler";
 
 interface Props {
   app: App
 }
 
-export default class MikesProfile extends React.Component<Props, any> {
-  
+export default class TarynsProfile extends React.Component<Props, any> {
+
+
   componentDidMount() {
-    new Howl({ src: [ "./bell.wav" ] })
+    new Howl({ src: [ "./scream.wav" ] })
       .play();
   }
-  
+
   render() {
+
     return <div className={css.profile}>
-      
-      {/* <Particles /> */}
 
       <div className={css.rootContainer}>
 
         <div className={css.hozContainer}>
           <Clock />
           <div className={css.flex} />
-          <ProfilePicture url="../facial_recognition/faces/mike.jpg" />
+          <ProfilePicture url="../facial_recognition/faces/taryn.jpg" />
         </div>
-
-
+      
         <div className={css.flex} />
 
         <div className={css.hozContainer}>
-          <WeatherChart />
           <div className={css.flex} />
-          <div className={css.vertContainer}>
-            <div className={css.flex} />
-            <SystemInfo />
-          </div>
-         
+          <WelcomeMessage message="Oh jeez.." />
+          <div className={css.flex} />
         </div>
 
       </div>
 
     </div>
+
   }
 }
