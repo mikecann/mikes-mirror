@@ -13,13 +13,19 @@ interface SwitcherProps {
 }
 
 class Switcher extends React.Component<SwitcherProps, any> {
+
+    timer: NodeJS.Timer;
     
     componentWillReceiveProps(nextProps: SwitcherProps) {
-        if (nextProps.detections.length === 0)
-            nextProps.onChangeProfile("empty");
+        
+        clearTimeout(this.timer);
+
+        if (nextProps.detections.length === 0) 
+            this.timer = setTimeout(() => nextProps.onChangeProfile("empty"), 10000); // wait 10 seconds before switching to empty
 
         if (nextProps.detections.length === 1)
             nextProps.onChangeProfile(nextProps.detections[0].name);
+            
     }
 
     render() {
