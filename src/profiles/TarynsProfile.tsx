@@ -2,21 +2,14 @@ import * as React from 'react';
 import Clock from '../widgets/clock/Clock';
 import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
-import NewsRSS from '../widgets/news-rss/NewsRSS';
-import App from '../components/App';
 import css from "./styles";
 import { Howl } from "howler";
 
-interface Props {
-  app: App
-}
-
-export default class TarynsProfile extends React.Component<Props, any> {
-
+export default class TarynsProfile extends React.Component<any, any> {
 
   componentDidMount() {
-    new Howl({ src: [ "./scream.wav" ] })
-      .play();
+    // Play a sound when showing the profile
+    new Howl({ src: [ "./scream.wav" ] }).play();
   }
 
   render() {

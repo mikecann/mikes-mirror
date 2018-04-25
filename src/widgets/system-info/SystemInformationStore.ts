@@ -1,4 +1,3 @@
-import { BrowserWindow } from "electron";
 import * as si from "systeminformation";
 import { Container } from "unstated";
 

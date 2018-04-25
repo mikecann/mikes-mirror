@@ -17,11 +17,11 @@ setupStyles();
 
 // The available profiles we can switch between
 const profiles: Profiles = {
-  mike: (app: App) => <MikesProfile app={app} />,
-  kelsie: (app: App) => <KelsiesProfile app={app} />,
-  taryn: (app: App) => <TarynsProfile app={app} />,
-  leah: (app: App) => <LeahsProfile app={app} />,
-  empty: (app: App) => <EmptyProfile app={app} />
+  mike: () => <MikesProfile />,
+  kelsie: () => <KelsiesProfile />,
+  taryn: () => <TarynsProfile />,
+  leah: () => <LeahsProfile />,
+  empty: () => <EmptyProfile />
 }
 
 const facialRecognition = new FacialRecognitionStore();

@@ -1,13 +1,10 @@
 import * as React from 'react';
-// import './weather-chart.css';
-// import * as Spinner from "react-spinkit";
 import css from "./styles";
 
 interface Props {
 }
 
 interface State {
-    cacheBuster: number,
     image: HTMLImageElement | null
 }
 
@@ -19,20 +16,18 @@ export default class WeatherChart extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            cacheBuster: 0,
             image: null
         }
     }
 
     componentDidMount() {
-        this.timer = setInterval(this.bustCache, 3600 * 1000);
-        this.bustCache();
+        this.timer = setInterval(this.tick, 3600000);
+        this.tick();
     }
 
-    bustCache = () => {
-        const bust = this.state.cacheBuster + 1;
+    tick = () => {
         const image = document.createElement("img");
-        image.src = `https://www.yr.no/place/Australia/Western_Australia/Perth/meteogram.png?r=${bust}`;
+        image.src = `https://www.yr.no/place/Australia/Western_Australia/Perth/meteogram.png?r=${Math.random()}`;
         image.onload = () => {
 
             console.log("WeatherChart image loaded", {canvas: this.canvas});
@@ -46,13 +41,13 @@ export default class WeatherChart extends React.Component<Props, State> {
 
             context.drawImage(image, -5, -25);
 
-            this.setState({ cacheBuster: bust, image });
+            this.setState({ image });
         };
     }
 
     onCanvasLoaded = (cnv: HTMLCanvasElement) => {
         this.canvas = cnv;
-        this.bustCache();
+        this.tick();
     }
 
     componentWillUnmount() {
@@ -61,7 +56,7 @@ export default class WeatherChart extends React.Component<Props, State> {
 
     render() {
         const { image } = this.state;
-        return <div className="weather-chart">
+        return <div>
             <canvas 
                 className={css.canvas}
                 ref={this.onCanvasLoaded} 
@@ -73,8 +68,8 @@ export default class WeatherChart extends React.Component<Props, State> {
     }
 
     renderLoading() {
-        return <div className="spinner-container">
-            {/* <Spinner name='ball-clip-rotate-multiple' /> */}
+        return <div>
+            Loading..
         </div>
     }
 }

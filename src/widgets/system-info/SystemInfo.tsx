@@ -1,6 +1,4 @@
 import * as React from 'react';
-// import './system-info.css';
-import { ipcRenderer } from "electron";
 import { SystemInformationStore, State } from './SystemInformationStore';
 import { Subscribe } from 'unstated';
 import { Systeminformation } from 'systeminformation';

@@ -1,12 +1,4 @@
 import { stylesheet } from 'typestyle';
-import { common } from "../../styles";
-
-// .clock .the-date {
-//     border-top: 1px solid #333;
-//     margin-top: -0.5em;
-//     font-size: 1.6em;
-//     font-weight: 100;
-// }
 
 export default stylesheet({
     clock: {

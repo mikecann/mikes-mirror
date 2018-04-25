@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import './App.css';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { Profiles } from './Profiles';
 import ProfileWrapper from './ProfileWrapper';
@@ -7,11 +6,6 @@ import ManualProfileSwitcher from '../widgets/manual-profile-switcher/ManualProf
 import FacialProfileSwitcher from '../widgets/facial-profile-switcher/FacialProfileSwitcher';
 import { wrap } from '../utils/utils';
 import css from "./AppStyles";
-
-// const electron = (window as any).require('electron');
-// const fs = electron.remote.require('fs');
-// const ipcRenderer  = electron.ipcRenderer;
-// console.log({fs, ipcRenderer});
 
 interface Props {
   profiles: Profiles,
@@ -45,7 +39,7 @@ export default class App extends React.Component<Props, State> {
           transitionLeaveTimeout={300}
         >
           {[<ProfileWrapper key={profile}>
-            {profiles[profile](this)}
+            {profiles[profile]()}
           </ProfileWrapper>]}
         </CSSTransitionGroup>
 

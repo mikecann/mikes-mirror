@@ -1,7 +1,5 @@
 import * as React from 'react';
 import * as RSSParser from "rss-parser";
-// import './rss-news.css';
-// import * as Spinner from "react-spinkit";
 import * as moment from "moment";
 import css from "./styles";
 
@@ -59,7 +57,6 @@ export default class NewsRSS extends React.Component<Props, State> {
 
     renderLoading() {
         return <div className="spinner-container">
-            {/* <Spinner name='ball-clip-rotate-multiple' /> */}
         </div>
     }
 }

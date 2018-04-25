@@ -1,5 +1,5 @@
 import { stylesheet, cssRule } from "typestyle";
-import {normalize, setupPage, padding} from "csstips";
+import { normalize, setupPage } from "csstips";
 
 const isProd = process.env.NODE_ENV == "production";
 const prodPadding = "10px 35px 30px 30px";

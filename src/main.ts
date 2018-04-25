@@ -1,24 +1,23 @@
 import { app, BrowserWindow, powerSaveBlocker } from "electron";
 import * as path from "path";
 import * as url from "url";
-import * as moment from "moment";
 import * as reload from "electron-reload";
 import { waitForUpdate } from './utils/GitBasedAutoUpdater';
 
-reload(__dirname, {
-  electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),
-  hardResetMethod: 'exit'
-});
-
-
+// Work out if we are running in prod mode or not
 const isProduction = process.env.NODE_ENV == "production";
 const isDev = !isProduction;
+
+// If we are in dev mode then listen for updates to the renderer code and reload 
+if (isDev)
+  reload(__dirname, {
+    electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),
+    hardResetMethod: 'exit'
+  });
 
 console.log("Mikes Mirror Starting Up..", { isProduction });
 
 // This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on("ready", async () => {
 
   // Create the window
@@ -50,16 +49,16 @@ app.on("window-all-closed", () => app.quit());
 const createWindowProd = () => new BrowserWindow({
   fullscreen: true,
   frame: false,
-  webPreferences: {
-    webSecurity: false
-  }
+  // webPreferences: {
+  //   webSecurity: false
+  // }
 });
 
 const createWindowDev = () => new BrowserWindow({
   width: 800,
   height: 600,
-  webPreferences: {
-    webSecurity: false
-  }
+  // webPreferences: {
+  //   webSecurity: false
+  // }
 });
 

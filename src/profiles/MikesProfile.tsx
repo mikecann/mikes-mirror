@@ -4,23 +4,18 @@ import Clock from '../widgets/clock/Clock';
 import WeatherChart from '../widgets/weather-chart/WeatherChart';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import SystemInfo from '../widgets/system-info/SystemInfo';
-import App from '../components/App';
 import css from "./styles";
 
-interface Props {
-  app: App
-}
+export default class MikesProfile extends React.Component<any, any> {
 
-export default class MikesProfile extends React.Component<Props, any> {
-  
   componentDidMount() {
-    new Howl({ src: [ "./bell.wav" ] })
-      .play();
+    // Play a sound when showing the profile
+    new Howl({ src: ["./bell.wav"] }).play();
   }
-  
+
   render() {
     return <div className={css.profile}>
-      
+
       <Particles />
 
       <div className={css.rootContainer}>
@@ -31,7 +26,6 @@ export default class MikesProfile extends React.Component<Props, any> {
           <ProfilePicture url="../facial_recognition/faces/mike.jpg" />
         </div>
 
-
         <div className={css.flex} />
 
         <div className={css.hozContainer}>
@@ -41,7 +35,7 @@ export default class MikesProfile extends React.Component<Props, any> {
             <div className={css.flex} />
             <SystemInfo />
           </div>
-         
+
         </div>
 
       </div>

@@ -1,8 +1,6 @@
 import * as PythonShell from "python-shell";
-import { BrowserWindow } from "electron";
 import { Container } from "unstated";
 import * as path from 'path';
-
 
 export interface FaceRecognitionDetection {
     top: number;
@@ -30,7 +28,11 @@ export class FacialRecognitionStore extends Container<State> {
 
     private startDetecting() {
 
-        const rootDir = path.dirname(require.main.filename);
+        const main = require.main;
+        if (!main)
+            throw new Error("require.main is undefined for some reason, cannot continue.");
+
+        const rootDir = path.dirname(main.filename);
         console.log("Starting python service..", { rootDir });
 
         let lastMessage = "";
@@ -43,7 +45,6 @@ export class FacialRecognitionStore extends Container<State> {
             });
     
             this.pyshell.on('message', (message: string) => {
-                // console.log("FacialRecognitionStore Message: ", message);
                 if (message !== lastMessage) {
                     lastMessage = message;
                     try {
@@ -58,12 +59,10 @@ export class FacialRecognitionStore extends Container<State> {
     
             this.pyshell.on('error', (message:any) => {
                 console.error("FacialRecognitionStore Error", message);
-                // this.window.webContents.send("FaceDetectionService-onError", message);
             });
     
             this.pyshell.on('close', (message:any) => {
                 console.error("FacialRecognitionStore Closed", message);
-                // this.window.webContents.send("FaceDetectionService-onClose", message);
             });
     
         }
@@ -72,14 +71,5 @@ export class FacialRecognitionStore extends Container<State> {
             console.error('Error while tryng to start the python shell', e);
         }
 
-    }
-
-    private stopDetecting() {
-        this.pyshell.end(function (err: any, code: any, signal: any) {
-            if (err) throw err;
-            console.log('The exit code was: ' + code);
-            console.log('The exit signal was: ' + signal);
-            console.log('finished');
-          });
     }
 }
