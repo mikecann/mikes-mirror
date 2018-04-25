@@ -23,6 +23,7 @@ sudo apt-get install -y --fix-missing \
     python3-dev \
     python3-numpy \
     software-properties-common \
+    python3-setuptools \
     zip
 
 cd ~
