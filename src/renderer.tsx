@@ -11,6 +11,7 @@ import { SystemInformationStore } from './widgets/system-info/SystemInformationS
 import { FacialRecognitionStore } from './widgets/facial-profile-switcher/FaceDetectionStore';
 import TarynsProfile from './profiles/TarynsProfile';
 import LeahsProfile from './profiles/LeahsProfile';
+import UnknownProfile from './profiles/UnknownProfile';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -21,7 +22,8 @@ const profiles: Profiles = {
   kelsie: () => <KelsiesProfile />,
   taryn: () => <TarynsProfile />,
   leah: () => <LeahsProfile />,
-  empty: () => <EmptyProfile />
+  empty: () => <EmptyProfile />,
+  unknown: () => <UnknownProfile />
 }
 
 const facialRecognition = new FacialRecognitionStore();

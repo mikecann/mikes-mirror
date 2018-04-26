@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as RSSParser from "rss-parser";
 import * as moment from "moment";
 import css from "./styles";
+import { classes } from 'typestyle/lib';
+import { common } from '../../styles';
 
 interface Props {
     feedUrl: string;
@@ -56,7 +58,8 @@ export default class NewsRSS extends React.Component<Props, State> {
     }
 
     renderLoading() {
-        return <div className="spinner-container">
+        return <div>
+            <i className={classes("fas", "fa-spinner", common.spin)} />
         </div>
     }
 }

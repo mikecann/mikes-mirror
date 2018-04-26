@@ -1,4 +1,4 @@
-import { stylesheet, cssRule } from "typestyle";
+import { stylesheet, cssRule, keyframes } from "typestyle";
 import { normalize, setupPage } from "csstips";
 
 const isProd = process.env.NODE_ENV == "production";
@@ -17,6 +17,11 @@ export function setupStyles(root: string = "#root") {
     });
 }
 
+const spinAnimName = keyframes({
+    '0%': { transform: 'rotate(0deg)' },
+    '100%': { transform: 'rotate(359deg)' }
+  })
+
 export const common = stylesheet({
     dimmed: {
         color: "#666",
@@ -29,4 +34,7 @@ export const common = stylesheet({
     bright: {
         color: "#fff"
     },
+    spin: {
+        animation: `${spinAnimName} 1s infinite linear`
+   }
 })

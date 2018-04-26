@@ -7,7 +7,6 @@ import DisplayDeactivator from '../widgets/display-deactivator/DisplayDeactivato
 export default class EmptyProfile extends React.Component<any, any> {
   render() {
     return <div className={css.rootContainer}>
-      <div className={css.flex} />
       <div className={css.hozContainer}>
         <div className={css.flex} />
         <div style={{ textAlign: "center" }}>
@@ -18,7 +17,6 @@ export default class EmptyProfile extends React.Component<any, any> {
       </div>
       <div className={css.flex} />
       <SystemInfo />
-      
     </div>
   }
 }

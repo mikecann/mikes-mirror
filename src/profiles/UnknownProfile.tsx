@@ -10,13 +10,13 @@ export default class UnknownProfile extends React.Component<any, any> {
       <div className={css.hozContainer}>
         <div className={css.flex} />
         <div style={{ textAlign: "center" }}>
+          <i className="fa fa-unknown" style={{ fontSize: "8em" }} />
           <WelcomeMessage message="I have no idea who you are.." />        
         </div>
         <div className={css.flex} />
       </div>
       <div className={css.flex} />
       <SystemInfo />
-      
     </div>
   }
 }

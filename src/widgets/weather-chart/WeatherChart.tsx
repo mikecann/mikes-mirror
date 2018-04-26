@@ -1,5 +1,7 @@
 import * as React from 'react';
 import css from "./styles";
+import { classes } from 'typestyle/lib';
+import { common } from '../../styles';
 
 interface Props {
 }
@@ -68,8 +70,8 @@ export default class WeatherChart extends React.Component<Props, State> {
     }
 
     renderLoading() {
-        return <div>
-            Loading..
+        return <div className={css.loading}>
+            <i className={classes("fas", "fa-spinner", common.spin)} />
         </div>
     }
 }
