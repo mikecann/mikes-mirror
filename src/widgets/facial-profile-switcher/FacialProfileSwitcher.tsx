@@ -20,10 +20,13 @@ class Switcher extends React.Component<SwitcherProps, any> {
         
         clearTimeout(this.timer);
 
-        if (nextProps.detections.length === 0) 
+        if (nextProps.detections.find(d => d.name === "Unknown"))
+            nextProps.onChangeProfile("unknown");
+
+        else if (nextProps.detections.length === 0) 
             this.timer = setTimeout(() => nextProps.onChangeProfile("empty"), 10000); // wait 10 seconds before switching to empty
 
-        if (nextProps.detections.length === 1)
+        else if (nextProps.detections.length === 1)
             nextProps.onChangeProfile(nextProps.detections[0].name);
             
     }
