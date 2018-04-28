@@ -47,6 +47,7 @@ export class FacialRecognitionStore extends Container<State> {
             this.pyshell.on('message', (message: string) => {
                 if (message !== lastMessage) {
                     lastMessage = message;
+                    console.log(message);
                     try {
                         this.setState({
                             detections: JSON.parse(message).detections
