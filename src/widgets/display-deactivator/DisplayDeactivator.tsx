@@ -26,7 +26,7 @@ export default class DisplayDeactivator extends React.Component<Props, State> {
     componentDidMount() {
         this.turnOnDisplay();
         this.countdownInterval = setInterval(() => this.forceUpdate(), 1000);
-        this.timeoutId = setTimeout(this.turnOffDisplay, this.props.msBeforeTurnOff);
+        //this.timeoutId = setTimeout(this.turnOffDisplay, this.props.msBeforeTurnOff);
     }
 
     turnOffDisplay = () => {
