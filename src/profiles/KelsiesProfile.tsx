@@ -4,7 +4,6 @@ import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import NewsRSS from '../widgets/news-rss/NewsRSS';
 import css from "./styles";
-import { Howl } from "howler";
 
 export default class MikesProfile extends React.Component<any, any> {
 
