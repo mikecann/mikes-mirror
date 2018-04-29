@@ -9,10 +9,10 @@ import { Howl } from "howler";
 export default class MikesProfile extends React.Component<any, any> {
 
 
-  componentDidMount() {
-    // Play a sound when showing the profile
-    new Howl({ src: [ "./angels.mp3" ] }).play();
-  }
+  // componentDidMount() {
+  //   // Play a sound when showing the profile
+  //   new Howl({ src: [ "./angels.mp3" ] }).play();
+  // }
 
   render() {
 

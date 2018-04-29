@@ -8,10 +8,10 @@ import css from "./styles";
 
 export default class MikesProfile extends React.Component<any, any> {
 
-  componentDidMount() {
-    // Play a sound when showing the profile
-    new Howl({ src: ["./bell.wav"] }).play();
-  }
+  // componentDidMount() {
+  //   // Play a sound when showing the profile
+  //   new Howl({ src: ["./bell.wav"] }).play();
+  // }
 
   render() {
     return <div className={css.profile}>
