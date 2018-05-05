@@ -5,14 +5,35 @@ import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import css from "./styles";
 import { Howl } from "howler";
 
-export default class OliviasProfile extends React.Component<any, any> {
+interface State 
+{
+  puppies: string[]
+}
 
-  componentDidMount() {
+export default class OliviasProfile extends React.Component<any, State> {
+
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      puppies: ["nF79jOW"]
+    }
+  }
+
+  async componentDidMount() {
     // Play a sound when showing the profile
     new Howl({ src: ["./matchbox.wav"] }).play();
+
+    var puppiesResp = await fetch("https://raw.githubusercontent.com/heyitsolivia/secretpuppies/master/puppies.json");
+    var puppiesJson = await puppiesResp.json();
+    this.setState({ puppies: puppiesJson });
+
   }
 
   render() {
+    
+    const puppyId = this.state.puppies[Math.floor(Math.random()*this.state.puppies.length)];
+    const puppy = `https://i.imgur.com/${puppyId}.mp4`;
 
     return <div className={css.profile}>
 
@@ -27,7 +48,7 @@ export default class OliviasProfile extends React.Component<any, any> {
         <div className={css.flex} />
         <div className={css.hozContainer}>
           <div className={css.flex} />
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvx4H9VUNRT9c8b0Ez8spebrtUMGjE44QlrPBXERQ1SHN6iwt8Q" />
+          <video src={puppy} autoPlay loop />
           <div className={css.flex} />
         </div>
         <div className={css.flex} />
