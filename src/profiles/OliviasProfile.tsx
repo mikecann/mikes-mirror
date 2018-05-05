@@ -25,8 +25,16 @@ export default class OliviasProfile extends React.Component<any, any> {
         </div>
 
         <div className={css.flex} />
+        <div className={css.hozContainer}>
+          <div className={css.flex} />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbvx4H9VUNRT9c8b0Ez8spebrtUMGjE44QlrPBXERQ1SHN6iwt8Q" />
+          <div className={css.flex} />
+        </div>
+        <div className={css.flex} />
+
 
         <div className={css.hozContainer}>
+          
           <div className={css.flex} />
           <WelcomeMessage message="Streichholzschachtel" />
           <div className={css.flex} />
