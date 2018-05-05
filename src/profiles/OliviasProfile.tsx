@@ -7,7 +7,7 @@ import { Howl } from "howler";
 
 interface State 
 {
-  puppies: string[]
+  animals: string[]
 }
 
 export default class OliviasProfile extends React.Component<any, State> {
@@ -16,7 +16,7 @@ export default class OliviasProfile extends React.Component<any, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      puppies: ["nF79jOW"]
+      animals: ["nF79jOW"]
     }
   }
 
@@ -24,15 +24,18 @@ export default class OliviasProfile extends React.Component<any, State> {
     // Play a sound when showing the profile
     new Howl({ src: ["./matchbox.wav"] }).play();
 
-    var puppiesResp = await fetch("https://raw.githubusercontent.com/heyitsolivia/secretpuppies/master/puppies.json");
-    var puppiesJson = await puppiesResp.json();
-    this.setState({ puppies: puppiesJson });
+    var resp = await fetch("https://raw.githubusercontent.com/heyitsolivia/secretpuppies/master/puppies.json");
+    var puppies: string[] = await resp.json();
+    this.setState({ animals: puppies });
 
+    resp = await fetch("https://raw.githubusercontent.com/heyitsolivia/secretpuppies/master/kittens.json");
+    var kittens: string[] = await resp.json();
+    this.setState({ animals: puppies.concat(kittens) });
   }
 
   render() {
     
-    const puppyId = this.state.puppies[Math.floor(Math.random()*this.state.puppies.length)];
+    const puppyId = this.state.animals[Math.floor(Math.random()*this.state.animals.length)];
     const puppy = `https://i.imgur.com/${puppyId}.mp4`;
 
     return <div className={css.profile}>
