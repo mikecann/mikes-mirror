@@ -12,6 +12,9 @@ import { FacialRecognitionStore } from './widgets/facial-profile-switcher/FaceDe
 import TarynsProfile from './profiles/TarynsProfile';
 import LeahsProfile from './profiles/LeahsProfile';
 import UnknownProfile from './profiles/UnknownProfile';
+import OliviasProfile from './profiles/OliviasProfile';
+import GregsProfile from './profiles/GregsProfile';
+import ColleensProfile from './profiles/ColleensProfile';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -21,6 +24,9 @@ const profiles: Profiles = {
   mike: () => <MikesProfile />,
   kelsie: () => <KelsiesProfile />,
   taryn: () => <TarynsProfile />,
+  olivia: () => <OliviasProfile />,
+  greg: () => <GregsProfile />,
+  colleen: () => <ColleensProfile />,
   leah: () => <LeahsProfile />,
   empty: () => <EmptyProfile />,
   unknown: () => <UnknownProfile />
