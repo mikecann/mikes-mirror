@@ -3,6 +3,7 @@ import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import css from "./styles";
 import SystemInfo from '../widgets/system-info/SystemInfo';
 import DisplayDeactivator from '../widgets/display-deactivator/DisplayDeactivator';
+import Clock from '../widgets/clock/Clock';
 
 export default class EmptyProfile extends React.Component<any, any> {
   render() {
@@ -13,6 +14,12 @@ export default class EmptyProfile extends React.Component<any, any> {
           <WelcomeMessage message="No one there" />        
           <DisplayDeactivator msBeforeTurnOff={60000 * 5} />
         </div>
+        <div className={css.flex} />
+      </div>
+      <div className={css.flex} />
+      <div className={css.hozContainer}>
+        <div className={css.flex} />
+        <Clock />
         <div className={css.flex} />
       </div>
       <div className={css.flex} />
