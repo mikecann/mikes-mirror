@@ -4,14 +4,15 @@ import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import NewsRSS from '../widgets/news-rss/NewsRSS';
 import css from "./styles";
-import { Howl } from "howler";
+//import { Howl } from "howler";
+import RandomCute from '../widgets/random-cute/RandomCute';
 
 export default class MikesProfile extends React.Component<any, any> {
 
 
   componentDidMount() {
     // Play a sound when showing the profile
-    new Howl({ src: [ "./angels.mp3" ] }).play();
+    //new Howl({ src: [ "./angels.mp3" ] }).play();
   }
 
   render() {
@@ -26,13 +27,19 @@ export default class MikesProfile extends React.Component<any, any> {
           <ProfilePicture url="../facial_recognition/faces/kelsie.jpg" />
         </div>
 
-        <NewsRSS
+        {/* <NewsRSS
           style={{ marginLeft: 20, maxWidth: "40em" }}
           title="Latest Health and Wellness News"
           feedUrl="http://www.health.com/mind-body/feed"
-        />
+        /> */}
 
+        <div className={css.flex} />
 
+        <div className={css.hozContainer}>
+          <div className={css.flex} />
+          <RandomCute />
+          <div className={css.flex} />
+        </div>
         <div className={css.flex} />
 
         <div className={css.hozContainer}>
