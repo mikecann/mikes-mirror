@@ -23,14 +23,18 @@ export function waitForUpdate(intervalMs: number = 30000) {
     return new Promise(resolve => {
         setInterval(async () => {
             
-            const hasUpdate = await checkForUpdate();
+            try {
+                const hasUpdate = await checkForUpdate();
 
-            if (!hasUpdate)
-                console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - Currently up to date`);
-            else
-            {
-                console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - New update detected.`);
-                resolve();
+                if (!hasUpdate)
+                    console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - Currently up to date`);
+                else
+                {
+                    console.log(`${moment().format("MMMM Do YYYY, h:mm:ss a")} - New update detected.`);
+                    resolve();
+                }
+            } catch (error) {
+                console.error("An error attempting to update git. ", error)
             }
 
         }, intervalMs);

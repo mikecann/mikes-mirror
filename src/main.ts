@@ -39,7 +39,7 @@ app.on("ready", async () => {
   powerSaveBlocker.start("prevent-display-sleep");
 
   // Lets move the mouse out the way if we can
-  hideMouse();  
+  hideMouse();
 
   // After 2 hours lets manually restart, just incase..
   setTimeout(() => window.close, 2 * 3600 * 1000);
@@ -70,7 +70,7 @@ const createWindowDev = () => new BrowserWindow({
 });
 
 const hideMouse = () => exec("xdotool mousemove 0 30000", (err, stdout, stderr) => {
-  if (err) 
-      return console.error("Canot move the mouse out the way, its not a biggie, will continue on anways.. ", err);
+  if (err)
+    return console.error("Canot move the mouse out the way, its not a biggie, will continue on anways.. ", err);
 });
 
