@@ -5,7 +5,8 @@ function execute(command: string) {
     return new Promise<string>((resolve, reject) => {
         exec(command, { cwd: "." }, (error, stdout, stderr) => {
             if (error)
-                throw error;
+                reject(error);
+
             resolve(stdout);
         });
     });
