@@ -1,0 +1,19 @@
+{
+  "name": "mikes-mirror-sonus",
+  "version": "0.1.9",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "tsc ."
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/speech": "^0.10.3",
+    "node-record-lpcm16": "^0.3.0",
+    "snowboy": "1.2.0",
+    "ts-node": "^6.0.3",
+    "typescript": "^2.8.3"
+  }
+}
