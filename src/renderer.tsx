@@ -4,17 +4,18 @@ import MikesProfile from './profiles/MikesProfile';
 import KelsiesProfile from './profiles/KelsiesProfile';
 import EmptyProfile from './profiles/EmptyProfile';
 import { Profiles } from './components/Profiles';
-import { Provider } from "unstated";
 import App from './components/App';
 import { setupStyles } from './styles';
-import { SystemInformationStore } from './widgets/system-info/SystemInformationStore';
-import { FacialRecognitionStore } from './widgets/facial-profile-switcher/FaceDetectionStore';
-import TarynsProfile from './profiles/TarynsProfile';
 import LeahsProfile from './profiles/LeahsProfile';
 import UnknownProfile from './profiles/UnknownProfile';
 import OliviasProfile from './profiles/OliviasProfile';
 import GregsProfile from './profiles/GregsProfile';
 import ColleensProfile from './profiles/ColleensProfile';
+import TarynsProfile from './profiles/TarynsProfile';
+import { FacialRecognitionModel } from './widgets/facial-profile-switcher/FaceDetectionModel';
+import { VoiceCommandsModel } from './widgets/voice-commands/VoiceCommandsModel';
+import { Provider } from 'mobx-react';
+import { SystemInformationModel } from './widgets/system-info/SystemInformationModel';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -32,13 +33,16 @@ const profiles: Profiles = {
   unknown: () => <UnknownProfile />
 }
 
-const facialRecognition = new FacialRecognitionStore();
-const systemInfo = new SystemInformationStore();
+const facialRecognition = new FacialRecognitionModel();
+const voiceCommands = new VoiceCommandsModel();
+const systemInfoModel = new SystemInformationModel();
 
 // Begin rendering
 ReactDOM.render(
-  <Provider inject={[facialRecognition, systemInfo]}>
+  <Provider systemInfoModel={systemInfoModel}>
     <App 
+      facialModel={facialRecognition}
+      voiceModel={voiceCommands}
       isProd={process.env.NODE_ENV=="production"}
       profiles={profiles}  
       startingProfile="empty"
@@ -46,3 +50,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root') as HTMLElement
 );
+
+// Init the models
+facialRecognition.startDetecting();
+voiceCommands.startDetecting();
+systemInfoModel.start();

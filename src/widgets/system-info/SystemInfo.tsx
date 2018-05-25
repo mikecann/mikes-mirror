@@ -1,24 +1,30 @@
 import * as React from 'react';
-import { SystemInformationStore, State } from './SystemInformationStore';
-import { Subscribe } from 'unstated';
 import { Systeminformation } from 'systeminformation';
 import css from "./styles";
+import { inject, observer } from 'mobx-react';
+import { SystemInformationModel } from './SystemInformationModel';
 
-export default class SystemInfo extends React.Component<any, any> {
+interface Props {
+    systemInfoModel?: SystemInformationModel
+}
+
+@inject("systemInfoModel")
+@observer
+export default class SystemInfo extends React.Component<Props, any> {
 
     render() {
-        return <Subscribe to={[SystemInformationStore]}>
-            { store => this.renderState(store.state) }
-        </Subscribe>
-    }
+        const { state } = this.props.systemInfoModel!;
+        
+        if (!state)
+            return null;
 
-    renderState(state: State) {
         return <div className={css.systemInfo}>
-            <div><i className="fa fa-microchip" /> {state.mem ? this.getMem(state.mem) : 0}</div>
-            <div><i className="fa fa-desktop" /> {state.load ? this.getLoad(state.load) : 0}</div>
-        </div>
+        <div><i className="fa fa-microchip" /> {state.mem ? this.getMem(state.mem) : 0}</div>
+        <div><i className="fa fa-desktop" /> {state.load ? this.getLoad(state.load) : 0}</div>
+    </div>
     }
 
+ 
     getMem = (data: Systeminformation.MemData) => `${this.toGb(data.used).toFixed(1)} Gb used of ${this.toGb(data.total).toFixed(1)} Gb total`;
 
     toGb = (bytes: number) => ((bytes/1024) / 1024) / 1024;

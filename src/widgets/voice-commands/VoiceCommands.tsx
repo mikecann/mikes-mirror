@@ -1,23 +1,34 @@
 import * as React from 'react';
-// import './face-recognition.css';
-import { Subscribe } from "unstated";
-import { VoiceCommandsStore } from './VoiceCommandsStore';
+import css from "./styles";
+import { VoiceCommandsModel } from './VoiceCommandsModel';
+import { observer } from "mobx-react";
 
-interface Props
-{
-
+interface Props {
+    model: VoiceCommandsModel
 }
 
+@observer
 export default class VoiceCommands extends React.Component<Props, any> {
 
     render() {
 
-        return <Subscribe to={[VoiceCommandsStore]}>
-        {
-            (store: VoiceCommandsStore) => <div className="voice-command">
-                voice command
+        const lastEvent = this.props.model.lastEvent;
+
+        return <div className="voice-command">
+        <div className={css.full}>
+
+            <div className={css.flex} />
+
+            <div className={css.hozContainer}>
+                <div className={css.flex} />
+                event: {lastEvent ? lastEvent.event : null}
+                <div className={css.flex} />
             </div>
-        }
-        </Subscribe>
+
+            <div className={css.flex} />
+
+        </div>
+
+    </div>
     }
 }

@@ -1,5 +1,5 @@
 import * as si from "systeminformation";
-import { Container } from "unstated";
+import { observable } from 'mobx';
 
 export interface State {
     cpu?: si.Systeminformation.CpuData;
@@ -8,26 +8,22 @@ export interface State {
     load?: si.Systeminformation.CurrentLoadData;
 }
 
-export class SystemInformationStore extends Container<State> {
+export class SystemInformationModel {
+
+    @observable state: State | null = null;
 
     private memTimer: NodeJS.Timer;
     private loadTimer: NodeJS.Timer;
-
-    constructor() {
-        super();
-        this.state = {}
-        this.start();
-    }
 
     async start() {
         console.log("Starting performance service..");
 
         // We only need to grab this information once so do it upfront
-        this.setState({ cpu: await si.cpu() });
+        this.state = { cpu: await si.cpu() };
 
         // Every so often tick and send new data to the renderer
-        this.memTimer = setInterval(async () => this.setState({ mem: await si.mem()  }), 5000);
-        this.memTimer = setInterval(async () => this.setState({ load: await si.currentLoad() }), 1000);
+        this.memTimer = setInterval(async () => this.state = { mem: await si.mem()  }, 5000);
+        this.memTimer = setInterval(async () => this.state = { load: await si.currentLoad() }, 1000);
 
         // For debug purposes lets just dump everything in one object to the console once
         console.log("System Information Dump", {

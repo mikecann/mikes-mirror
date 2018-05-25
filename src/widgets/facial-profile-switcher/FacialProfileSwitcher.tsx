@@ -1,11 +1,6 @@
 import * as React from 'react';
-// import './face-recognition.css';
-import { Subscribe } from "unstated";
-import { FacialRecognitionStore, FaceRecognitionDetection } from './FaceDetectionStore';
-
-interface Props {
-    onChangeProfile: (profile: string) => void
-}
+import { observer } from 'mobx-react';
+import { FacialRecognitionModel, FaceRecognitionDetection } from './FaceDetectionModel';
 
 interface SwitcherProps {
     onChangeProfile: (profile: string) => void;
@@ -37,19 +32,21 @@ class Switcher extends React.Component<SwitcherProps, any> {
 
 } 
 
+interface Props {
+    model: FacialRecognitionModel,
+    onChangeProfile: (profile: string) => void
+}
+
+@observer
 export default class FacialProfileSwitcher extends React.Component<Props, any> {
 
     render() {
-
-        return <Subscribe to={[FacialRecognitionStore]}>
-        {
-            (store: FacialRecognitionStore) => <div className="face-recognition">
-                <Switcher 
-                    onChangeProfile={this.props.onChangeProfile}
-                    detections={store.state.detections} 
-                />
-            </div>
-        }
-        </Subscribe>
+        const { detections } = this.props.model;
+        return <div className="face-recognition">
+        <Switcher 
+            onChangeProfile={this.props.onChangeProfile}
+            detections={detections} 
+        />
+    </div>
     }
 }
