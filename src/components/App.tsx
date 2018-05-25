@@ -6,6 +6,7 @@ import ManualProfileSwitcher from '../widgets/manual-profile-switcher/ManualProf
 import FacialProfileSwitcher from '../widgets/facial-profile-switcher/FacialProfileSwitcher';
 import { wrap } from '../utils/utils';
 import css from "./AppStyles";
+import VoiceCommands from '../widgets/voice-commands/VoiceCommands';
 
 interface Props {
   profiles: Profiles,
@@ -50,6 +51,8 @@ export default class App extends React.Component<Props, State> {
         />
 
         { this.props.isProd ? <FacialProfileSwitcher onChangeProfile={this.changeProfile} /> : null } 
+
+        <VoiceCommands />
     </div>
   }
 

@@ -14,8 +14,8 @@ export default class VoiceCommands extends React.Component<Props, any> {
 
         return <Subscribe to={[VoiceCommandsStore]}>
         {
-            (store: VoiceCommandsStore) => <div className="voice-command">
-                voice command
+            (store: VoiceCommandsStore) => <div className="voice-command" style={{ fontSize: "8em" }}>
+                EVENT {  store.state.event ? store.state.event.event : null }
             </div>
         }
         </Subscribe>

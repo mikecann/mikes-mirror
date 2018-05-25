@@ -14,16 +14,16 @@ const language = "en-US"
 const sonus = SonusC.init({ hotwords, language, recordProgram: "rec" }, speech)
 
 SonusC.start(sonus)
-console.log({ event: "ready", hotword: hotwords[0].hotword })
+console.log(JSON.stringify({ event: "ready", hotword: hotwords[0].hotword }))
 
-sonus.on('hotword', (index, keyword) => console.log({ event: "hotword-detected" }))
+sonus.on('hotword', (index, keyword) => console.log(JSON.stringify({ event: "hotword-detected" })))
 
-sonus.on('partial-result', result => console.log({ event: "partial", result }))
+sonus.on('partial-result', result => console.log(JSON.stringify({ event: "partial", result })))
 
-sonus.on('error', error => console.log({ event: "error", error }))
+sonus.on('error', error => console.log(JSON.stringify({ event: "error", error })))
 
 sonus.on('final-result', result => {
-  console.log({ event: "final", result })
+  console.log(JSON.stringify({ event: "final", result }))
   if (result.includes("stop")) {
     SonusC.stop()
   }

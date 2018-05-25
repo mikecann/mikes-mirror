@@ -15,6 +15,7 @@ import UnknownProfile from './profiles/UnknownProfile';
 import OliviasProfile from './profiles/OliviasProfile';
 import GregsProfile from './profiles/GregsProfile';
 import ColleensProfile from './profiles/ColleensProfile';
+import { VoiceCommandsStore } from './widgets/voice-commands/VoiceCommandsStore';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -34,10 +35,11 @@ const profiles: Profiles = {
 
 const facialRecognition = new FacialRecognitionStore();
 const systemInfo = new SystemInformationStore();
+const voiceCommands = new VoiceCommandsStore();
 
 // Begin rendering
 ReactDOM.render(
-  <Provider inject={[facialRecognition, systemInfo]}>
+  <Provider inject={[facialRecognition, systemInfo, voiceCommands]}>
     <App 
       isProd={process.env.NODE_ENV=="production"}
       profiles={profiles}  
