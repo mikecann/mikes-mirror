@@ -6,24 +6,17 @@ import ManualProfileSwitcher from '../widgets/manual-profile-switcher/ManualProf
 import FacialProfileSwitcher from '../widgets/facial-profile-switcher/FacialProfileSwitcher';
 import { wrap } from '../utils/utils';
 import css from "./AppStyles";
-import VoiceCommands from '../widgets/voice-commands/VoiceCommands';
-import { observer } from 'mobx-react';
-import { FacialRecognitionModel } from '../widgets/facial-profile-switcher/FaceDetectionModel';
-import { VoiceCommandsModel } from '../widgets/voice-commands/VoiceCommandsModel';
 
 interface Props {
   profiles: Profiles,
   startingProfile: string,
-  isProd: boolean,
-  facialModel: FacialRecognitionModel,
-  voiceModel: VoiceCommandsModel
+  isProd: boolean
 }
 
 interface State {
   profile: string
 }
 
-@observer
 export default class App extends React.Component<Props, State> {
 
   constructor(props: Props) {
@@ -34,7 +27,7 @@ export default class App extends React.Component<Props, State> {
   }
 
   render() {
-    const {profiles,facialModel,voiceModel} = this.props;
+    const {profiles} = this.props;
     const {profile} = this.state;
 
     return <div className={css.app}>
@@ -56,9 +49,7 @@ export default class App extends React.Component<Props, State> {
           onPrevProfile={this.prevProfile} 
         />
 
-        { this.props.isProd ? <FacialProfileSwitcher model={facialModel} onChangeProfile={this.changeProfile} /> : null } 
-
-        <VoiceCommands model={voiceModel} />
+        { this.props.isProd ? <FacialProfileSwitcher onChangeProfile={this.changeProfile} /> : null } 
     </div>
   }
 

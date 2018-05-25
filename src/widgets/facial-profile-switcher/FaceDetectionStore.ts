@@ -1,6 +1,6 @@
 import * as PythonShell from "python-shell";
+import { Container } from "unstated";
 import * as path from 'path';
-import { observable } from "mobx";
 
 export interface FaceRecognitionDetection {
     top: number;
@@ -10,20 +10,23 @@ export interface FaceRecognitionDetection {
     name: string;
 }
 
-// export interface State {
-//     detections: FaceRecognitionDetection[];
-// }
+export interface State {
+    detections: FaceRecognitionDetection[];
+}
 
-export class FacialRecognitionModel {
+export class FacialRecognitionStore extends Container<State> {
 
-    @observable detections: FaceRecognitionDetection[] = [];
-
-    private pyshell: any;
+    pyshell: any;
 
     constructor() {
+        super();
+        this.startDetecting();
+        this.state = {
+            detections: []
+        }
     }
 
-    startDetecting() {
+    private startDetecting() {
 
         const main = require.main;
         if (!main)
@@ -46,7 +49,9 @@ export class FacialRecognitionModel {
                     lastMessage = message;
                     console.log(message);
                     try {
-                        this.detections = JSON.parse(message).detections;
+                        this.setState({
+                            detections: JSON.parse(message).detections
+                        });    
                     } catch (error) {
                         console.error(`Could not parse message from python '${message}'`);
                     }
