@@ -22,8 +22,8 @@ export default stylesheet({
     },
     ready: {
       position: "absolute",
-      top: 10,
-      right: 10,
+      top: 100,
+      right: 100,
       fontSize: "2em",
     },
     flex: csstips.flex,
