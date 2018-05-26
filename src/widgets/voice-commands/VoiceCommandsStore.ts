@@ -1,7 +1,7 @@
 import { Container } from "unstated";
 import { spawn } from "child_process";
 
-interface VoiceEvent {
+export interface VoiceEvent {
     event: "ready" | "hotword-detected" | "partial" | "error" | "final"
     hotword?: string
     error?: string
@@ -9,18 +9,19 @@ interface VoiceEvent {
 }
 
 export interface State {
-    event: VoiceEvent | null
+    event: VoiceEvent | null,
+    hotword?: string
 }
 
 export class VoiceCommandsStore extends Container<State> {
 
-    pyshell: any;
+    private resetTimeout: NodeJS.Timer;
 
     constructor() {
         super();
         this.startDetecting();
         this.state = {
-            event: null
+            event: null,
         }
     }
 
@@ -30,21 +31,35 @@ export class VoiceCommandsStore extends Container<State> {
 
         ls.stdout.on('data', (data) => {
             try {
-                console.log(`stdout: ${data}`);
-                var event: VoiceEvent = JSON.parse(data+"");
-                console.log(`event`, event);
-                this.setState({ event });
+                //console.log(`stdout: ${data}`);
+                var event: VoiceEvent = JSON.parse(data + "");
+                //console.log(`event`, event);
+                this.setState({
+                    event,
+                    hotword: event.event == "ready" ? event.hotword : undefined
+                });
+
+                if (event.event == "final")
+                    this.resetTimeout = setTimeout(() => this.setState({
+                        event: {
+                            event: "ready",
+                            hotword: this.state.hotword
+                        }
+                    }), 1000);
+                else
+                    clearTimeout(this.resetTimeout);
+
             } catch (e) {
-                
-            }          
+
+            }
         });
-        
+
         ls.stderr.on('data', (data) => {
-          console.error(`VoiceCommandsStore ERROR`, data);
+            console.error(`VoiceCommandsStore ERROR`, data);
         });
-        
+
         ls.on('close', (code) => {
-          console.error(`VoiceCommandsStore close`, code);
+            console.error(`VoiceCommandsStore close`, code);
         });
     }
 }
