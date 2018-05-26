@@ -7,6 +7,8 @@ import FacialProfileSwitcher from '../widgets/facial-profile-switcher/FacialProf
 import { wrap } from '../utils/utils';
 import css from "./AppStyles";
 import VoiceCommands from '../widgets/voice-commands/VoiceCommands';
+import { VoiceCommandsStore } from '../widgets/voice-commands/VoiceCommandsStore';
+import { Subscribe } from 'unstated';
 
 interface Props {
   profiles: Profiles,
@@ -28,11 +30,28 @@ export default class App extends React.Component<Props, State> {
   }
 
   render() {
-    const {profiles} = this.props;
-    const {profile} = this.state;
+
+
+    return <Subscribe to={[VoiceCommandsStore]}>
+      {
+        (store: VoiceCommandsStore) => this.renderAll(store)
+      }
+    </Subscribe>
+
+
+  }
+
+  renderAll(store: VoiceCommandsStore) {
+
+    const { profiles } = this.props;
+    const { profile } = this.state;
+
+    const event = store.state.event.event;
+    const shouldShowProfile = event == "ready" || event == "not-ready";
 
     return <div className={css.app}>
 
+      {shouldShowProfile ?
         <CSSTransitionGroup
           className={css.profiles}
           transitionName="profile"
@@ -42,17 +61,19 @@ export default class App extends React.Component<Props, State> {
           {[<ProfileWrapper key={profile}>
             {profiles[profile]()}
           </ProfileWrapper>]}
-        </CSSTransitionGroup>
+        </CSSTransitionGroup> : null
+      }
 
-        <ManualProfileSwitcher 
-          onChangeProfile={this.changeProfile} 
-          onNextProfile={this.nextProfile} 
-          onPrevProfile={this.prevProfile} 
-        />
+      <ManualProfileSwitcher
+        onChangeProfile={this.changeProfile}
+        onNextProfile={this.nextProfile}
+        onPrevProfile={this.prevProfile}
+      />
 
-        { this.props.isProd ? <FacialProfileSwitcher onChangeProfile={this.changeProfile} /> : null } 
+      {this.props.isProd ? <FacialProfileSwitcher onChangeProfile={this.changeProfile} /> : null}
 
-        <VoiceCommands />
+      <VoiceCommands />
+
     </div>
   }
 
@@ -60,25 +81,25 @@ export default class App extends React.Component<Props, State> {
 
     if (!this.props.profiles.hasOwnProperty(profile))
       return console.log(`Cannot change profile to '${profile}', its an unknown profile`);
-    
+
     if (profile === this.state.profile)
       return;
 
-    console.log(`Profile changed`, {profile});
-    this.setState({profile});   
+    console.log(`Profile changed`, { profile });
+    this.setState({ profile });
   }
 
   nextProfile = () => {
     var keys = Object.keys(this.props.profiles);
     let nextIndex = wrap(0, keys.length, keys.indexOf(this.state.profile) + 1);
-    console.log(`nextProfiled`, {nextIndex});
+    console.log(`nextProfiled`, { nextIndex });
     this.changeProfile(keys[nextIndex]);
   }
 
   prevProfile = () => {
     var keys = Object.keys(this.props.profiles);
     let nextIndex = wrap(0, keys.length, keys.indexOf(this.state.profile) - 1);
-    console.log(`prevProfile`, {nextIndex});
+    console.log(`prevProfile`, { nextIndex });
     this.changeProfile(keys[nextIndex]);
   }
 

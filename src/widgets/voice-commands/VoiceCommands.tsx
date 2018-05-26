@@ -14,7 +14,7 @@ export default class VoiceCommands extends React.Component<Props, any> {
         return <Subscribe to={[VoiceCommandsStore]}>
             {
                 (store: VoiceCommandsStore) => <div className={css.voiceCommands}>
-                    {store.state.event ? <EventRendering event={store.state.event} /> : null}
+                    <EventRendering event={store.state.event} />
                 </div>
             }
         </Subscribe>
@@ -22,6 +22,10 @@ export default class VoiceCommands extends React.Component<Props, any> {
 }
 
 const EventRendering = ({ event }: { event: VoiceEvent }) => {
+
+    if (event.event == "not-ready")
+        return <NotReady event={event} />
+
     if (event.event == "ready")
         return <Ready event={event} />
 
@@ -39,6 +43,11 @@ const EventRendering = ({ event }: { event: VoiceEvent }) => {
 
     return <Unknown event={event} />
 }
+
+const NotReady = ({ event }: { event: VoiceEvent }) =>
+    <div className={css.ready}>
+        <span className="fa fa-microphone" style={{ color: "red" }} />
+    </div>
 
 const Ready = ({ event }: { event: VoiceEvent }) =>
     <div className={css.ready}>

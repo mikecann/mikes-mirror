@@ -13,7 +13,7 @@ export default stylesheet({
       width: "100%",
       height: "100%",
       flexDirection: "column",
-      background: "rgba(0,0,0,1)",
+      background: "rgba(0,0,0,0.5)",
       fontSize: "5em",
       display: "flex",
       alignItems: "center",

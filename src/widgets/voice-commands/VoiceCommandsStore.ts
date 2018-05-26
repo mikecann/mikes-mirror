@@ -2,14 +2,14 @@ import { Container } from "unstated";
 import { spawn } from "child_process";
 
 export interface VoiceEvent {
-    event: "ready" | "hotword-detected" | "partial" | "error" | "final"
+    event: "not-ready" | "ready" | "hotword-detected" | "partial" | "error" | "final"
     hotword?: string
     error?: string
     result?: string
 }
 
 export interface State {
-    event: VoiceEvent | null,
+    event: VoiceEvent,
     hotword?: string
 }
 
@@ -21,7 +21,9 @@ export class VoiceCommandsStore extends Container<State> {
         super();
         this.startDetecting();
         this.state = {
-            event: null,
+            event: {
+                event: "not-ready"
+            },
         }
     }
 
@@ -45,7 +47,7 @@ export class VoiceCommandsStore extends Container<State> {
                             event: "ready",
                             hotword: this.state.hotword
                         }
-                    }), 1000);
+                    }), 2000);
                 else
                     clearTimeout(this.resetTimeout);
 
