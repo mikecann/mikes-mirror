@@ -3,6 +3,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
+    "postinstall": "cd voice_recognition && yarn install",
     "build": "yarn build:scripts && yarn build:resources",
     "build:scripts": "tsc",
     "build:resources": "cpx -v src/resources/**/* dist",

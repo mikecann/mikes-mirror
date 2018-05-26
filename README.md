@@ -6,6 +6,7 @@ My React and Typescript based smart mirror software.
 
 * NodeJs
 * Yarn
+* sudo apt-get install sox libsox-fmt-all libatlas-base-dev
 
 ## Initial Setup
 
