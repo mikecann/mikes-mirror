@@ -11,7 +11,7 @@ const hotwords = [{ file: ROOT_DIR + 'resources/sonus.pmdl', hotword: 'sonus' }]
 const language = "en-US"
 
 //recordProgram can also be 'arecord' which works much better on the Pi and low power devices
-const sonus = SonusC.init({ hotwords, language, recordProgram: "rec" }, speech)
+const sonus = SonusC.init({ hotwords, language, recordProgram: "arecord" }, speech)
 
 SonusC.start(sonus)
 console.log(JSON.stringify({ event: "ready", hotword: hotwords[0].hotword }))
