@@ -35,7 +35,13 @@ const profiles: Profiles = {
 
 const facialRecognition = new FacialRecognitionStore();
 const systemInfo = new SystemInformationStore();
-const voiceCommands = new VoiceCommandsStore();
+const voiceCommands = new VoiceCommandsStore({
+  "restart": () => window.close(),
+  "reboot": () => window.close(),
+  "exit": () => window.close(),
+  "quit": () => window.close(),
+  "switch profile to": (result) => console.log("switching to: ", result.toLowerCase().split("switch profile to")[1].trim()),
+});
 
 // Begin rendering
 ReactDOM.render(
