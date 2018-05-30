@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import './face-recognition.css';
 import { Subscribe } from "unstated";
-import { FacialRecognitionStore, FaceRecognitionDetection } from './FaceDetectionStore';
+import { FaceRecognitionDetection, FacialRecognitionStore } from './FacialRecognitionStore';
 
 interface Props {
     onChangeProfile: (profile: string) => void

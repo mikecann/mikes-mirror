@@ -4,6 +4,7 @@ import css from "./styles";
 import SystemInfo from '../widgets/system-info/SystemInfo';
 import DisplayDeactivator from '../widgets/display-deactivator/DisplayDeactivator';
 import Clock from '../widgets/clock/Clock';
+import FacialRecogntionStats from '../widgets/facial-recognition/FacialRecogntionStats';
 
 export default class EmptyProfile extends React.Component<any, any> {
   render() {
@@ -22,6 +23,7 @@ export default class EmptyProfile extends React.Component<any, any> {
         <div className={css.flex} />
       </div>
       <div className={css.flex} />
+      <FacialRecogntionStats />
       <SystemInfo />
     </div>
   }

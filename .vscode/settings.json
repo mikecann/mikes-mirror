@@ -1,4 +1,5 @@
 {
     "god.tsconfig": "./tsconfig.json",
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "python.linting.pylintEnabled": false
 }

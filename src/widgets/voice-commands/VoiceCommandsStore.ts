@@ -9,7 +9,7 @@ export interface VoiceEvent {
 }
 
 export type Commands = {
-    [key : string]: (result: string) => void
+    [key : string]: (result: RegExpExecArray) => void
 }
 
 export interface State {
@@ -76,8 +76,17 @@ export class VoiceCommandsStore extends Container<State> {
         if (!event.result)
             return;
 
-        for (var key in this.commands)
-            if (event.result.toLowerCase().includes(key))
-                this.commands[key](event.result);
+        for (var key in this.commands) {
+            var regexp = new RegExp(key);
+            if (regexp.test(event.result)) {
+                var parts = regexp.exec(event.result);
+                if (parts) {
+                    this.commands[key](parts);
+                    return;
+                }
+            }
+        }
+            // if (event.result.toLowerCase().includes(key))
+            //     this.commands[key](event.result);
     }
 }

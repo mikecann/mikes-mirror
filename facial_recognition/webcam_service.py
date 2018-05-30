@@ -19,7 +19,7 @@ def scan_known_people(known_people_folder):
 
         basename = os.path.splitext(os.path.basename(file))[0]
 
-        print("Generating encodings for {}..".format(basename))
+        print(json.dumps({"event": "generating-encodings", "person": basename}))
 
         img = face_recognition.load_image_file(file)
         encodings = face_recognition.face_encodings(img, num_jitters=5) 
@@ -48,7 +48,11 @@ def scan_known_people(known_people_folder):
 video_capture = cv2.VideoCapture(0)
 # video_capture.set(cv2.CAP_PROP_BUFFERSIZE,1) # cant do this quite yet (https://github.com/opencv/opencv/pull/11047)
 
+print(json.dumps({"event": "scanning-faces"}))
+
 known_names, known_face_encodings = scan_known_people("./faces")
+
+print(json.dumps({"event": "detecting"}))
 
 # Initialize some variables
 face_locations = []
@@ -59,6 +63,8 @@ downscale_factor = 4
 tolerance = 0.5
 
 while True:
+
+    total_start_time = time.time()
     
     # 4 Empty grabs first due to framebuffer getting filled by slow render loop
     video_capture.grab()
@@ -74,11 +80,18 @@ while True:
 
     # Only process every other frame of video to save time
     if process_this_frame:
+
         # Find all the faces and face encodings in the current frame of video
+        start_time = time.time() 
         face_locations = face_recognition.face_locations(small_frame)
+        face_locations_time = time.time() - start_time
+
+        start_time = time.time()
         face_encodings = face_recognition.face_encodings(small_frame, face_locations)
+        face_encodings_time = time.time() - start_time
 
         face_names = []
+        start_time = time.time()
         for face_encoding in face_encodings:
 
             # See if the face is a match for the known face(s)
@@ -88,6 +101,8 @@ while True:
             for i, match in enumerate(matches):
                 if match:
                     face_names.append(known_names[i])
+
+        compare_faces_time = time.time() - start_time
 
     process_this_frame = not process_this_frame
 
@@ -102,7 +117,7 @@ while True:
 
         detections.append({"top": top, "left": left, "bottom": bottom, "right": right, "name": name})
         
-    output = {"detections": detections}
+    output = {"event": "detections-update", "detections": detections, "face_locations_time": face_locations_time, "face_encodings_time": face_encodings_time, "compare_faces_time": compare_faces_time, "total_time": time.time() - total_start_time}
     print(json.dumps(output))
     sys.stdout.flush()
 

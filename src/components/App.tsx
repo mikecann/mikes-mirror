@@ -3,12 +3,13 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import { Profiles } from './Profiles';
 import ProfileWrapper from './ProfileWrapper';
 import ManualProfileSwitcher from '../widgets/manual-profile-switcher/ManualProfileSwitcher';
-import FacialProfileSwitcher from '../widgets/facial-profile-switcher/FacialProfileSwitcher';
-import { wrap } from '../utils/utils';
 import css from "./AppStyles";
 import VoiceCommands from '../widgets/voice-commands/VoiceCommands';
 import { VoiceCommandsStore } from '../widgets/voice-commands/VoiceCommandsStore';
 import { Subscribe } from 'unstated';
+import { AppStore } from '../stores/AppStore';
+import FacialRecognition from '../widgets/facial-recognition/FacialRecognition';
+import FacialProfileSwitcher from '../widgets/facial-recognition/FacialProfileSwitcher';
 
 interface Props {
   profiles: Profiles,
@@ -16,37 +17,23 @@ interface Props {
   isProd: boolean
 }
 
-interface State {
-  profile: string
-}
-
-export default class App extends React.Component<Props, State> {
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      profile: props.startingProfile
-    }
-  }
+export default class App extends React.Component<Props, any> {
 
   render() {
-
-
-    return <Subscribe to={[VoiceCommandsStore]}>
+    return <Subscribe to={[VoiceCommandsStore, AppStore]}>
       {
-        (store: VoiceCommandsStore) => this.renderAll(store)
+        (voiceStore: VoiceCommandsStore, appStore: AppStore) => 
+          this.renderAll(appStore, voiceStore)
       }
     </Subscribe>
-
-
   }
 
-  renderAll(store: VoiceCommandsStore) {
+  renderAll(appStore: AppStore, voiceStore: VoiceCommandsStore) {
 
     const { profiles } = this.props;
-    const { profile } = this.state;
+    const { profile } = appStore.state;
 
-    const event = store.state.event.event;
+    const event = voiceStore.state.event.event;
     const shouldShowProfile = event == "ready" || event == "not-ready";
 
     return <div className={css.app}>
@@ -65,42 +52,18 @@ export default class App extends React.Component<Props, State> {
       }
 
       <ManualProfileSwitcher
-        onChangeProfile={this.changeProfile}
-        onNextProfile={this.nextProfile}
-        onPrevProfile={this.prevProfile}
+        onChangeProfile={appStore.changeProfile}
+        onNextProfile={appStore.nextProfile}
+        onPrevProfile={appStore.prevProfile}
       />
 
-      {this.props.isProd ? <FacialProfileSwitcher onChangeProfile={this.changeProfile} /> : null}
+      {this.props.isProd ? <FacialProfileSwitcher onChangeProfile={appStore.changeProfile} /> : null}
 
       <VoiceCommands />
+      <FacialRecognition />
+
+      
 
     </div>
   }
-
-  changeProfile = (profile: string) => {
-
-    if (!this.props.profiles.hasOwnProperty(profile))
-      return console.log(`Cannot change profile to '${profile}', its an unknown profile`);
-
-    if (profile === this.state.profile)
-      return;
-
-    console.log(`Profile changed`, { profile });
-    this.setState({ profile });
-  }
-
-  nextProfile = () => {
-    var keys = Object.keys(this.props.profiles);
-    let nextIndex = wrap(0, keys.length, keys.indexOf(this.state.profile) + 1);
-    console.log(`nextProfiled`, { nextIndex });
-    this.changeProfile(keys[nextIndex]);
-  }
-
-  prevProfile = () => {
-    var keys = Object.keys(this.props.profiles);
-    let nextIndex = wrap(0, keys.length, keys.indexOf(this.state.profile) - 1);
-    console.log(`prevProfile`, { nextIndex });
-    this.changeProfile(keys[nextIndex]);
-  }
-
 }

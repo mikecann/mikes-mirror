@@ -46,7 +46,7 @@ const EventRendering = ({ event }: { event: VoiceEvent }) => {
 
 const NotReady = ({ event }: { event: VoiceEvent }) =>
     <div className={css.ready}>
-        <span className="fa fa-microphone" style={{ color: "red" }} />
+        <span className="fa fa-microphone" style={{ color: "white", opacity: 0.5 }} />
     </div>
 
 const Ready = ({ event }: { event: VoiceEvent }) =>

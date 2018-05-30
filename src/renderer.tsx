@@ -8,7 +8,6 @@ import { Provider } from "unstated";
 import App from './components/App';
 import { setupStyles } from './styles';
 import { SystemInformationStore } from './widgets/system-info/SystemInformationStore';
-import { FacialRecognitionStore } from './widgets/facial-profile-switcher/FaceDetectionStore';
 import TarynsProfile from './profiles/TarynsProfile';
 import LeahsProfile from './profiles/LeahsProfile';
 import UnknownProfile from './profiles/UnknownProfile';
@@ -16,6 +15,9 @@ import OliviasProfile from './profiles/OliviasProfile';
 import GregsProfile from './profiles/GregsProfile';
 import ColleensProfile from './profiles/ColleensProfile';
 import { VoiceCommandsStore } from './widgets/voice-commands/VoiceCommandsStore';
+import { AppStore } from './stores/AppStore';
+import { VoiceCommandsService } from './services/VoiceCommandsService';
+import { FacialRecognitionStore } from './widgets/facial-recognition/FacialRecognitionStore';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -33,19 +35,23 @@ const profiles: Profiles = {
   unknown: () => <UnknownProfile />
 }
 
-const facialRecognition = new FacialRecognitionStore();
-const systemInfo = new SystemInformationStore();
-const voiceCommands = new VoiceCommandsStore({
-  "restart": () => window.close(),
-  "reboot": () => window.close(),
-  "exit": () => window.close(),
-  "quit": () => window.close(),
-  "switch profile to": (result) => console.log("switching to: ", result.toLowerCase().split("switch profile to")[1].trim()),
+const appStore = new AppStore({
+  profile: "empty"
+}, profiles);
+
+const facialRecognition = new FacialRecognitionStore({
+  autoRestart: true
 });
+
+const systemInfo = new SystemInformationStore();
+const commandsService = new VoiceCommandsService(appStore, facialRecognition);
+const voiceCommands = new VoiceCommandsStore(commandsService.createCommands());
+
+setTimeout(() => facialRecognition.enable(), 3000);
 
 // Begin rendering
 ReactDOM.render(
-  <Provider inject={[facialRecognition, systemInfo, voiceCommands]}>
+  <Provider inject={[facialRecognition, systemInfo, voiceCommands, appStore]}>
     <App 
       isProd={process.env.NODE_ENV=="production"}
       profiles={profiles}  
