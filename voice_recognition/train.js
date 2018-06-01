@@ -56,8 +56,8 @@ async function send(samples)
     if (result.status != 201)
         throw new Error(await result.text())
     
-    var bytes = await result.blob();
-    fs.writeFileSync(`./resources/generated.pmdl`, bytes);
+    var buffer = await result.buffer();
+    fs.writeFileSync(`./resources/generated.pmdl`, buffer);
 }
 
 
