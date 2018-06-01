@@ -17,17 +17,17 @@ export class AppStore extends Container<State> {
 
   changeProfile = (profile: string, force?: boolean) => {
 
-    if (this.state.profileLocked && !force)
-      return;
+    if (this.state.profileLocked && !force) 
+      return console.log(`Cannot change profile to '${profile}', it is currently locked`);
 
     if (!this.profiles.hasOwnProperty(profile))
       return console.log(`Cannot change profile to '${profile}', its an unknown profile`);
 
     if (profile === this.state.profile)
       return;
-
-    console.log(`Profile changed`, { profile });
+    
     this.setState({ profile });
+    console.log(`Profile changed`, { profile });
   }
 
   nextProfile = () => {
@@ -44,10 +44,14 @@ export class AppStore extends Container<State> {
     this.changeProfile(keys[nextIndex]);
   }
 
-  lockProfile = (profle: string) => {
-    this.changeProfile(profle);
+  lockProfile = (profile: string) => {
+    console.log("profile locked to", profile);
+    this.changeProfile(profile);
     this.setState({ profileLocked: true });
   }
 
-  unlockProfile = () => this.setState({ profileLocked: false });
+  unlockProfile = () => {
+    console.log("unlocking profile");
+    this.setState({ profileLocked: false });
+  }
 }

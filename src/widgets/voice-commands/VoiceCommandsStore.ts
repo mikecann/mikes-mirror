@@ -1,8 +1,15 @@
 import { Container } from "unstated";
 import { spawn } from "child_process";
 
-export interface VoiceEvent {
-    event: "not-ready" | "ready" | "hotword-detected" | "partial" | "error" | "final"
+type SonusEventTypes = "not-ready" | "ready" | "hotword-detected" | 
+    "partial" | "error" | "final";
+
+type MirrorEventTypes = "command-not-found" | "command-found";
+
+type CombinedEventTypes = SonusEventTypes | MirrorEventTypes;
+
+export interface SonusEvent {
+    event: SonusEventTypes,
     hotword?: string
     error?: string
     result?: string
@@ -13,7 +20,9 @@ export type Commands = {
 }
 
 export interface State {
-    event: VoiceEvent,
+    state: CombinedEventTypes,
+    result?: string,
+    error?: string,
     enabled?: boolean,
     autoRestart?: boolean,
     hotword?: string
@@ -23,14 +32,11 @@ export class VoiceCommandsStore extends Container<State> {
 
     private resetTimeout: NodeJS.Timer;
 
-
     constructor(private commands: Commands, initialState: Partial<State>) {
         super();
         this.startDetecting();
         this.state = {
-            event: {
-                event: "not-ready",
-            },
+            state: "not-ready",
             ...initialState
         }
     }
@@ -41,12 +47,13 @@ export class VoiceCommandsStore extends Container<State> {
 
         ls.stdout.on('data', (data) => {
             try {
-                //console.log(`stdout: ${data}`);
-                var event: VoiceEvent = JSON.parse(data + "");
-                //console.log(`event`, event);
+                var event: SonusEvent = JSON.parse(data + "");
+
                 this.setState({
-                    event,
-                    hotword: event.event == "ready" ? event.hotword : undefined
+                    state: event.event,
+                    error: event.error,
+                    hotword: event.hotword,
+                    result: event.result
                 });
 
                 if (event.event == "final")
@@ -55,7 +62,7 @@ export class VoiceCommandsStore extends Container<State> {
                     clearTimeout(this.resetTimeout);
 
             } catch (e) {
-
+                console.warn(`VoiceCommandsStore failed to parse sonus event`, e);
             }
         });
 
@@ -71,16 +78,23 @@ export class VoiceCommandsStore extends Container<State> {
         });
     }
 
-    private handleFinal(event: VoiceEvent) {
+    private handleFinal(event: SonusEvent) {
+        
         this.resetTimeout = setTimeout(() => this.setState({
-            event: {
-                event: "ready",
-                hotword: this.state.hotword
-            }
+            state: "ready",
         }), 2000);
 
+        var executedCommand = this.findAndExecuteMatchingCommand(event);
+        if (executedCommand == null)
+            this.setState({ state: "command-not-found" });
+        else 
+            this.setState({ state: "command-found" });
+    }
+
+    private findAndExecuteMatchingCommand(event: SonusEvent): string | null {
+
         if (!event.result)
-            return;
+            return null;
 
         for (var key in this.commands) {
             var regexp = new RegExp(key);
@@ -88,9 +102,11 @@ export class VoiceCommandsStore extends Container<State> {
                 var parts = regexp.exec(event.result);
                 if (parts) {
                     this.commands[key](parts);
-                    return;
+                    return key;
                 }
             }
         }
+
+        return null;
     }
 }

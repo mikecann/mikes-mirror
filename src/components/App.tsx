@@ -33,8 +33,8 @@ export default class App extends React.Component<Props, any> {
     const { profiles } = this.props;
     const { profile } = appStore.state;
 
-    const event = voiceStore.state.event.event;
-    const shouldShowProfile = event == "ready" || event == "not-ready";
+    const voiceState = voiceStore.state.state;
+    const shouldShowProfile = voiceState == "ready" || voiceState == "not-ready";
 
     return <div className={css.app}>
 
@@ -61,8 +61,6 @@ export default class App extends React.Component<Props, any> {
 
       <VoiceCommands />
       <FacialRecognition />
-
-      
 
     </div>
   }

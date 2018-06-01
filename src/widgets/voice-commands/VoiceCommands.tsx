@@ -1,7 +1,7 @@
 import * as React from 'react';
 import css from "./styles";
 import { Subscribe } from "unstated";
-import { VoiceCommandsStore, VoiceEvent } from './VoiceCommandsStore';
+import { VoiceCommandsStore, State } from './VoiceCommandsStore';
 
 interface Props {
 
@@ -14,70 +14,72 @@ export default class VoiceCommands extends React.Component<Props, any> {
         return <Subscribe to={[VoiceCommandsStore]}>
             {
                 (store: VoiceCommandsStore) => <div className={css.voiceCommands}>
-                    <EventRendering event={store.state.event} />
+                    <EventRendering state={store.state} />
                 </div>
             }
         </Subscribe>
     }
 }
 
-const EventRendering = ({ event }: { event: VoiceEvent }) => {
+const EventRendering = (props: { state: State }) => {
 
-    if (event.event == "not-ready")
-        return <NotReady event={event} />
+    const { state, result } = props.state;
 
-    if (event.event == "ready")
-        return <Ready event={event} />
+    if (state == "not-ready")
+        return <NotReady />
 
-    if (event.event == "hotword-detected")
-        return <HotwordDetected event={event} />
+    if (state == "ready")
+        return <Ready />
 
-    if (event.event == "partial")
-        return <Partial event={event} />
+    if (state == "hotword-detected")
+        return <HotwordDetected />
 
-    if (event.event == "final")
-        return <Final event={event} />
+    if (state == "partial")
+        return <Partial result={result!} />
 
-    if (event.event == "error")
-        return <Error event={event} />
+    if (state == "final")
+        return <Final result={result!} />
 
-    return <Unknown event={event} />
+    if (state == "error")
+        return <Error result={result!} />
+
+    return <Unknown {...props.state} />
 }
 
-const NotReady = ({ event }: { event: VoiceEvent }) =>
+const NotReady = () =>
     <div className={css.ready}>
         <span className="fa fa-microphone" style={{ color: "white", opacity: 0.5 }} />
     </div>
 
-const Ready = ({ event }: { event: VoiceEvent }) =>
+const Ready = () =>
     <div className={css.ready}>
         <span className="fa fa-microphone" />
     </div>
 
-const HotwordDetected = ({ event }: { event: VoiceEvent }) =>
+const HotwordDetected = () =>
     <div className={css.rootContainer}>
         <span className="fa fa-microphone" style={{ color: "white" }} />
     </div>
 
-const Partial = ({ event }: { event: VoiceEvent }) =>
+const Partial = ({ result }: { result: string }) =>
     <div className={css.rootContainer}>
         <div><i className="fa fa-microphone" style={{ color: "orange" }} /></div>
-        <div>{event.result}</div>
+        <div>{result}</div>
     </div>
 
-const Final = ({ event }: { event: VoiceEvent }) =>
+const Final = ({ result }: { result: string }) =>
     <div className={css.rootContainer}>
         <div><i className="fa fa-microphone" style={{ color: "green" }} /></div>
-        <div>{event.result}</div>
+        <div>{result}</div>
     </div>
 
-const Error = ({ event }: { event: VoiceEvent }) =>
+const Error = ({ result }: { result: string }) =>
     <div className={css.rootContainer}>
         <div><i className="fa fa-microphone" style={{ color: "red" }} /></div>
-        <div>ERROR {JSON.stringify(event.result)}</div>
+        <div>ERROR {result}</div>
     </div>
 
-const Unknown = ({ event }: { event: VoiceEvent }) =>
+const Unknown = (props: any) =>
     <div className={css.rootContainer}>
         <div><i className="fa fa-microphone" style={{ color: "green" }} /></div>
         <div>UNKOWN {JSON.stringify(event)}</div>
