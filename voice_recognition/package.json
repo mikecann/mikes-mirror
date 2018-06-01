@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "tsc ."
+    "build": "tsc .",
+    "train": "node train.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@google-cloud/speech": "^0.10.3",
+    "node-fetch": "^2.1.2",
     "node-record-lpcm16": "^0.3.0",
     "snowboy": "1.2.0",
     "ts-node": "^6.0.3",
