@@ -7,7 +7,7 @@ const speech = require('@google-cloud/speech')({
   keyFilename: ROOT_DIR + 'keyfile.json'
 })
 
-const hotwords = [{ file: ROOT_DIR + 'resources/mirror.pmdl', hotword: 'mirror' }]
+const hotwords = [{ file: ROOT_DIR + 'resources/smart_mirror.pmdl', hotword: 'smart mirror' }]
 const language = "en-US"
 
 //recordProgram can also be 'arecord' which works much better on the Pi and low power devices
