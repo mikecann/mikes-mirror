@@ -14,6 +14,8 @@ export type Commands = {
 
 export interface State {
     event: VoiceEvent,
+    enabled?: boolean,
+    autoRestart?: boolean,
     hotword?: string
 }
 
@@ -22,13 +24,14 @@ export class VoiceCommandsStore extends Container<State> {
     private resetTimeout: NodeJS.Timer;
 
 
-    constructor(private commands: Commands) {
+    constructor(private commands: Commands, initialState: Partial<State>) {
         super();
         this.startDetecting();
         this.state = {
             event: {
-                event: "not-ready"
+                event: "not-ready",
             },
+            ...initialState
         }
     }
 
@@ -61,7 +64,10 @@ export class VoiceCommandsStore extends Container<State> {
         });
 
         ls.on('close', (code) => {
-            console.error(`VoiceCommandsStore close`, code);
+            console.log(`VoiceCommandsStore close`, code);
+
+            if (this.state.enabled && this.state.autoRestart)
+                this.startDetecting();
         });
     }
 
@@ -86,7 +92,5 @@ export class VoiceCommandsStore extends Container<State> {
                 }
             }
         }
-            // if (event.result.toLowerCase().includes(key))
-            //     this.commands[key](event.result);
     }
 }

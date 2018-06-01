@@ -45,7 +45,9 @@ const facialRecognition = new FacialRecognitionStore({
 
 const systemInfo = new SystemInformationStore();
 const commandsService = new VoiceCommandsService(appStore, facialRecognition);
-const voiceCommands = new VoiceCommandsStore(commandsService.createCommands());
+const voiceCommands = new VoiceCommandsStore(commandsService.createCommands(), {
+  autoRestart: true
+});
 
 setTimeout(() => facialRecognition.enable(), 3000);
 
