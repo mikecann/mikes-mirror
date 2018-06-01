@@ -17,6 +17,8 @@ export class VoiceCommandsService
             "exit": () => window.close(),
             "quit": () => window.close(),
             "switch profile to (.*)": (result) => this.appStore.changeProfile(result[1].toLocaleLowerCase()),
+            "lock profile (.*)": (result) => this.appStore.lockProfile(result[1].toLocaleLowerCase()),
+            "unlock profile": (result) => this.appStore.unlockProfile(),
             "toggle inspector": () => this.toggleInspector(),
             "open inspector": () => this.openInspector(),
             "close inspector": () => this.closeInspector(),
@@ -26,6 +28,10 @@ export class VoiceCommandsService
             "disable facial recognition": () => this.facialRecogntion.disable(),
             "stop facial recognition": () => this.facialRecogntion.enable(),
             "start facial recognition": () => this.facialRecogntion.disable(),
+            "stop face recognition": () => this.facialRecogntion.enable(),
+            "start face recognition": () => this.facialRecogntion.disable(),
+            "disable face recognition": () => this.facialRecogntion.enable(),
+            "enable face recognition": () => this.facialRecogntion.disable(),
           }
     }
 

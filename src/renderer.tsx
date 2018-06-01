@@ -18,6 +18,7 @@ import { VoiceCommandsStore } from './widgets/voice-commands/VoiceCommandsStore'
 import { AppStore } from './stores/AppStore';
 import { VoiceCommandsService } from './services/VoiceCommandsService';
 import { FacialRecognitionStore } from './widgets/facial-recognition/FacialRecognitionStore';
+import { TextToSpeechService } from './services/TextToSpeechService';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -44,10 +45,14 @@ const facialRecognition = new FacialRecognitionStore({
 });
 
 const systemInfo = new SystemInformationStore();
+const textToSpeech = new TextToSpeechService();
 const commandsService = new VoiceCommandsService(appStore, facialRecognition);
 const voiceCommands = new VoiceCommandsStore(commandsService.createCommands(), {
   autoRestart: true
 });
+
+// textToSpeech.init();
+// textToSpeech.say("Hello there mike");
 
 setTimeout(() => facialRecognition.enable(), 3000);
 
