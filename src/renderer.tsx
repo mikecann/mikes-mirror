@@ -51,7 +51,7 @@ const voiceCommands = new VoiceCommandsStore(commandsService.createCommands(), {
   autoRestart: true
 });
 
-// textToSpeech.init();
+textToSpeech.init();
 // textToSpeech.say("Hello there mike");
 
 setTimeout(() => facialRecognition.enable(), 3000);
