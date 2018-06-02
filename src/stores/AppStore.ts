@@ -17,8 +17,8 @@ export class AppStore extends Container<State> {
 
   changeProfile = (profile: string, force?: boolean) => {
 
-    if (this.state.profileLocked && !force) 
-      return console.log(`Cannot change profile to '${profile}', it is currently locked`);
+    // if (this.state.profileLocked && !force) 
+    //   return console.log(`Cannot change profile to '${profile}', it is currently locked`);
 
     if (!this.profiles.hasOwnProperty(profile))
       return console.log(`Cannot change profile to '${profile}', its an unknown profile`);
