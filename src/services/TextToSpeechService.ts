@@ -39,6 +39,7 @@ export class TextToSpeechService {
     }
 
     say(text: string) {
-        shelljs.exec(`say "${text}"`);
+        shelljs.config.execPath = shelljs.which('node')
+        shelljs.exec(`echo "${text}" | festival --tts`);
     }
 }

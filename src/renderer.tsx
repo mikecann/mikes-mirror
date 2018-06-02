@@ -52,7 +52,7 @@ const voiceCommands = new VoiceCommandsStore(commandsService.createCommands(), {
 });
 
 textToSpeech.init();
-// textToSpeech.say("Hello there mike");
+//textToSpeech.say("Hello there mike");
 
 setTimeout(() => facialRecognition.enable(), 3000);
 

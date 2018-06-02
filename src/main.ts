@@ -42,7 +42,7 @@ app.on("ready", async () => {
   hideMouse();
 
   // After 2 hours lets manually restart, just incase..
-  setTimeout(() => window.close, 2 * 3600 * 1000);
+  setTimeout(() => window.close(), 2 * 3600 * 1000);
 
   // Lets continually check git to see if there are updates and close if there are
   await waitForUpdate(30000);

@@ -8,7 +8,7 @@ My React and Typescript based smart mirror software.
 * Yarn
 * for voice recognition: `sudo apt-get install sox libsox-fmt-all libatlas-base-dev`
 * keyfile for google API (contact me for how to get this)
-* for speech synthesis: `sudo apt-get install gnustep-gui-runtime`
+* for speech synthesis: `sudo apt-get install festival`
  
 ## Initial Setup
 
