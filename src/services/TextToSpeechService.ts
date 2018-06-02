@@ -1,4 +1,4 @@
-import * as shelljs from "shelljs";
+import { spawn } from 'child_process';
 
 export class TextToSpeechService {
 
@@ -39,7 +39,6 @@ export class TextToSpeechService {
     }
 
     say(text: string) {
-        shelljs.config.execPath = shelljs.which('node')
-        shelljs.exec(`echo "${text}" | festival --tts`);
+        spawn(`say`, [text]);
     }
 }

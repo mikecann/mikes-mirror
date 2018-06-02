@@ -2,11 +2,14 @@ import { Commands } from '../widgets/voice-commands/VoiceCommandsStore';
 import { AppStore } from '../stores/AppStore';
 import { FacialRecognitionStore } from '../widgets/facial-recognition/FacialRecognitionStore';
 import { remote } from "electron";
+import { TextToSpeechService } from './TextToSpeechService';
 
 export class VoiceCommandsService
 {
     constructor(private appStore: AppStore,
-        private facialRecogntion: FacialRecognitionStore) {
+        private facialRecogntion: FacialRecognitionStore,
+        private textToSpeech: TextToSpeechService
+    ) {
 
     }
 
@@ -32,6 +35,8 @@ export class VoiceCommandsService
             "start face recognition": () => this.facialRecogntion.disable(),
             "disable face recognition": () => this.facialRecogntion.enable(),
             "enable face recognition": () => this.facialRecogntion.disable(),
+            "say (.*)": (result) => this.textToSpeech.say(result[1]),
+            "who is the fairest of them all": (result) => this.textToSpeech.say("everyone knows that olivia is the fairest of them all")
           }
     }
 

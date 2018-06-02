@@ -46,13 +46,10 @@ const facialRecognition = new FacialRecognitionStore({
 
 const systemInfo = new SystemInformationStore();
 const textToSpeech = new TextToSpeechService();
-const commandsService = new VoiceCommandsService(appStore, facialRecognition);
+const commandsService = new VoiceCommandsService(appStore, facialRecognition, textToSpeech);
 const voiceCommands = new VoiceCommandsStore(commandsService.createCommands(), {
   autoRestart: true
 });
-
-textToSpeech.init();
-//textToSpeech.say("Hello there mike");
 
 setTimeout(() => facialRecognition.enable(), 3000);
 
