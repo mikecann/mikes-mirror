@@ -37,8 +37,14 @@ const EventRendering = (props: { state: State }) => {
     if (state == "partial")
         return <Partial result={result!} />
 
-    if (state == "final" || state == "command-found" || state == "command-not-found")
+    if (state == "final")
         return <Final result={result!} />
+
+    if (state == "command-found")
+        return <CommandFound result={result!} />
+
+    if (state == "command-not-found")
+        return <CommandNotFound result={result!} />
 
     if (state == "error")
         return <Error result={result!} />
@@ -69,7 +75,7 @@ const Partial = ({ result }: { result: string }) =>
 
 const Final = ({ result }: { result: string }) =>
     <div className={css.rootContainer}>
-        <div><i className="fa fa-microphone" style={{ color: "green" }} /></div>
+        <div><i className="fa fa-microphone" style={{ color: "white" }} /></div>
         <div>{result}</div>
     </div>
 
@@ -77,6 +83,18 @@ const Error = ({ result }: { result: string }) =>
     <div className={css.rootContainer}>
         <div><i className="fa fa-microphone" style={{ color: "red" }} /></div>
         <div>ERROR {result}</div>
+    </div>
+
+const CommandNotFound = ({ result }: { result: string }) =>
+    <div className={css.rootContainer}>
+        <div><i className="fa fa-microphone" style={{ color: "red" }} /></div>
+        <div>{result}</div>
+    </div>
+
+const CommandFound = ({ result }: { result: string }) =>
+    <div className={css.rootContainer}>
+        <div><i className="fa fa-microphone" style={{ color: "green" }} /></div>
+        <div>{result}</div>
     </div>
 
 const Unknown = (props: any) =>

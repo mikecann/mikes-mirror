@@ -57,7 +57,7 @@ async function send(samples)
         throw new Error(await result.text())
     
     var buffer = await result.buffer();
-    fs.writeFileSync(`./resources/generated.pmdl`, buffer);
+    fs.writeFileSync(`./resources/mirror.pmdl`, buffer);
 }
 
 
