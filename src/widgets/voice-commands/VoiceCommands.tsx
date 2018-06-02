@@ -37,7 +37,7 @@ const EventRendering = (props: { state: State }) => {
     if (state == "partial")
         return <Partial result={result!} />
 
-    if (state == "final")
+    if (state == "final" || state == "command-found" || state == "command-not-found")
         return <Final result={result!} />
 
     if (state == "error")
