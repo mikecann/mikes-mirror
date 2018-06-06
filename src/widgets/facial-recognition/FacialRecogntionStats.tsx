@@ -21,10 +21,7 @@ export default class FacialRecogntionStats extends React.Component<Props, any> {
     renderStats(store: FacialRecognitionStore) {
         return <span style={{ fontSize: "0.8em" }}>
             <i className="fa fa-video" style={{ marginRight: 5 }} /> 
-                locations: {store.state.performance.locations}, 
-                encodings: {store.state.performance.encodings}, 
-                compare faces: {store.state.performance.compareFaces}, 
-                total: {store.state.performance.total}
+                {store.state.elapsedMs} ms, 
         </span>
     }
 }

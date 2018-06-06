@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "docker-compose build && docker-compose run face_recognition bash",
-    "start": "docker-compose up --build"
+    "start": "python3 webcam_service.py",
+    "gui": "python3 webcam2.py"
   }
 }

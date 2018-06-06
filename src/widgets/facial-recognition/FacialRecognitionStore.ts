@@ -16,12 +16,7 @@ export interface State {
     isRunning: boolean;
     autoRestart: boolean;
     event: FacialRecogntionEvent,
-    performance: {
-        locations: number,
-        encodings: number,
-        compareFaces: number,
-        total: number
-    }
+    elapsedMs: number
 }
 
 export interface FacialRecogntionEvent
@@ -29,9 +24,6 @@ export interface FacialRecogntionEvent
     event: "not-started" | "generating-encodings" | "scanning-faces" | "detecting" | "detections-update",
     detections?: FaceRecognitionDetection[],
     person?: string,
-    face_locations_time?: string,
-    face_encodings_time?: string,
-    compare_faces_time?: string,
     total_time?: string,
 }
 
@@ -47,12 +39,7 @@ export class FacialRecognitionStore extends Container<State> {
             isRunning: false,
             event: { event: "not-started" },
             autoRestart: props.autoRestart == undefined ? false : props.autoRestart,
-            performance: {
-                locations: 0,
-                encodings: 0,
-                compareFaces: 0,
-                total: 0
-            }
+            elapsedMs: 0
         }
         console.log("FacialRecognitionStore CREATE!!");
     }
@@ -141,15 +128,11 @@ export class FacialRecognitionStore extends Container<State> {
         switch(event.event)
         {
             case "detections-update":
+
                 //console.log("event.detections", event.detections)
                 this.setState({
                     detections: event.detections,
-                    performance: {
-                        encodings: Math.round(parseFloat(event.face_encodings_time!) * 1000),
-                        locations: Math.round(parseFloat(event.face_locations_time!) * 1000),
-                        compareFaces: Math.round(parseFloat(event.compare_faces_time!) * 1000),
-                        total: Math.round(parseFloat(event.total_time!) * 1000),
-                    }
+                    elapsedMs: Math.round(parseFloat(event.total_time!) * 1000),
                 });  
                 break;
         }
