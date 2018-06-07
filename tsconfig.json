@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "lib": ["es6", "dom"],
     "jsx": "react",
+    "target": "es5",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -13,6 +14,7 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
+    "experimentalDecorators": true,
     "paths": {
       "*": ["node_modules/*"]
     }

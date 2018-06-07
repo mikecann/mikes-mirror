@@ -1,64 +1,53 @@
 import * as React from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
-import { Profiles } from './Profiles';
 import ProfileWrapper from './ProfileWrapper';
-import ManualProfileSwitcher from '../widgets/manual-profile-switcher/ManualProfileSwitcher';
+import ManualProfileSwitcher from '../widgets/profiles/ManualProfileSwitcher';
 import css from "./AppStyles";
-import VoiceCommands from '../widgets/voice-commands/VoiceCommands';
-import { VoiceCommandsStore } from '../widgets/voice-commands/VoiceCommandsStore';
-import { Subscribe } from 'unstated';
-import { AppStore } from '../stores/AppStore';
-import FacialRecognition from '../widgets/facial-recognition/FacialRecognition';
+import { observer, inject } from 'mobx-react';
+import { ProfilesStore } from '../widgets/profiles/ProfilesStore';
+import { AppProfiles } from '../profiles/AppProfiles';
+import VoiceCommands from '../widgets/speech-detect/SpeechDetectionOverlay';
+import FacialProfileStatusIcon from '../widgets/facial-recognition/FacialProfileStatusIcon';
+import SpeechDetectionOverlay from '../widgets/speech-detect/SpeechDetectionOverlay';
+import SpeechDetectionStatusIcon from '../widgets/speech-detect/SpeechDetectionStatusIcon';
 
 interface Props {
-  profiles: Profiles,
-  startingProfile: string,
-  isProd: boolean
+  profiles?: ProfilesStore<AppProfiles>
 }
 
+@inject("profiles")
+@observer
 export default class App extends React.Component<Props, any> {
 
   render() {
-    return <Subscribe to={[VoiceCommandsStore, AppStore]}>
-      {
-        (voiceStore: VoiceCommandsStore, appStore: AppStore) => 
-          this.renderAll(appStore, voiceStore)
-      }
-    </Subscribe>
-  }
-
-  renderAll(appStore: AppStore, voiceStore: VoiceCommandsStore) {
 
     const { profiles } = this.props;
-    const { profile } = appStore.state;
-
-    const voiceState = voiceStore.state.state;
-    const shouldShowProfile = voiceState == "ready" || voiceState == "not-ready";
+    const profile = profiles!.profile;
 
     return <div className={css.app}>
 
-      {shouldShowProfile ?
-        <CSSTransitionGroup
-          className={css.profiles}
-          transitionName="profile"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-        >
-          {[<ProfileWrapper key={profile}>
-            {profiles[profile]()}
-          </ProfileWrapper>]}
-        </CSSTransitionGroup> : null
-      }
+      <CSSTransitionGroup
+        className={css.profiles}
+        transitionName="profile"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}
+      >
+        {[<ProfileWrapper key={profile}>
+          {profiles!.profiles[profile]()}
+        </ProfileWrapper>]}
+      </CSSTransitionGroup>
 
-      <ManualProfileSwitcher
-        onChangeProfile={appStore.changeProfile}
-        onNextProfile={appStore.nextProfile}
-        onPrevProfile={appStore.prevProfile}
-      />
+      <ManualProfileSwitcher />
 
-      <VoiceCommands />
-      <FacialRecognition />
+      <VoiceCommands />      
+      <SpeechDetectionOverlay />
+
+      <div style={{ display: "flex", position: "absolute", top: 0, right: 0 }}>
+        <FacialProfileStatusIcon />
+        <SpeechDetectionStatusIcon />
+      </div>
 
     </div>
   }
+
 }

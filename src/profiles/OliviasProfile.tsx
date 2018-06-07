@@ -5,12 +5,10 @@ import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import css from "./styles";
 import { Howl } from "howler";
 import RandomCute from '../widgets/random-cute/RandomCute';
+import { Profile } from '../widgets/profiles/Profile';
 
-interface State 
-{
-}
 
-export default class OliviasProfile extends React.Component<any, State> {
+export default class OliviasProfile extends Profile<any, any> {
 
 
   constructor(props: any) {

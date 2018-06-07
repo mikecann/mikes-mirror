@@ -1,27 +1,31 @@
-import { Commands } from '../widgets/voice-commands/VoiceCommandsStore';
-import { AppStore } from '../stores/AppStore';
 import { FacialRecognitionStore } from '../widgets/facial-recognition/FacialRecognitionStore';
 import { remote } from "electron";
 import { TextToSpeechService } from './TextToSpeechService';
+import { ProfilesStore } from '../widgets/profiles/ProfilesStore';
+import { AppProfiles } from '../profiles/AppProfiles';
+import { ISpeechCommandsProvider } from '../widgets/speech-detect/ISpeechCommandsProvider';
 
-export class VoiceCommandsService
+export type Commands = {
+    [key : string]: (result: RegExpExecArray) => void
+}
+
+export class VoiceCommandsController implements ISpeechCommandsProvider
 {
-    constructor(private appStore: AppStore,
+    constructor(private profiles: ProfilesStore<AppProfiles>,
         private facialRecogntion: FacialRecognitionStore,
         private textToSpeech: TextToSpeechService
     ) {
 
     }
 
-    createCommands(): Commands {
-        return {
+    private commands: Commands = {
             "restart": () => window.close(),
             "reboot": () => window.close(),
             "exit": () => window.close(),
             "quit": () => window.close(),
-            "switch profile to (.*)": (result) => this.appStore.changeProfile(result[1].toLocaleLowerCase()),
-            "lock profile (.*)": (result) => this.appStore.lockProfile(result[1].toLocaleLowerCase()),
-            "unlock profile": (result) => this.appStore.unlockProfile(),
+            "switch profile to (.*)": (result) => this.profiles.changeProfile(result[1].toLocaleLowerCase()),
+            "lock profile (.*)": (result) => this.profiles.lockProfile(result[1].toLocaleLowerCase()),
+            "unlock profile": (result) => this.profiles.unlockProfile(),
             "toggle inspector": () => this.toggleInspector(),
             "open inspector": () => this.openInspector(),
             "close inspector": () => this.closeInspector(),
@@ -37,7 +41,6 @@ export class VoiceCommandsService
             "enable face recognition": () => this.facialRecogntion.disable(),
             "say (.*)": (result) => this.textToSpeech.say(result[1]),
             "who is the fairest of them all": (result) => this.textToSpeech.say("everyone knows that olivia is the fairest of them all")
-          }
     }
 
     toggleInspector() {
@@ -55,5 +58,9 @@ export class VoiceCommandsService
     closeInspector() {
         var window = remote.getCurrentWindow();
         window.webContents.closeDevTools();
+    }
+
+    getCommands(): Commands {
+        return this.commands;
     }
 }

@@ -1,70 +1,63 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import MikesProfile from './profiles/MikesProfile';
-import KelsiesProfile from './profiles/KelsiesProfile';
-import EmptyProfile from './profiles/EmptyProfile';
-import { Profiles } from './components/Profiles';
-import { Provider } from "unstated";
-import App from './components/App';
 import { setupStyles } from './styles';
 import { SystemInformationStore } from './widgets/system-info/SystemInformationStore';
-import TarynsProfile from './profiles/TarynsProfile';
-import LeahsProfile from './profiles/LeahsProfile';
-import UnknownProfile from './profiles/UnknownProfile';
-import OliviasProfile from './profiles/OliviasProfile';
-import GregsProfile from './profiles/GregsProfile';
-import ColleensProfile from './profiles/ColleensProfile';
-import { VoiceCommandsStore } from './widgets/voice-commands/VoiceCommandsStore';
-import { AppStore } from './stores/AppStore';
 import { FacialRecognitionStore } from './widgets/facial-recognition/FacialRecognitionStore';
-import { FacialProfileSwitchingService } from './services/FacialProfileSwitchingService';
+import { Provider as MobxProvider } from "mobx-react";
+import { configure } from 'mobx';
+import App from './components/App';
+import { ProfilesStore } from './widgets/profiles/ProfilesStore';
+import { appProfiles } from './profiles/AppProfiles';
+import { SpeechDetectionStore } from './widgets/speech-detect/SpeechDetectionStore';
+import { SpeechCommandsStore } from './widgets/speech-detect/SpeechCommandsStore';
+import { VoiceCommandsController } from './services/VoiceCommandsService';
 import { TextToSpeechService } from './services/TextToSpeechService';
-import { VoiceCommandsService } from './services/VoiceCommandsService';
 
 // Setup the initial styles for the page
 setupStyles();
 
-// The available profiles we can switch between
-const profiles: Profiles = {
-  mike: () => <MikesProfile />,
-  kelsie: () => <KelsiesProfile />,
-  taryn: () => <TarynsProfile />,
-  olivia: () => <OliviasProfile />,
-  greg: () => <GregsProfile />,
-  colleen: () => <ColleensProfile />,
-  leah: () => <LeahsProfile />,
-  empty: () => <EmptyProfile />,
-  unknown: () => <UnknownProfile />
-}
+// Init MobX
+configure({
+  enforceActions: true
+})
 
-const appStore = new AppStore({
-  profile: "empty",
-  msBetweenProfileChanges: 10000
-}, profiles);
+// Services
 
-const facialRecognition = new FacialRecognitionStore({
-  autoRestart: true
-});
 
+// Controllers
+//const facialSwitcher = new FacialProfileSwitchingController(appStore, facialStore);
+
+// Construct dependencies
+const profiles = new ProfilesStore(appProfiles, "empty");
+const facialStore = new FacialRecognitionStore();
 const systemInfo = new SystemInformationStore();
+const speechDetection = new SpeechDetectionStore();
 const textToSpeech = new TextToSpeechService();
-const facialSwitcher = new FacialProfileSwitchingService(appStore, facialRecognition);
-const commandsService = new VoiceCommandsService(appStore, facialRecognition, textToSpeech);
-const voiceCommands = new VoiceCommandsStore(commandsService.createCommands(), {
-  autoRestart: true
-});
+const commandsService = new VoiceCommandsController(profiles, facialStore, textToSpeech);
+const speechCommands = new SpeechCommandsStore(speechDetection, commandsService);
 
-facialSwitcher.init();
-setTimeout(() => facialRecognition.enable(), 3000);
+
+
+
+
+// Wait a little time for things to bootup before we start facial recognition
+setTimeout(() => facialStore.enable(), 3000);
+
+// Init
+systemInfo.start();
+speechDetection.start();
+speechCommands.start();
 
 // Begin rendering
 ReactDOM.render(
-  <Provider inject={[facialRecognition, systemInfo, voiceCommands, appStore]}>
-    <App 
-      isProd={process.env.NODE_ENV=="production"}
-      profiles={profiles}  
-      startingProfile="empty"
-    />
-  </Provider>,
+  <MobxProvider
+    systemInfo={systemInfo}
+    profiles={profiles}
+    facialStore={facialStore}
+    speechDetection={speechDetection}
+    speechCommands={speechCommands}
+    >
+      <App />
+  </MobxProvider>,
   document.getElementById('root') as HTMLElement
 );

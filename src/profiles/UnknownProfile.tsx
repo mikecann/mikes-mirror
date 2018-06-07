@@ -2,8 +2,9 @@ import * as React from 'react';
 import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import css from "./styles";
 import SystemInfo from '../widgets/system-info/SystemInfo';
+import { Profile } from '../widgets/profiles/Profile';
 
-export default class UnknownProfile extends React.Component<any, any> {
+export default class UnknownProfile extends Profile<any, any> {
   render() {
     return <div className={css.rootContainer}>
       <div className={css.flex} />

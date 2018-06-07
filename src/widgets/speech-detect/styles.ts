@@ -2,7 +2,7 @@ import { stylesheet } from "typestyle/lib";
 import * as csstips from 'csstips';
 
 export default stylesheet({
-    voiceCommands: {
+    fullscreen: {
       width: "100%",
       height: "100%",
       position: "absolute",

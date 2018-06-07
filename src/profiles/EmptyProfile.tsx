@@ -5,8 +5,9 @@ import SystemInfo from '../widgets/system-info/SystemInfo';
 import DisplayDeactivator from '../widgets/display-deactivator/DisplayDeactivator';
 import Clock from '../widgets/clock/Clock';
 import FacialRecogntionStats from '../widgets/facial-recognition/FacialRecogntionStats';
+import { Profile } from '../widgets/profiles/Profile';
 
-export default class EmptyProfile extends React.Component<any, any> {
+export default class EmptyProfile extends Profile<any, any> {
   render() {
     return <div className={css.rootContainer}>
       <div className={css.hozContainer}>

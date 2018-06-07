@@ -6,8 +6,9 @@ import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import SystemInfo from '../widgets/system-info/SystemInfo';
 import css from "./styles";
 import FacialRecogntionStats from '../widgets/facial-recognition/FacialRecogntionStats';
+import { Profile } from '../widgets/profiles/Profile';
 
-export default class MikesProfile extends React.Component<any, any> {
+export default class MikesProfile extends Profile<any, any> {
 
   // componentDidMount() {
   //   // Play a sound when showing the profile

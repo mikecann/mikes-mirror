@@ -1,6 +1,8 @@
 import * as PythonShell from "python-shell";
-import { Container } from "unstated";
 import * as path from 'path';
+import { observable, action, runInAction, computed } from "mobx";
+
+export type EventType = "generating-encodings" | "scanning-faces" | "detecting" | "detections-update";
 
 export interface FaceRecognitionDetection {
     top: number;
@@ -10,57 +12,34 @@ export interface FaceRecognitionDetection {
     name: string;
 }
 
-export interface State {
-    detections: FaceRecognitionDetection[];
-    enabled: boolean;
-    isRunning: boolean;
-    autoRestart: boolean;
-    event: FacialRecogntionEvent,
-    elapsedMs: number[],
-}
-
-export interface FacialRecogntionEvent
-{
-    event: "not-started" | "generating-encodings" | "scanning-faces" | "detecting" | "detections-update",
+export interface FacialRecogntionEvent {
+    event: EventType,
     detections?: FaceRecognitionDetection[],
     person?: string,
     total_time?: string,
 }
 
-export class FacialRecognitionStore extends Container<State> {
+export class FacialRecognitionStore {
 
-    pyshell: any;
+    private pyshell: any;
 
-    count: number;
-    averageElapsed: number;
+    @observable enabled: boolean = true;
+    @observable isRunning: boolean = false;
+    @observable autoRestart: boolean = true;
+    @observable event?: FacialRecogntionEvent;
+    @observable elapsedMs: number[] = [1];
 
-    constructor(props: Partial<State>) {
-        super();
-        this.state = {
-            detections: [],
-            enabled: false,
-            isRunning: false,
-            event: { event: "not-started" },
-            autoRestart: props.autoRestart == undefined ? false : props.autoRestart,
-            elapsedMs: [1]
-        }
-    }
-
+    @action
     public enable() {
-        const { isRunning } = this.state;
-
-        this.setState({ enabled: true });
-
-        if (!isRunning)
+        this.enabled = true;
+        if (!this.isRunning)
             this.startDetecting();
     }
 
+    @action
     public disable() {
-        const { isRunning } = this.state;
-
-        this.setState({ enabled: false });
-
-        if (isRunning)
+        this.enabled = false;
+        if (this.isRunning)
             this.stopDetecting();
     }
 
@@ -72,79 +51,62 @@ export class FacialRecognitionStore extends Container<State> {
 
         const rootDir = path.dirname(main.filename);
 
-        let lastMessage = "";
-
-        try 
-        {
-            this.setState({ isRunning: true, detections: [], event: { event: "not-started" } });
-
+        try {
             this.pyshell = new PythonShell("webcam_service.py", {
                 cwd: `${rootDir}/../facial_recognition/`,
                 pythonPath: "python3"
             });
-    
+
             this.pyshell.on('message', (message: string) => {
-                if (message !== lastMessage) {
-                    lastMessage = message;
-                    //console.log(message);
-                    try {
-                        var event: FacialRecogntionEvent = JSON.parse(message);
-                        this.handleEvent(event);                        
-                    } catch (error) {
-                        console.warn(`FacialRecognitionStore could not parse message from python '${message}'`);
-                    }
+                try {
+                    var event: FacialRecogntionEvent = JSON.parse(message);
+                    this.handleEvent(event);
+                } catch (error) {
+                    console.warn(`FacialRecognitionStore could not parse message from python '${message}'`, error);
                 }
             });
-    
-            this.pyshell.on('error', (message:any) => {
+
+            this.pyshell.on('error', (message: any) => {
                 console.error("FacialRecognitionStore Error", message);
-
-                this.setState({ isRunning: false });
-
-                if (this.state.enabled && this.state.autoRestart)
+                runInAction(() => this.isRunning = false);
+                if (this.enabled && this.autoRestart)
                     this.startDetecting();
 
             });
-    
-            this.pyshell.on('close', (message:any) => {
+
+            this.pyshell.on('close', (message: any) => {
                 console.error("FacialRecognitionStore Closed", message);
-
-                this.setState({ isRunning: false });
-
-                if (this.state.enabled && this.state.autoRestart)
+                runInAction(() => this.isRunning = false);
+                if (this.enabled && this.autoRestart)
                     this.startDetecting();
             });
+
+            runInAction(() => this.isRunning = true);
         }
-        catch(e)
-        {
+        catch (e) {
             console.error('Error while tryng to start the python shell', e);
         }
 
     }
 
-    private handleEvent(event: FacialRecogntionEvent)
-    {
+    @action
+    private handleEvent(event: FacialRecogntionEvent) {
         //console.log("FacialRecognitionStore handing event", event);
 
-        switch(event.event)
-        {
-            case "detections-update":
+        this.event = event;
 
-                //console.log("event.detections", event.detections)
-                const ms = Math.round(parseFloat(event.total_time!) * 1000);
-                const arr = [...this.state.elapsedMs];
-                arr.push(ms);
-                if (arr.length == 10)
-                    arr.shift();
+        if (event.event != "detections-update")
+            return;
 
-                this.setState({
-                    detections: event.detections,
-                    elapsedMs: arr,
-                });  
-                break;
-        }
-          
-        this.setState({ event });
+        //console.log("event.detections", event.detections)
+        const ms = Math.round(parseFloat(event.total_time!) * 1000);
+        this.elapsedMs.push(ms);
+        this.elapsedMs.shift();
+    }
+
+    @computed
+    get averageElapsedMs() {
+        return Math.round(this.elapsedMs.reduce((p, c) => p + c, 0) / this.elapsedMs.length)
     }
 
     private stopDetecting() {

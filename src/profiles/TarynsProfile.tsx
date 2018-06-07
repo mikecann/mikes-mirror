@@ -4,8 +4,9 @@ import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
 import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import css from "./styles";
 import { Howl } from "howler";
+import { Profile } from '../widgets/profiles/Profile';
 
-export default class TarynsProfile extends React.Component<any, any> {
+export default class TarynsProfile extends Profile<any, any> {
 
   componentDidMount() {
     // Play a sound when showing the profile

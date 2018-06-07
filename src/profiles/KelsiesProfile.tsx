@@ -6,8 +6,9 @@ import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
 import css from "./styles";
 //import { Howl } from "howler";
 import RandomCute from '../widgets/random-cute/RandomCute';
+import { Profile } from '../widgets/profiles/Profile';
 
-export default class MikesProfile extends React.Component<any, any> {
+export default class MikesProfile extends Profile<any, any> {
 
 
   componentDidMount() {
