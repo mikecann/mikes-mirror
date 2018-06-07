@@ -16,7 +16,7 @@ export interface State {
     isRunning: boolean;
     autoRestart: boolean;
     event: FacialRecogntionEvent,
-    elapsedMs: number
+    elapsedMs: number[],
 }
 
 export interface FacialRecogntionEvent
@@ -31,6 +31,9 @@ export class FacialRecognitionStore extends Container<State> {
 
     pyshell: any;
 
+    count: number;
+    averageElapsed: number;
+
     constructor(props: Partial<State>) {
         super();
         this.state = {
@@ -39,9 +42,8 @@ export class FacialRecognitionStore extends Container<State> {
             isRunning: false,
             event: { event: "not-started" },
             autoRestart: props.autoRestart == undefined ? false : props.autoRestart,
-            elapsedMs: 0
+            elapsedMs: [1]
         }
-        console.log("FacialRecognitionStore CREATE!!");
     }
 
     public enable() {
@@ -69,7 +71,6 @@ export class FacialRecognitionStore extends Container<State> {
             throw new Error("require.main is undefined for some reason, cannot continue.");
 
         const rootDir = path.dirname(main.filename);
-        console.log("Starting python service..", { rootDir });
 
         let lastMessage = "";
 
@@ -85,7 +86,7 @@ export class FacialRecognitionStore extends Container<State> {
             this.pyshell.on('message', (message: string) => {
                 if (message !== lastMessage) {
                     lastMessage = message;
-                    console.log(message);
+                    //console.log(message);
                     try {
                         var event: FacialRecogntionEvent = JSON.parse(message);
                         this.handleEvent(event);                        
@@ -130,9 +131,15 @@ export class FacialRecognitionStore extends Container<State> {
             case "detections-update":
 
                 //console.log("event.detections", event.detections)
+                const ms = Math.round(parseFloat(event.total_time!) * 1000);
+                const arr = [...this.state.elapsedMs];
+                arr.push(ms);
+                if (arr.length == 10)
+                    arr.shift();
+
                 this.setState({
                     detections: event.detections,
-                    elapsedMs: Math.round(parseFloat(event.total_time!) * 1000),
+                    elapsedMs: arr,
                 });  
                 break;
         }

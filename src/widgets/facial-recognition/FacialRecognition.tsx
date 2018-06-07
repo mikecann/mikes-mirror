@@ -23,16 +23,19 @@ export default class FacialRecognition extends React.Component<Props, any> {
 
         const { enabled, event, detections } = store.state;
 
-        const hasDetections = detections.length > 0;
-        const isDetecting = event.event === "detections-update";
+        if (enabled) {
 
-        if (enabled)
-            return <Enabled hasDetections={hasDetections} isDetecting={isDetecting} />
-
-        if (!enabled)
+            if (event.event == "detections-update")
+                if (detections.length != 0)
+                    return <DetectionsFound />
+                else
+                    return <NoDetections />
+            else
+                return <NotReady />
+        }
+        else {
             return <Disabled />
-
-        return <Unknown />
+        }
     }
 }
 
@@ -41,18 +44,23 @@ const Disabled = () =>
         <span className="fa fa-video" style={{ opacity: 0.5 }} />
     </div>
 
-const Enabled = (props: { isDetecting: boolean, hasDetections: boolean }) => {
+const NotReady = () =>
+    <div className={css.ready}>
+        <span className="fa fa-video" style={{ color: "orange" }} />
+    </div>;
 
-    //let colour = props.hasDetections ? "green" : "white";
-
-    return <div className={css.ready}>
+const NoDetections = () =>
+    <div className={css.ready}>
         <span className="fa fa-video" style={{ color: "white" }} />
     </div>;
-}
 
+const DetectionsFound = () =>
+    <div className={css.ready}>
+        <span className="fa fa-video" style={{ color: "green" }} />
+    </div>;
 
-const Unknown = () => {
-    return <div className={css.ready}>
-        <span className="fa fa-video" style={{ color: "red" }} />
-    </div>
-}
+// const IconBadge = (props: { num: number, style?: any }) => 
+//     <span className="fa-layers fa-fw">
+//         <i className="fas fa-video" style={props.style}></i>
+//         <span className="fa-layers-counter" style={{background: "Tomato"}}>12456</span>
+//     </span>

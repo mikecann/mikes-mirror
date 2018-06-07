@@ -19,9 +19,12 @@ export default class FacialRecogntionStats extends React.Component<Props, any> {
     }
 
     renderStats(store: FacialRecognitionStore) {
+        const arr = store.state.elapsedMs;
+        const averageElapsed = Math.round(arr.reduce((p, c) => p + c, 0) / arr.length);
+
         return <span style={{ fontSize: "0.8em" }}>
             <i className="fa fa-video" style={{ marginRight: 5 }} /> 
-                {store.state.elapsedMs} ms, 
+                {averageElapsed} ms, 
         </span>
     }
 }

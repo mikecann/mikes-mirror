@@ -9,7 +9,6 @@ import { VoiceCommandsStore } from '../widgets/voice-commands/VoiceCommandsStore
 import { Subscribe } from 'unstated';
 import { AppStore } from '../stores/AppStore';
 import FacialRecognition from '../widgets/facial-recognition/FacialRecognition';
-import FacialProfileSwitcher from '../widgets/facial-recognition/FacialProfileSwitcher';
 
 interface Props {
   profiles: Profiles,
@@ -56,8 +55,6 @@ export default class App extends React.Component<Props, any> {
         onNextProfile={appStore.nextProfile}
         onPrevProfile={appStore.prevProfile}
       />
-
-      {this.props.isProd ? <FacialProfileSwitcher onChangeProfile={appStore.changeProfile} /> : null}
 
       <VoiceCommands />
       <FacialRecognition />

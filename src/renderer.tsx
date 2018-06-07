@@ -16,9 +16,10 @@ import GregsProfile from './profiles/GregsProfile';
 import ColleensProfile from './profiles/ColleensProfile';
 import { VoiceCommandsStore } from './widgets/voice-commands/VoiceCommandsStore';
 import { AppStore } from './stores/AppStore';
-import { VoiceCommandsService } from './services/VoiceCommandsService';
 import { FacialRecognitionStore } from './widgets/facial-recognition/FacialRecognitionStore';
+import { FacialProfileSwitchingService } from './services/FacialProfileSwitchingService';
 import { TextToSpeechService } from './services/TextToSpeechService';
+import { VoiceCommandsService } from './services/VoiceCommandsService';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -37,7 +38,8 @@ const profiles: Profiles = {
 }
 
 const appStore = new AppStore({
-  profile: "empty"
+  profile: "empty",
+  msBetweenProfileChanges: 10000
 }, profiles);
 
 const facialRecognition = new FacialRecognitionStore({
@@ -46,11 +48,13 @@ const facialRecognition = new FacialRecognitionStore({
 
 const systemInfo = new SystemInformationStore();
 const textToSpeech = new TextToSpeechService();
+const facialSwitcher = new FacialProfileSwitchingService(appStore, facialRecognition);
 const commandsService = new VoiceCommandsService(appStore, facialRecognition, textToSpeech);
 const voiceCommands = new VoiceCommandsStore(commandsService.createCommands(), {
   autoRestart: true
 });
 
+facialSwitcher.init();
 setTimeout(() => facialRecognition.enable(), 3000);
 
 // Begin rendering
