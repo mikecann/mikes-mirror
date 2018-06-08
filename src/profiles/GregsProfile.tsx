@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Clock from '../plugins/clock/Clock';
 import WelcomeMessage from '../plugins/welcome-message/WelcomeMessage';
-import ProfilePicture from '../plugins/profile-picture/ProfilePicture';
 import css from "./styles";
 import { Profile } from '../plugins/profiles/Profile';
+import { ProfilePicWithChangeBar } from '../components/ProfilePicWithChangeBar';
 
 
 export default class GregsProfile extends Profile<any, any> {
@@ -22,7 +22,7 @@ export default class GregsProfile extends Profile<any, any> {
         <div className={css.hozContainer}>
           <Clock />
           <div className={css.flex} />
-          <ProfilePicture url="../facial_recognition/faces/greg.jpg" />
+          <ProfilePicWithChangeBar url="../facial_recognition/faces/greg.jpg" />
         </div>
 
         <div className={css.flex} />

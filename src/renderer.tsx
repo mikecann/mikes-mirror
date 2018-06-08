@@ -10,8 +10,9 @@ import { ProfilesStore } from './plugins/profiles/ProfilesStore';
 import { appProfiles } from './profiles/AppProfiles';
 import { SpeechDetectionStore } from './plugins/speech-detect/SpeechDetectionStore';
 import { SpeechCommandsStore } from './plugins/speech-detect/SpeechCommandsStore';
-import { VoiceCommandsController } from './services/VoiceCommandsService';
-import { TextToSpeechService } from './services/TextToSpeechService';
+import { MirrorSpeechCommandsProvider } from './services/MirrorSpeechCommandsProvider';
+import { TextToSpeechService } from './plugins/text-to-speech/TextToSpeechService';
+import { FacialProfileSwitcher } from './plugins/facial-profile-switcher/FacialProfileSwitcher';
 
 // Setup the initial styles for the page
 setupStyles();
@@ -21,24 +22,15 @@ configure({
   enforceActions: true
 })
 
-// Services
-
-
-// Controllers
-//const facialSwitcher = new FacialProfileSwitchingController(appStore, facialStore);
-
 // Construct dependencies
 const profiles = new ProfilesStore(appProfiles, "empty");
 const facialStore = new FacialRecognitionStore();
 const systemInfo = new SystemInformationStore();
 const speechDetection = new SpeechDetectionStore();
 const textToSpeech = new TextToSpeechService();
-const commandsService = new VoiceCommandsController(profiles, facialStore, textToSpeech);
+const commandsService = new MirrorSpeechCommandsProvider(profiles, facialStore, textToSpeech);
 const speechCommands = new SpeechCommandsStore(speechDetection, commandsService);
-
-
-
-
+const facialSwitcher = new FacialProfileSwitcher(profiles, facialStore);
 
 // Wait a little time for things to bootup before we start facial recognition
 setTimeout(() => facialStore.enable(), 3000);
@@ -47,6 +39,7 @@ setTimeout(() => facialStore.enable(), 3000);
 systemInfo.start();
 speechDetection.start();
 speechCommands.start();
+facialSwitcher.start();
 
 // Begin rendering
 ReactDOM.render(
@@ -56,6 +49,7 @@ ReactDOM.render(
     facialStore={facialStore}
     speechDetection={speechDetection}
     speechCommands={speechCommands}
+    facialSwitcher={facialSwitcher}
     >
       <App />
   </MobxProvider>,

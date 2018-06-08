@@ -18,6 +18,11 @@ export class ProfilesStore<T extends Profiles>
 
     @action
     changeProfile(name: keyof T) {
+        
+        if (name == this.profile)
+            return;
+
+        console.log(`ProfilesStore changed profile to`, name);
         this.profile = name;
     }
 
@@ -25,7 +30,7 @@ export class ProfilesStore<T extends Profiles>
     nextProfile() {
         var keys = Object.keys(this.profiles);
         let nextIndex = wrap(0, keys.length, keys.indexOf(this.profile + "") + 1);
-        console.log(`nextProfiled`, { nextIndex });
+        console.log(`ProfilesStore nextProfiled`, { nextIndex });
         this.changeProfile(keys[nextIndex]);
     }
 
@@ -33,20 +38,20 @@ export class ProfilesStore<T extends Profiles>
     prevProfile() {
         var keys = Object.keys(this.profiles);
         let nextIndex = wrap(0, keys.length, keys.indexOf(this.profile + "") - 1);
-        console.log(`prevProfile`, { nextIndex });
+        console.log(`ProfilesStore prevProfile`, { nextIndex });
         this.changeProfile(keys[nextIndex]);
     }
 
     @action
     lockProfile(profile: string) {
-        console.log("profile locked to", profile);
+        console.log("ProfilesStore profile locked to", profile);
         this.changeProfile(profile);
         this.isProfileLocked = true;
     }
 
     @action
     unlockProfile() {
-        console.log("unlocking profile");
+        console.log("ProfilesStore unlocking profile");
         this.isProfileLocked = false;
     }
 

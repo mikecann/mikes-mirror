@@ -1,5 +1,5 @@
 import * as React from 'react';
-import MikesProfile from './KelsiesProfile';
+import MikesProfile from './MikesProfile';
 import KelsiesProfile from './KelsiesProfile';
 import TarynsProfile from './TarynsProfile';
 import OliviasProfile from './OliviasProfile';

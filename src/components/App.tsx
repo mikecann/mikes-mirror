@@ -10,6 +10,7 @@ import VoiceCommands from '../plugins/speech-detect/SpeechDetectionOverlay';
 import FacialProfileStatusIcon from '../plugins/facial-recognition/FacialProfileStatusIcon';
 import SpeechDetectionOverlay from '../plugins/speech-detect/SpeechDetectionOverlay';
 import SpeechDetectionStatusIcon from '../plugins/speech-detect/SpeechDetectionStatusIcon';
+import { toJS } from 'mobx';
 
 interface Props {
   profiles?: ProfilesStore<AppProfiles>
@@ -21,8 +22,12 @@ export default class App extends React.Component<Props, any> {
 
   render() {
 
-    const { profiles } = this.props;
-    const profile = profiles!.profile;
+    const profiles = toJS(this.props.profiles!.profiles);
+    const profile = toJS(this.props.profiles!.profile) + "";
+    
+    const profileConstr = profiles[profile];
+
+    console.log("profile", profile, profiles, profileConstr)
 
     return <div className={css.app}>
 
@@ -33,7 +38,7 @@ export default class App extends React.Component<Props, any> {
         transitionLeaveTimeout={300}
       >
         {[<ProfileWrapper key={profile}>
-          {profiles!.profiles[profile]()}
+          {profileConstr()}
         </ProfileWrapper>]}
       </CSSTransitionGroup>
 

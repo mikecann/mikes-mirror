@@ -1,14 +1,12 @@
 import * as React from 'react';
 import Clock from '../plugins/clock/Clock';
 import WelcomeMessage from '../plugins/welcome-message/WelcomeMessage';
-import ProfilePicture from '../plugins/profile-picture/ProfilePicture';
-//import NewsRSS from '../plugins/news-rss/NewsRSS';
 import css from "./styles";
-//import { Howl } from "howler";
 import RandomCute from '../plugins/random-cute/RandomCute';
 import { Profile } from '../plugins/profiles/Profile';
+import { ProfilePicWithChangeBar } from '../components/ProfilePicWithChangeBar';
 
-export default class MikesProfile extends Profile<any, any> {
+export default class KelsiesProfile extends Profile<any, any> {
 
 
   componentDidMount() {
@@ -25,7 +23,7 @@ export default class MikesProfile extends Profile<any, any> {
         <div className={css.hozContainer}>
           <Clock />
           <div className={css.flex} />
-          <ProfilePicture url="../facial_recognition/faces/kelsie.jpg" />
+          <ProfilePicWithChangeBar url="../facial_recognition/faces/kelsie.jpg" />
         </div>
 
         {/* <NewsRSS
