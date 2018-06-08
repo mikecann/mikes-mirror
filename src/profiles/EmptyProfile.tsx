@@ -1,11 +1,11 @@
 import * as React from 'react';
-import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
+import WelcomeMessage from '../plugins/welcome-message/WelcomeMessage';
 import css from "./styles";
-import SystemInfo from '../widgets/system-info/SystemInfo';
-import DisplayDeactivator from '../widgets/display-deactivator/DisplayDeactivator';
-import Clock from '../widgets/clock/Clock';
-import FacialRecogntionStats from '../widgets/facial-recognition/FacialRecogntionStats';
-import { Profile } from '../widgets/profiles/Profile';
+import SystemInfo from '../plugins/system-info/SystemInfo';
+import DisplayDeactivator from '../plugins/display-deactivator/DisplayDeactivator';
+import Clock from '../plugins/clock/Clock';
+import FacialRecogntionStats from '../plugins/facial-recognition/FacialRecogntionStats';
+import { Profile } from '../plugins/profiles/Profile';
 
 export default class EmptyProfile extends Profile<any, any> {
   render() {

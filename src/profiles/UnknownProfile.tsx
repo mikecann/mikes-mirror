@@ -1,8 +1,8 @@
 import * as React from 'react';
-import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
+import WelcomeMessage from '../plugins/welcome-message/WelcomeMessage';
 import css from "./styles";
-import SystemInfo from '../widgets/system-info/SystemInfo';
-import { Profile } from '../widgets/profiles/Profile';
+import SystemInfo from '../plugins/system-info/SystemInfo';
+import { Profile } from '../plugins/profiles/Profile';
 
 export default class UnknownProfile extends Profile<any, any> {
   render() {

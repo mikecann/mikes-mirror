@@ -1,9 +1,9 @@
-import { FacialRecognitionStore } from '../widgets/facial-recognition/FacialRecognitionStore';
+import { FacialRecognitionStore } from '../plugins/facial-recognition/FacialRecognitionStore';
 import { remote } from "electron";
 import { TextToSpeechService } from './TextToSpeechService';
-import { ProfilesStore } from '../widgets/profiles/ProfilesStore';
+import { ProfilesStore } from '../plugins/profiles/ProfilesStore';
 import { AppProfiles } from '../profiles/AppProfiles';
-import { ISpeechCommandsProvider } from '../widgets/speech-detect/ISpeechCommandsProvider';
+import { ISpeechCommandsProvider } from '../plugins/speech-detect/ISpeechCommandsProvider';
 
 export type Commands = {
     [key : string]: (result: RegExpExecArray) => void

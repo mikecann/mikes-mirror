@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 import ProfileWrapper from './ProfileWrapper';
-import ManualProfileSwitcher from '../widgets/profiles/ManualProfileSwitcher';
+import ManualProfileSwitcher from '../plugins/profiles/ManualProfileSwitcher';
 import css from "./AppStyles";
 import { observer, inject } from 'mobx-react';
-import { ProfilesStore } from '../widgets/profiles/ProfilesStore';
+import { ProfilesStore } from '../plugins/profiles/ProfilesStore';
 import { AppProfiles } from '../profiles/AppProfiles';
-import VoiceCommands from '../widgets/speech-detect/SpeechDetectionOverlay';
-import FacialProfileStatusIcon from '../widgets/facial-recognition/FacialProfileStatusIcon';
-import SpeechDetectionOverlay from '../widgets/speech-detect/SpeechDetectionOverlay';
-import SpeechDetectionStatusIcon from '../widgets/speech-detect/SpeechDetectionStatusIcon';
+import VoiceCommands from '../plugins/speech-detect/SpeechDetectionOverlay';
+import FacialProfileStatusIcon from '../plugins/facial-recognition/FacialProfileStatusIcon';
+import SpeechDetectionOverlay from '../plugins/speech-detect/SpeechDetectionOverlay';
+import SpeechDetectionStatusIcon from '../plugins/speech-detect/SpeechDetectionStatusIcon';
 
 interface Props {
   profiles?: ProfilesStore<AppProfiles>
@@ -44,6 +44,7 @@ export default class App extends React.Component<Props, any> {
 
       <div style={{ display: "flex", position: "absolute", top: 0, right: 0 }}>
         <FacialProfileStatusIcon />
+        <div style={{ width: 10 }} />
         <SpeechDetectionStatusIcon />
       </div>
 

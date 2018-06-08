@@ -8,7 +8,7 @@ import ColleensProfile from './ColleensProfile';
 import LeahsProfile from './LeahsProfile';
 import EmptyProfile from './EmptyProfile';
 import UnknownProfile from './UnknownProfile';
-import { Profiles } from '../widgets/profiles/Profiles';
+import { Profiles } from '../plugins/profiles/Profiles';
 
 export const appProfiles : Profiles = {
     mike: () => <MikesProfile />,

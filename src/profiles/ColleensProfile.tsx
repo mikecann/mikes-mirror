@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Clock from '../widgets/clock/Clock';
-import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
-import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
+import Clock from '../plugins/clock/Clock';
+import WelcomeMessage from '../plugins/welcome-message/WelcomeMessage';
+import ProfilePicture from '../plugins/profile-picture/ProfilePicture';
 import css from "./styles";
-import { Profile } from '../widgets/profiles/Profile';
+import { Profile } from '../plugins/profiles/Profile';
 
 export default class ColleensProfile extends Profile<any, any> {
 

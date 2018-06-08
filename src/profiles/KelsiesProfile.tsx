@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Clock from '../widgets/clock/Clock';
-import WelcomeMessage from '../widgets/welcome-message/WelcomeMessage';
-import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
-//import NewsRSS from '../widgets/news-rss/NewsRSS';
+import Clock from '../plugins/clock/Clock';
+import WelcomeMessage from '../plugins/welcome-message/WelcomeMessage';
+import ProfilePicture from '../plugins/profile-picture/ProfilePicture';
+//import NewsRSS from '../plugins/news-rss/NewsRSS';
 import css from "./styles";
 //import { Howl } from "howler";
-import RandomCute from '../widgets/random-cute/RandomCute';
-import { Profile } from '../widgets/profiles/Profile';
+import RandomCute from '../plugins/random-cute/RandomCute';
+import { Profile } from '../plugins/profiles/Profile';
 
 export default class MikesProfile extends Profile<any, any> {
 

@@ -16,7 +16,7 @@ export default class SpeechDetectionOverlay extends React.Component<Props, any> 
     render() {
 
         const { event, enabled, isRunning } = this.props.speechDetection!;
-        const { lastCommandWasFound } = this.props.speechCommands!;
+        const { command } = this.props.speechCommands!;
 
         if (!isRunning || !enabled)
             return "";
@@ -30,8 +30,8 @@ export default class SpeechDetectionOverlay extends React.Component<Props, any> 
         if (event.event == "partial")
             return <Partial result={event.result!} />
 
-        if (event.event == "final")
-            if (lastCommandWasFound)
+        if (event.event == "final" && command)
+            if (command.match)
                 return <CommandFound result={event.result!} />
             else
                 return <CommandNotFound result={event.result!} />

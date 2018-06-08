@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { setupStyles } from './styles';
-import { SystemInformationStore } from './widgets/system-info/SystemInformationStore';
-import { FacialRecognitionStore } from './widgets/facial-recognition/FacialRecognitionStore';
+import { SystemInformationStore } from './plugins/system-info/SystemInformationStore';
+import { FacialRecognitionStore } from './plugins/facial-recognition/FacialRecognitionStore';
 import { Provider as MobxProvider } from "mobx-react";
 import { configure } from 'mobx';
 import App from './components/App';
-import { ProfilesStore } from './widgets/profiles/ProfilesStore';
+import { ProfilesStore } from './plugins/profiles/ProfilesStore';
 import { appProfiles } from './profiles/AppProfiles';
-import { SpeechDetectionStore } from './widgets/speech-detect/SpeechDetectionStore';
-import { SpeechCommandsStore } from './widgets/speech-detect/SpeechCommandsStore';
+import { SpeechDetectionStore } from './plugins/speech-detect/SpeechDetectionStore';
+import { SpeechCommandsStore } from './plugins/speech-detect/SpeechCommandsStore';
 import { VoiceCommandsController } from './services/VoiceCommandsService';
 import { TextToSpeechService } from './services/TextToSpeechService';
 

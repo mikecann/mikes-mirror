@@ -1,6 +1,6 @@
-// import { FacialRecognitionStore } from '../widgets/facial-recognition/FacialRecognitionStore';
+// import { FacialRecognitionStore } from '../plugins/facial-recognition/FacialRecognitionStore';
 // import { AppProfiles } from '../profiles/AppProfiles';
-// import { Profiles } from '../widgets/profiles/Profiles';
+// import { Profiles } from '../plugins/profiles/Profiles';
 
 // export class FacialProfileSwitchingController
 // {

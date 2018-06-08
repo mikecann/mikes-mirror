@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
-import TimeUntilProfileChangeBar from '../widgets/facial-recognition/TimeUntilProfileChangeBar';
+import ProfilePicture from '../plugins/profile-picture/ProfilePicture';
+import TimeUntilProfileChangeBar from '../plugins/facial-recognition/TimeUntilProfileChangeBar';
 
 interface Props {
 }

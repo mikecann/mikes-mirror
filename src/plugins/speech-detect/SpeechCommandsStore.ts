@@ -1,12 +1,18 @@
 import { SpeechDetectionStore } from './SpeechDetectionStore';
-import { autorun, IReactionDisposer, observable, action } from 'mobx';
+import { autorun, IReactionDisposer, observable, action, runInAction } from 'mobx';
 import { ISpeechCommandsProvider } from './ISpeechCommandsProvider';
+
+interface SpeechCommand {
+    input: string,
+    match?: string,
+}
 
 export class SpeechCommandsStore
 {
-    @observable lastCommandWasFound: boolean = false;
+    @observable command?: SpeechCommand;
 
     private autorunDisposer?: IReactionDisposer;
+    private timeout: NodeJS.Timer;
 
     constructor(private speechDetection: SpeechDetectionStore,
         private commandHandler: ISpeechCommandsProvider) {
@@ -22,19 +28,24 @@ export class SpeechCommandsStore
 
     @action
     private attemptToExecute(command: string) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => runInAction(() => this.command = undefined), 2000);
+        this.command = this.findCommand(command);
+    }
+
+    private findCommand(command: string): SpeechCommand {
         const commands = this.commandHandler.getCommands();
-        this.lastCommandWasFound = false;
         for (var key in commands) {
             var regexp = new RegExp(key);
             if (regexp.test(command)) {
                 var parts = regexp.exec(command);
                 if (parts) {
                     commands[key](parts);
-                    this.lastCommandWasFound = true;
-                    return;
+                    return { input: command, match: key };
                 }
             }
         }
+        return { input: command };
     }
 
     stop() {

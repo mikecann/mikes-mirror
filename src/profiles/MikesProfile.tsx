@@ -1,12 +1,12 @@
 import * as React from 'react';
-import Particles from '../widgets/particles/Particles';
-import Clock from '../widgets/clock/Clock';
-import WeatherChart from '../widgets/weather-chart/WeatherChart';
-import ProfilePicture from '../widgets/profile-picture/ProfilePicture';
-import SystemInfo from '../widgets/system-info/SystemInfo';
+import Particles from '../plugins/particles/Particles';
+import Clock from '../plugins/clock/Clock';
+import WeatherChart from '../plugins/weather-chart/WeatherChart';
+import ProfilePicture from '../plugins/profile-picture/ProfilePicture';
+import SystemInfo from '../plugins/system-info/SystemInfo';
 import css from "./styles";
-import FacialRecogntionStats from '../widgets/facial-recognition/FacialRecogntionStats';
-import { Profile } from '../widgets/profiles/Profile';
+import FacialRecogntionStats from '../plugins/facial-recognition/FacialRecogntionStats';
+import { Profile } from '../plugins/profiles/Profile';
 
 export default class MikesProfile extends Profile<any, any> {
 

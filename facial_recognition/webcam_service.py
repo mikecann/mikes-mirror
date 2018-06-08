@@ -61,10 +61,13 @@ face_names = []
 process_this_frame = True
 downscale_factor = 4.0
 tolerance = 0.5
+frame_count = 0
+frame_processed = False
 
 while True:
 
     total_start_time = time.time()
+    frame_processed = False
     
     # 4 Empty grabs first due to framebuffer getting filled by slow render loop
     # video_capture.grab()
@@ -78,8 +81,11 @@ while True:
     # Resize frame of video to 1/4 size for faster face recognition processing
     small_frame = cv2.resize(frame, (0, 0), fx=1/downscale_factor, fy=1/downscale_factor)
 
-    # Only process every other frame of video to save time
-    if process_this_frame:
+    # Only process every so many farmes for performance
+    if frame_count == 10:
+
+        frame_count = 0
+        frame_processed = True
 
         # Find all the faces and face encodings in the current frame of video
         face_locations = face_recognition.face_locations(small_frame)
@@ -96,8 +102,7 @@ while True:
                 if match:
                     face_names.append(known_names[i])
 
-    process_this_frame = not process_this_frame
-
+    frame_count += 1
     detections = []
 
     for (top, right, bottom, left), name in zip(face_locations, face_names):
@@ -110,7 +115,10 @@ while True:
         detections.append({"top": top, "left": left, "bottom": bottom, "right": right, "name": name})
         
     output = {"event": "detections-update", "detections": detections, "total_time": time.time() - total_start_time}
-    print(json.dumps(output))
+
+    if frame_processed:
+        print(json.dumps(output))
+
     sys.stdout.flush()
 
 # Release handle to the webcam
