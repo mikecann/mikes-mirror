@@ -4,6 +4,7 @@ import { TextToSpeechService } from '../plugins/text-to-speech/TextToSpeechServi
 import { ProfilesStore } from '../plugins/profiles/ProfilesStore';
 import { AppProfiles } from '../profiles/AppProfiles';
 import { ISpeechCommandsProvider } from '../plugins/speech-detect/ISpeechCommandsProvider';
+import { toJS } from 'mobx';
 
 export type Commands = {
     [key: string]: (result: RegExpExecArray) => void
@@ -38,7 +39,9 @@ export class MirrorSpeechCommandsProvider implements ISpeechCommandsProvider {
         "disable face recognition": () => this.facialRecogntion.enable(),
         "enable face recognition": () => this.facialRecogntion.disable(),
         "say (.*)": (result) => this.textToSpeech.say(result[1]),
-        "who is the fairest of them all": (result) => this.textToSpeech.say("everyone knows that olivia is the fairest of them all")
+        "who is the fairest of them all": (result) => this.textToSpeech.say("everyone knows that olivia is the fairest of them all"),
+        "save my profile": () => this.facialRecogntion.saveFrame(toJS(this.profiles.profile)+""),
+        "save profile for (.*)": (result) => this.facialRecogntion.saveFrame(result[1])
     }
 
     toggleInspector() {

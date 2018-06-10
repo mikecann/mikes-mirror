@@ -53,6 +53,8 @@ export default class App extends React.Component<Props, any> {
         <SpeechDetectionStatusIcon />
       </div>
 
+      {/* <Webcam /> */}
+
     </div>
   }
 

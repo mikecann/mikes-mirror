@@ -6,6 +6,7 @@ import os
 import click
 import re
 import time
+import select
 
 def image_files_in_folder(folder):
     return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.(jpg|jpeg|png)', f, flags=re.I)]
@@ -34,6 +35,10 @@ def scan_known_people(known_people_folder):
             known_face_encodings.append(encodings[0])
 
     return known_names, known_face_encodings
+
+def saveFrame(profileName, frame):
+    fname = "./faces/{}.jpg".format(profileName)
+    cv2.imwrite(fname, frame)
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -115,6 +120,15 @@ while True:
         detections.append({"top": top, "left": left, "bottom": bottom, "right": right, "name": name})
         
     output = {"event": "detections-update", "detections": detections, "total_time": time.time() - total_start_time}
+
+    if select.select([sys.stdin,],[],[],0.0)[0]:
+        inp = sys.stdin.readline()
+        obj = json.loads(inp)
+        if obj["command"] == "saveFrame":
+            saveFrame(obj["profileName"], frame)
+
+    #inp = sys.stdin.newlines
+    #print("GOT LINE {}".format(inp))
 
     if frame_processed:
         print(json.dumps(output))

@@ -59,6 +59,7 @@ export class FacialRecognitionStore {
 
             this.pyshell.on('message', (message: string) => {
                 try {
+                    console.log(message);
                     var event: FacialRecogntionEvent = JSON.parse(message);
                     this.handleEvent(event);
                 } catch (error) {
@@ -87,6 +88,13 @@ export class FacialRecognitionStore {
             console.error('Error while tryng to start the python shell', e);
         }
 
+    }
+
+    saveFrame(profileName: string) {
+        if (!this.enabled)
+            return;
+
+        this.pyshell.send(JSON.stringify({ command: "saveFrame", profileName }));
     }
 
     @action
