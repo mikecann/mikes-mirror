@@ -90,9 +90,11 @@ export class FacialRecognitionStore {
 
     }
 
-    saveFrame(profileName: string) {
+    saveProfilePicture(profileName: string) {
         if (!this.enabled)
             return;
+
+        console.log("Saving profile picture for", profileName)
 
         this.pyshell.send(JSON.stringify({ command: "saveFrame", profileName }));
     }
