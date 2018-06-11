@@ -57,7 +57,7 @@ export class SpeechDetectionStore {
                 runInAction(() => this.event = event);
                     
             } catch (e) {
-                console.warn(`SpeechDetectionStore failed to parse sonus event`, data);
+                console.warn(`SpeechDetectionStore failed to parse sonus event`, e, data + "");
             }
         });
 
