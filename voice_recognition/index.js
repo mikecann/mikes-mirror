@@ -20,6 +20,10 @@ sonus.on('hotword', (index, keyword) => console.log(JSON.stringify({ event: "hot
 
 sonus.on('partial-result', result => console.log(JSON.stringify({ event: "partial", result })))
 
+sonus.on('sound', result => console.log(JSON.stringify({ event: "sound" })))
+
+sonus.on('silence', result => console.log(JSON.stringify({ event: "silence" })))
+
 sonus.on('error', error => console.log(JSON.stringify({ event: "error", error })))
 
 sonus.on('final-result', result => {

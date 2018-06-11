@@ -1,8 +1,8 @@
 import { spawn, ChildProcess } from "child_process";
-import { observable, runInAction } from 'mobx';
+import { observable, runInAction, toJS } from 'mobx';
 
 type SonusEventTypes = "not-ready" | "ready" | "hotword-detected" | 
-    "partial" | "error" | "final";
+    "partial" | "error" | "final" | "silence" | "sound";
 
 export interface SonusEvent {
     event: SonusEventTypes,
@@ -17,8 +17,10 @@ export class SpeechDetectionStore {
     @observable autoRestart = true;
     @observable isRunning = false;
     @observable event?: SonusEvent;
+    @observable hasSound = false;
 
     private proc?: ChildProcess;
+    private lastData: string;
     
     start() {
         runInAction(() => {
@@ -32,8 +34,24 @@ export class SpeechDetectionStore {
 
         this.proc.stdout.on('data', (data) => {
             try {
+
+                if (data+"" == this.lastData)
+                    return;
+
+                this.lastData = data + "";
+
                 var event: SonusEvent = JSON.parse(data + "");
+
+                //console.log("Speech event", event);
+
+                if (event.event == "sound")
+                    return runInAction(() => this.hasSound = true);
+
+                if (event.event == "silence")
+                    return runInAction(() => this.hasSound = false);
+                
                 runInAction(() => this.event = event);
+                    
             } catch (e) {
                 console.warn(`SpeechDetectionStore failed to parse sonus event`, data);
             }

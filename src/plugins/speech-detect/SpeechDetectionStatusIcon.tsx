@@ -12,15 +12,16 @@ export default class SpeechDetectionStatusIcon extends React.Component<Props, an
 
     render() {
 
-        const { event, enabled, isRunning } = this.props.speechDetection!;
+        const { event, enabled, isRunning, hasSound } = this.props.speechDetection!;
 
         if (!isRunning || !enabled)
             return <NotRunningOrEnabled />
     
         if (!event || event.event == "not-ready")
             return <NotReady />
-    
-        return <Ready />
+
+        return hasSound ? <Sound /> : <Silence />
+
     }
 }
 
@@ -34,9 +35,14 @@ const NotReady = () =>
         <span className="fa fa-microphone" style={{ color: "orange", fontSize: "2em" }} />
     </div>
 
-const Ready = () =>
+const Silence = () =>
     <div>
         <span className="fa fa-microphone" style={{ fontSize: "2em" }} />
+    </div>
+
+const Sound = () =>
+    <div>
+        <span className="fa fa-microphone" style={{ fontSize: "2em", color: "green" }} />
     </div>
 
 // const HotwordDetected = () =>
