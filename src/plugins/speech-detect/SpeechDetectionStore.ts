@@ -44,11 +44,15 @@ export class SpeechDetectionStore {
 
                 //console.log("Speech event", event);
 
-                if (event.event == "sound")
-                    return runInAction(() => this.hasSound = true);
+                if (event.event == "sound") {
+                    runInAction(() => this.hasSound = true);
+                    return
+                }
 
-                if (event.event == "silence")
-                    return runInAction(() => this.hasSound = false);
+                if (event.event == "silence") {
+                    runInAction(() => this.hasSound = false);
+                    return;
+                }
                 
                 runInAction(() => this.event = event);
                     
