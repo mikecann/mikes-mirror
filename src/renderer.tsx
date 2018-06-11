@@ -10,9 +10,10 @@ import { ProfilesStore } from './plugins/profiles/ProfilesStore';
 import { appProfiles } from './profiles/AppProfiles';
 import { SpeechDetectionStore } from './plugins/speech-detect/SpeechDetectionStore';
 import { SpeechCommandsStore } from './plugins/speech-detect/SpeechCommandsStore';
-import { MirrorSpeechCommandsProvider } from './services/MirrorSpeechCommandsProvider';
 import { TextToSpeechService } from './plugins/text-to-speech/TextToSpeechService';
 import { FacialProfileSwitcher } from './plugins/facial-profile-switcher/FacialProfileSwitcher';
+import { registerCommands } from './commands';
+import NaturalLanguageCommander = require("natural-language-commander")
 
 // Setup the initial styles for the page
 setupStyles();
@@ -28,14 +29,15 @@ const facialStore = new FacialRecognitionStore();
 const systemInfo = new SystemInformationStore();
 const speechDetection = new SpeechDetectionStore();
 const textToSpeech = new TextToSpeechService();
-const commandsService = new MirrorSpeechCommandsProvider(profiles, facialStore, textToSpeech);
-const speechCommands = new SpeechCommandsStore(speechDetection, commandsService);
+const naturalLanguage = new NaturalLanguageCommander();
+const speechCommands = new SpeechCommandsStore(speechDetection, naturalLanguage);
 const facialSwitcher = new FacialProfileSwitcher(profiles, facialStore);
 
 // Wait a little time for things to bootup before we start facial recognition
 setTimeout(() => facialStore.enable(), 3000);
 
 // Init
+registerCommands(naturalLanguage, profiles, facialStore, textToSpeech);
 systemInfo.start();
 speechDetection.start();
 speechCommands.start();

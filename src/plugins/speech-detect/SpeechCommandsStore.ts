@@ -1,6 +1,6 @@
 import { SpeechDetectionStore } from './SpeechDetectionStore';
 import { autorun, IReactionDisposer, observable, action, runInAction } from 'mobx';
-import { ISpeechCommandsProvider } from './ISpeechCommandsProvider';
+import NLC = require("natural-language-commander")
 
 interface SpeechCommand {
     input: string,
@@ -15,7 +15,7 @@ export class SpeechCommandsStore
     private timeout: NodeJS.Timer;
 
     constructor(private speechDetection: SpeechDetectionStore,
-        private commandHandler: ISpeechCommandsProvider) {
+        private nlc: NLC) {
     }
 
     start() {
@@ -27,25 +27,17 @@ export class SpeechCommandsStore
     }
 
     @action
-    private attemptToExecute(command: string) {
+    private async attemptToExecute(command: string) {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => runInAction(() => this.command = undefined), 2000);
-        this.command = this.findCommand(command);
-    }
 
-    private findCommand(command: string): SpeechCommand {
-        const commands = this.commandHandler.getCommands();
-        for (var key in commands) {
-            var regexp = new RegExp(key);
-            if (regexp.test(command)) {
-                var parts = regexp.exec(command);
-                if (parts) {
-                    commands[key](parts);
-                    return { input: command, match: key };
-                }
-            }
+        try {
+            const intent = await this.nlc.handleCommand(command);
+            console.log("Command executed", { command, intent })
+            runInAction(() => this.command = { input: command, match: intent });
+        } catch (error) {
+            runInAction(() => this.command = { input: command });
         }
-        return { input: command };
     }
 
     stop() {

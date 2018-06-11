@@ -37,6 +37,14 @@ export class FacialRecognitionStore {
     }
 
     @action
+    public toggle() {
+        if (this.enabled)
+            this.disable();
+        else
+            this.enable();
+    }
+
+    @action
     public disable() {
         this.enabled = false;
         if (this.isRunning)
@@ -59,7 +67,7 @@ export class FacialRecognitionStore {
 
             this.pyshell.on('message', (message: string) => {
                 try {
-                    console.log(message);
+                    //console.log(message);
                     var event: FacialRecogntionEvent = JSON.parse(message);
                     this.handleEvent(event);
                 } catch (error) {

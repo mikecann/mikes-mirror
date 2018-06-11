@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add mobx-dom
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add @types/speakeasy-nlp
 
 PATH: 
   /home/mike/bin:/home/mike/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/mobx-dom: Not found
+  Error: https://registry.yarnpkg.com/@types%2fspeakeasy-nlp: Not found
       at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:65656:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:134675:22)
       at emitTwo (events.js:126:13)
@@ -60,6 +60,7 @@ npm manifest:
       "electron-reload": "^1.2.2",
       "howler": "^2.0.9",
       "mobx": "^4.3.1",
+      "mobx-react": "^5.2.0",
       "moment": "^2.22.1",
       "python-shell": "^0.5.0",
       "react": "^16.3.2",
@@ -68,11 +69,11 @@ npm manifest:
       "react-transition-group": "1.x",
       "rss-parser": "^3.1.2",
       "shelljs": "^0.8.1",
+      "speakeasy-nlp": "^0.2.12",
       "systeminformation": "^3.38.0",
       "tslint": "^5.9.1",
       "typescript": "^2.6.2",
-      "typestyle": "^1.7.2",
-      "unstated": "^2.0.2"
+      "typestyle": "^1.7.2"
     }
   }
 
@@ -480,10 +481,6 @@ Lockfile:
       shell-quote "^1.6.1"
       subarg "^1.0.0"
   
-  create-react-context@^0.1.5:
-    version "0.1.6"
-    resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.1.6.tgz#0f425931d907741127acc6e31acb4f9015dd9fdc"
-  
   cross-env@^5.1.4:
     version "5.1.4"
     resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.4.tgz#f61c14291f7cc653bb86457002ea80a04699d022"
@@ -885,6 +882,10 @@ Lockfile:
     version "4.2.1"
     resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
   
+  hoist-non-react-statics@^2.5.0:
+    version "2.5.0"
+    resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
+  
   home-path@^1.0.1:
     version "1.0.5"
     resolved "https://registry.yarnpkg.com/home-path/-/home-path-1.0.5.tgz#788b29815b12d53bacf575648476e6f9041d133f"
@@ -1127,6 +1128,10 @@ Lockfile:
     optionalDependencies:
       graceful-fs "^4.1.9"
   
+  levenshtein@*:
+    version "1.0.5"
+    resolved "https://registry.yarnpkg.com/levenshtein/-/levenshtein-1.0.5.tgz#3911737a9cb56da345d008f55782c6f138979ba3"
+  
   load-json-file@^1.0.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"
@@ -1250,6 +1255,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
     dependencies:
       minimist "0.0.8"
+  
+  mobx-react@^5.2.0:
+    version "5.2.0"
+    resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-5.2.0.tgz#d1fc36d6231a84d0ca54ebeaaa692872859d3629"
+    dependencies:
+      hoist-non-react-statics "^2.5.0"
+      react-lifecycles-compat "^3.0.2"
   
   mobx@^4.3.1:
     version "4.3.1"
@@ -1531,6 +1543,10 @@ Lockfile:
       object-assign "^4.1.1"
       prop-types "^15.6.0"
   
+  react-lifecycles-compat@^3.0.2:
+    version "3.0.4"
+    resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  
   react-particles-js@^2.1.1:
     version "2.1.3"
     resolved "https://registry.yarnpkg.com/react-particles-js/-/react-particles-js-2.1.3.tgz#f7ec18648dd0a05640817c8b4d55c8595e2a9db7"
@@ -1789,6 +1805,12 @@ Lockfile:
     version "3.0.0"
     resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.0.tgz#7a7cd28470cc6d3a1cfe6d66886f6bc430d3ac87"
   
+  speakeasy-nlp@^0.2.12:
+    version "0.2.12"
+    resolved "https://registry.yarnpkg.com/speakeasy-nlp/-/speakeasy-nlp-0.2.12.tgz#c24661a1938b7b4340d8583d3d1ec9cb5bcae7c8"
+    dependencies:
+      levenshtein "*"
+  
   speedometer@~0.1.2:
     version "0.1.4"
     resolved "https://registry.yarnpkg.com/speedometer/-/speedometer-0.1.4.tgz#9876dbd2a169d3115402d48e6ea6329c8816a50d"
@@ -1989,12 +2011,6 @@ Lockfile:
   ua-parser-js@^0.7.9:
     version "0.7.18"
     resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.18.tgz#a7bfd92f56edfb117083b69e31d2aa8882d4b1ed"
-  
-  unstated@^2.0.2:
-    version "2.1.1"
-    resolved "https://registry.yarnpkg.com/unstated/-/unstated-2.1.1.tgz#36b124dfb2e7a12d39d0bb9c46dfb6e51276e3a2"
-    dependencies:
-      create-react-context "^0.1.5"
   
   util-deprecate@~1.0.1:
     version "1.0.2"

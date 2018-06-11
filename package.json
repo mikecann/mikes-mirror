@@ -33,6 +33,7 @@
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.0",
     "moment": "^2.22.1",
+    "natural-language-commander": "^0.2.0",
     "python-shell": "^0.5.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",

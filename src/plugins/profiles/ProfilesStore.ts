@@ -22,6 +22,12 @@ export class ProfilesStore<T extends Profiles>
         if (name == this.profile)
             return;
 
+        if (this.isProfileLocked)
+            return;
+
+        if (this.profiles[name] == undefined)
+            return;
+
         console.log(`ProfilesStore changed profile to`, name);
         this.profile = name;
     }
@@ -43,9 +49,8 @@ export class ProfilesStore<T extends Profiles>
     }
 
     @action
-    lockProfile(profile: string) {
-        console.log("ProfilesStore profile locked to", profile);
-        this.changeProfile(profile);
+    lockProfile() {
+        console.log("ProfilesStore profile locked to", this.profile);
         this.isProfileLocked = true;
     }
 
