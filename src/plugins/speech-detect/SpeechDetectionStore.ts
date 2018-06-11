@@ -33,14 +33,15 @@ export class SpeechDetectionStore {
         this.proc = spawn('yarn', ['start'], { cwd: "./voice_recognition" });
 
         this.proc.stdout.on('data', (data) => {
-            try {
+            var str = data + "";
 
-                if (data+"" == this.lastData)
+            try {
+                if (str == this.lastData)
                     return;
 
-                this.lastData = data + "";
+                this.lastData = str;
 
-                var event: SonusEvent = JSON.parse(data + "");
+                var event: SonusEvent = JSON.parse(str);
 
                 //console.log("Speech event", event);
 
@@ -57,7 +58,7 @@ export class SpeechDetectionStore {
                 runInAction(() => this.event = event);
                     
             } catch (e) {
-                console.warn(`SpeechDetectionStore failed to parse sonus event`, e, data + "");
+                console.warn(`SpeechDetectionStore failed to parse sonus event`, e, str);
             }
         });
 
