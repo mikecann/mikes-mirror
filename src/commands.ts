@@ -51,6 +51,17 @@ export function registerCommands(
     });
 
     nlc.registerIntent({
+        intent: "lock profile to..",
+        slots: [{ name: "Profile", type: "STRING" }],
+        utterances: ["lock profile to {Profile}", "fix profile {Profile}"],
+        callback: (profile: string) => {
+            profiles.unlockProfile();
+            profiles.changeProfile(profile);
+            profiles.lockProfile();
+        }
+    });
+
+    nlc.registerIntent({
         intent: "unlock profile",
         utterances: ["unlock profile", "unlock my profile"],
         callback: () => profiles.unlockProfile()
