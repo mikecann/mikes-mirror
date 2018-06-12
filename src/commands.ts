@@ -5,6 +5,7 @@ import { TextToSpeechService } from './plugins/text-to-speech/TextToSpeechServic
 import NLC = require("natural-language-commander")
 import { remote } from "electron";
 import { toJS } from 'mobx';
+import * as moment from 'moment';
 
 const inspectorSlotType = "INSPECTOR_SLOT_TYPE";
 const openSlotType = "OPEN_SLOT_TYPE";
@@ -148,7 +149,7 @@ export function registerCommands(
     nlc.registerIntent({
         intent: "capture profile picture",
         slots: [{ name: "Capture", type: saveCaptureTakeSlotType }],
-        utterances: ["{Capture} my profile picture", "{Capture} my profile", "{Capture} profile picture"],
+        utterances: ["{Capture} my profile picture", "{Capture} my profile", "{Capture} profile picture", "update my profile picture"],
         callback: () => () => facialRecogntion.saveProfilePicture(toJS(profiles.profile)+"")
     });
 
@@ -160,5 +161,17 @@ export function registerCommands(
         ],
         utterances: ["{Capture} profile picture for {Person}", "{Capture} profile for {Person}"],
         callback: () => (person: string) => facialRecogntion.saveProfilePicture(person)
+    });
+
+    nlc.registerIntent({
+        intent: "what is the time",
+        utterances: ["tell me the time", "what is the time", "say the time"],
+        callback: () => textToSpeech.say(`The time is ${moment().format('h:mm a')}`)
+    });
+
+    nlc.registerIntent({
+        intent: "what is the date",
+        utterances: ["tell me the date", "what is the date", "say the date"],
+        callback: () => textToSpeech.say(`The date is ${moment().format('MMMM Do YYYY')}`)
     });
 }
