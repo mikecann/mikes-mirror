@@ -64,7 +64,12 @@ CloudSpeechRecognizer.startStreaming = (options, audioStream, cloudSpeechRecogni
       }
     })
 
+  var timeout = setTimeout(() => {
+    stopStream();
+  }, 10000);
+
   const stopStream = () => {
+    clearTimeout(timeout)
     cloudSpeechRecognizer.listening = false
     audioStream.unpipe(recognitionStream)
     recognitionStream.end()
