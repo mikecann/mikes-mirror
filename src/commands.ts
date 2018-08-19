@@ -47,7 +47,7 @@ export function registerCommands(
 
     nlc.registerIntent({
         intent: "lock profile",
-        utterances: ["lock profile", "lock my profile"],
+        utterances: ["lock this profile", "lock my profile"],
         callback: () => profiles.lockProfile()
     });
 
@@ -57,14 +57,14 @@ export function registerCommands(
         utterances: ["lock profile to {Profile}", "fix profile {Profile}"],
         callback: (profile: string) => {
             profiles.unlockProfile();
-            profiles.changeProfile(profile);
+            profiles.changeProfile(profile.toLocaleLowerCase());
             profiles.lockProfile();
         }
     });
 
     nlc.registerIntent({
         intent: "unlock profile",
-        utterances: ["unlock profile", "unlock my profile"],
+        utterances: ["unlock profile", "unlock this profile", "unlock my profile"],
         callback: () => profiles.unlockProfile()
     });
 
@@ -87,8 +87,8 @@ export function registerCommands(
         utterances: ["toggle {Inspector}"],
         callback: () => {
             window.webContents.isDevToolsOpened() ?
-            window.webContents.closeDevTools() :
-            window.webContents.openDevTools()
+                window.webContents.closeDevTools() :
+                window.webContents.openDevTools()
         }
     });
 
@@ -150,7 +150,7 @@ export function registerCommands(
         intent: "capture profile picture",
         slots: [{ name: "Capture", type: saveCaptureTakeSlotType }],
         utterances: ["{Capture} my profile picture", "{Capture} my profile", "{Capture} profile picture", "update my profile picture"],
-        callback: () => () => facialRecogntion.saveProfilePicture(toJS(profiles.profile)+"")
+        callback: () => () => facialRecogntion.saveProfilePicture(toJS(profiles.profile) + "")
     });
 
     nlc.registerIntent({

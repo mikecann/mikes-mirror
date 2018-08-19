@@ -18,7 +18,7 @@ export default class MikesProfile extends Profile<any, any> {
   render() {
     return <div className={css.profile}>
 
-      <Particles />
+      {/* <Particles /> */}
 
       <div className={css.rootContainer}>
 
@@ -31,8 +31,8 @@ export default class MikesProfile extends Profile<any, any> {
         <div className={css.flex} />
 
         <div className={css.hozContainer}>
-          
-          
+
+
           <div className={css.vertContainer}>
             <div className={css.flex} />
             <FacialRecogntionStats />

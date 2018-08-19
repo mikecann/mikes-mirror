@@ -33,7 +33,7 @@ app.on("ready", async () => {
 
   // If we are dev mode lets open the dev tools
   //if (isDev)
-    window.webContents.openDevTools();
+  window.webContents.openDevTools();
 
   // Prevent the display from sleeping
   powerSaveBlocker.start("prevent-display-sleep");
@@ -41,10 +41,10 @@ app.on("ready", async () => {
   // Lets move the mouse out the way if we can
   hideMouse();
 
-  // After 2 hours lets manually restart, just incase..
-  setTimeout(() => window.close(), 2 * 3600 * 1000);
+  // After 1 hours lets manually restart, just incase..
+  setTimeout(() => window.close(), 1 * 3600 * 1000);
 
-  // Lets continually check git to see if there are updates and close if there are
+  // Every 30 seconds check git to see if there are updates and close if there are
   await waitForUpdate(30000);
   window.close();
 

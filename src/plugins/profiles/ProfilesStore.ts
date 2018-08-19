@@ -18,7 +18,9 @@ export class ProfilesStore<T extends Profiles>
 
     @action
     changeProfile(name: keyof T) {
-        
+
+        console.log("attempting to change profile to " + name);
+
         if (name == this.profile)
             return;
 
