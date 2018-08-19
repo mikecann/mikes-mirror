@@ -10,6 +10,7 @@
     "watch:scripts": "yarn build:scripts -w",
     "watch:resources": "yarn build:resources -w",
     "start": "electron ./dist/main.js",
+    "setup:fitbit": "ts-node scripts/get-fitbit-access-token.ts",
     "start:prod": "cross-env NODE_ENV=production ELECTRON_ENABLE_LOGGING=1 DISPLAY=:0 yarn start",
     "dev": "yarn build && concurrently -n scripts,resources,electron \"yarn watch:scripts\" \"yarn watch:resources\" \"yarn start\" ",
     "deploy": "git pull && yarn install && yarn build && yarn start:prod && yarn deploy"
@@ -30,6 +31,7 @@
     "csx": "^8.5.0",
     "electron": "^1.8.4",
     "electron-reload": "^1.2.2",
+    "fitbit-node": "^2.1.0",
     "howler": "^2.0.9",
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.0",
@@ -43,6 +45,7 @@
     "rss-parser": "^3.1.2",
     "shelljs": "^0.8.1",
     "systeminformation": "^3.38.0",
+    "ts-node": "^7.0.1",
     "tslint": "^5.9.1",
     "typescript": "^2.6.2",
     "typestyle": "^1.7.2"

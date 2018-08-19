@@ -44,6 +44,8 @@ app.on("ready", async () => {
   // After 1 hours lets manually restart, just incase..
   setTimeout(() => window.close(), 1 * 3600 * 1000);
 
+
+
   // Every 30 seconds check git to see if there are updates and close if there are
   await waitForUpdate(30000);
   window.close();
